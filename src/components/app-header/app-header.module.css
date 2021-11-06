@@ -1,0 +1,28 @@
+.header{
+    display: flex;
+    background: #1C1C21;    
+    border-radius: 10px 10px 0 0; 
+    flex-direction: row;
+    
+    align-items: center;
+}
+.logo{
+    position: absolute;
+    margin: auto;
+}
+.nav{
+    display: flex;
+    flex-direction: row;
+    margin:0 auto;
+    align-items: center;
+}
+.nav_item_right{
+    float:right;
+    padding-right: 10%;
+    
+}
+.nav_item_left{
+    float:left;
+    padding-left: 10%;
+    
+}
