@@ -1,28 +1,30 @@
+nav{
+    background: #1C1C21;    
+    
+}
 .header{
     display: flex;
-    background: #1C1C21;    
-    border-radius: 10px 10px 0 0; 
-    flex-direction: row;
-    
-    align-items: center;
+    flex-direction: row; 
+    flex-grow:0;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-.logo{
-    position: absolute;
-    margin: auto;
+.logo{    
+    flex-grow: 1;
+    padding: 0 100px;
 }
 .nav{
     display: flex;
     flex-direction: row;
     margin:0 auto;
     align-items: center;
+    align-self: center;
 }
 .nav_item_right{
-    float:right;
-    padding-right: 10%;
-    
+
+   align-self: flex-end;
+
 }
 .nav_item_left{
-    float:left;
-    padding-left: 10%;
-    
+    align-self: flex-start;
 }

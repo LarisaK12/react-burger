@@ -223,11 +223,14 @@ class BurgerIngredients extends React.Component{
     };
     setCurrent=(value)=>{        
         this.setState(function (prevState,props){return{...prevState,current:value}});
+        const element = document.getElementById(value);
+        element.scrollIntoView({behavior:'smooth'});
     }
     render(){
-        return <div className={styles.ingredients}>
+      
+        return <div className={" pt-10"}>
         <p className="text text_type_main-large">Соберите бургер</p>
-        <div className="mt-5 mb-5" style={{ display: 'flex' }}>
+        <div className="mt-5 mb-10" style={{ display: 'flex' }}>
             <Tab value="bun" active={this.state.current === 'bun'} onClick={this.setCurrent}>
                 Булки
             </Tab>
@@ -238,10 +241,10 @@ class BurgerIngredients extends React.Component{
                 Начинки
             </Tab>
         </div>
-        <div>
-            <BurgerIngredientsTab tabname='Булки' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type=='bun')} ></BurgerIngredientsTab>
-            <BurgerIngredientsTab tabname='Соусы' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type=='sauce')}></BurgerIngredientsTab>
-            <BurgerIngredientsTab tabname='Начинки' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type=='main')}></BurgerIngredientsTab>
+        <div className={styles.ingredients}>
+            <BurgerIngredientsTab id='bun' tabname='Булки' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type=='bun')} ></BurgerIngredientsTab>
+            <BurgerIngredientsTab id='sauce' tabname='Соусы' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type=='sauce')}></BurgerIngredientsTab>
+            <BurgerIngredientsTab id='main' tabname='Начинки' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type=='main')}></BurgerIngredientsTab>
         </div>
 
         </div>

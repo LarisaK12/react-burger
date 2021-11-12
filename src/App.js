@@ -8,8 +8,9 @@ function App() {
       <header><AppHeader></AppHeader></header>
       <main>
        <section><BurgerIngredients/></section>
-       <section><BurgerConstructor/></section>
+       <section className="mt-25 ml-10"><BurgerConstructor/></section>       
       </main>
+      
     </>
   );
 }
