@@ -1,94 +1,68 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
-import BurgerElement from './burger-element';
-import {ConstructorElement , Button    } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
+import BurgerElement from '../burger-element/burger-element';
+import SubmitOrder from '../submit-order/submit-order';
+//import Modal from '../modal/modal';
+const burgerPropTypes = PropTypes.shape({
+    _id:PropTypes.string,
+    type: PropTypes.string,
+    isLocked:PropTypes.bool,
+    text:PropTypes.string,
+    price:PropTypes.number,
+    thumbnail:PropTypes.string
+})
 class BurgerConstructor extends React.Component {
     state={
-        burger:[
-            {
-                "_id":"60666c42cc7b410027a1a9b1",
-                "type": "top",
-                "isLocked":true,
-                "text":"Краторная булка N-200i",
-                "price":200,
-                "thumbnail":"https://code.s3.yandex.net/react/code/bun-02.png"
-        },
-        
-        {
-            "_id":"60666c42cc7b410027a1a9b3",
-            "type": "undefined",
-            "isLocked":false,            
-            "text":"Филе Люминесцентного тетраодонтимформа",
-            "price":988,
-            "thumbnail":"https://code.s3.yandex.net/react/code/meat-03.png",
-         },
-        {
-            "_id":"60666c42cc7b410027a1a9b5",
-            "type": "undefined",
-            "isLocked":false,
-            "text":"Говяжий метеорит (отбивная)",
-            "price":3000,
-            "thumbnail":"https://code.s3.yandex.net/react/code/meat-04.png"
-        },
-        ,
-        {
-           "_id":"60666c42cc7b410027a1a9b3",
-           "type": "undefined",
-           "isLocked":false,            
-           "text":"Филе Люминесцентного тетраодонтимформа",
-           "price":988,
-           "thumbnail":"https://code.s3.yandex.net/react/code/meat-03.png",
-        },
-        {
-           "_id":"60666c42cc7b410027a1a9bf",
-           "type": "undefined",
-            "isLocked":false,
-           "text":"Сыр с астероидной плесенью",
-           "price":4142,
-           "thumbnail":"https://code.s3.yandex.net/react/code/cheese.png",
-        },
-        {
-            "_id":"60666c42cc7b410027a1a9b1",
-            "type": "bottom",
-            "isLocked":true,
-            "text":"Краторная булка N-200i",
-            "price":200,
-            "thumbnail":"https://code.s3.yandex.net/react/code/bun-02.png"
-    }
-        ]
+        burger:[]
         ,
      visibleModal:false
     }
-    
+    constructor(props){
+        super(props);
+        this.state = {
+            burger:props.burger,
+            visibleModal:false,
+        }
+    }
     // handleOpenModal=()=> {
-    //     this.setState(function (prevState,props){return{...prevState, visibleModal: true }});
+    //     this.setState((prevState,props)=>({...prevState, visibleModal: true }));
     //   }
     
     //     handleCloseModal=()=> {
-    //     this.setState(function (prevState,props){return{...prevState, visibleModal: false }});
+    //     this.setState((prevState,props)=>({...prevState, visibleModal: false }));
     //   }
 render(){
     // const modal = (
     //     <Modal header="" onClose={this.handleCloseModal}> 
     //      </Modal>
     //   );
-    return this.state.burger.length > 1 &&<> <div id="react-modals"/>
+    return (
+        this.state.burger.length > 1 &&<>
     <div className={styles.burger} onClick={this.handleOpenModal}>
-            <BurgerElement {...this.state.burger[0]}></BurgerElement>
+            <BurgerElement  {...this.state.burger[0]}></BurgerElement>
             <div className="pb-4"/>
             <div className={styles.scrollable}>
                 {this.state.burger.filter(ingr=>ingr.type=='undefined').map((ingredient, index)=>
-                <>
+                <span key={index}>
                 <BurgerElement {...ingredient}></BurgerElement>
                 <div className="pb-4"/>
-                </>
+                </span>
                 )}
+                
             </div>
             <div className="pb-4"/>    
             <BurgerElement {...this.state.burger[this.state.burger.length-1]}></BurgerElement>
-    </div></>
+         
+    </div>
+    <div className='pt-10'></div>
+    <SubmitOrder  price={this.state.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price)}/>
+    </>
+    )
 }
 
 }
+BurgerConstructor.propTypes = {
+    burger: PropTypes.arrayOf(burgerPropTypes.isRequired)
+  }; 
 export default BurgerConstructor

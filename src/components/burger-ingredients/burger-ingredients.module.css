@@ -5,33 +5,18 @@
 .ingredients{
 flex:1 1 auto;
 margin: 0 auto;
-height: 400px;
+height: 550px;
 overflow-y: auto;
 overflow-x: hidden;
 }
-.ingretients_tab{
-    display:flex;
-    flex-wrap:wrap;
-}
-.ingredient_card{
-    display: flex;
-    flex-direction:column;
-    width: 280px;
-}
 .ingredients::-webkit-scrollbar {
     width: 8px;
-    background-color: #f9f9fd;
+    background-color: #2F2F37;
   }
 .ingredients::-webkit-scrollbar-thumb {
     background-color: #8585ad;
   }
-  .price_div{
-    display: flex;
-    flex-direction: row;
-    flex: 1 1 auto;
-    margin: 0 auto;
-  }
-  .item_center{
+.item_center{
     flex: 1 1 auto; 
     margin: 0 auto;
-  }
+}

@@ -14,14 +14,16 @@ class AppHeader extends React.Component {
     setConstructor=()=>this.setCurrent("constructor");
     setProfile=()=>this.setCurrent("profile");
       render() {
-        return <nav className=" p-4 ">
+        return (
+        <nav className=" p-4 ">
           <div className={styles.header}>
               <HeaderItem text="конструктор" onClick={this.setConstructor}><BurgerIcon  type={this.state.current === 'constructor'?"primary" :"secondary"}/></HeaderItem>
               <HeaderItem text="лента заказов" onClick={this.setOrder}><ListIcon  type={this.state.current === 'orders'?"primary" :"secondary"}/></HeaderItem>
               <span className={styles.logo}><Logo /></span>
               <HeaderItem text="личный кабинет" onClick={this.setProfile}><ProfileIcon  type={this.state.current === 'profile'?"primary" :"secondary"}/></HeaderItem>
           </div>        
-        </nav>;
+        </nav>
+        );
       }
 }
 export default AppHeader

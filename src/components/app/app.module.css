@@ -1,8 +1,4 @@
-.App {
-  text-align: center;
-  color: #FFFFFF;
-}
-main{
+.main{
     background: #131316;
     max-width: fit-content;
     display: flex;
@@ -10,14 +6,8 @@ main{
     margin:0 auto;
     justify-content: center;
 }
-section{
+.section{
   flex:1 1 auto;
   width: 600px;
   border-radius: 10px 10px 0 0; 
-
-}
-
-img{
-  width: 240px;
-  height: 130px;
 }
