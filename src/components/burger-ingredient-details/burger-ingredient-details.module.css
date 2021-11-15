@@ -1,0 +1,14 @@
+.flexcol{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+.flexrow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.main{
+    min-width: 600px;
+}

@@ -272,11 +272,13 @@ function App() {
   return (
     <>
       <header><AppHeader></AppHeader></header>
+           
       <main className={styles.main}>
        <section className={styles.section}><BurgerIngredients ingredients={state.ingredients}/></section>
        <div className='ml-10'/>
+       <div id='react-modals' className={styles.modal}></div> 
        <section className={`mt-25 ${styles.section}`}><BurgerConstructor burger={state.burger}/></section> 
-       <div id='react-modals'></div>      
+       
       </main>
       
     </>

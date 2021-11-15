@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import BurgerElement from '../burger-element/burger-element';
 import SubmitOrder from '../submit-order/submit-order';
-//import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import Modal from '../modal/modal';
 const burgerPropTypes = PropTypes.shape({
     _id:PropTypes.string,
     type: PropTypes.string,
@@ -12,38 +13,17 @@ const burgerPropTypes = PropTypes.shape({
     price:PropTypes.number,
     thumbnail:PropTypes.string
 })
-class BurgerConstructor extends React.Component {
-    state={
-        burger:[]
-        ,
-     visibleModal:false
-    }
-    constructor(props){
-        super(props);
-        this.state = {
-            burger:props.burger,
-            visibleModal:false,
-        }
-    }
-    // handleOpenModal=()=> {
-    //     this.setState((prevState,props)=>({...prevState, visibleModal: true }));
-    //   }
+function BurgerConstructor (props){
     
-    //     handleCloseModal=()=> {
-    //     this.setState((prevState,props)=>({...prevState, visibleModal: false }));
-    //   }
-render(){
-    // const modal = (
-    //     <Modal header="" onClose={this.handleCloseModal}> 
-    //      </Modal>
-    //   );
+    const [visibleModal, setVisibleModal] =useState(false);
+    
     return (
-        this.state.burger.length > 1 &&<>
-    <div className={styles.burger} onClick={this.handleOpenModal}>
-            <BurgerElement  {...this.state.burger[0]}></BurgerElement>
+        props.burger.length > 1 &&<>
+    <div className={styles.burger} >
+            <BurgerElement  {...props.burger[0]}></BurgerElement>
             <div className="pb-4"/>
             <div className={styles.scrollable}>
-                {this.state.burger.filter(ingr=>ingr.type=='undefined').map((ingredient, index)=>
+                {props.burger.filter(ingr=>ingr.type=='undefined').map((ingredient, index)=>
                 <span key={index}>
                 <BurgerElement {...ingredient}></BurgerElement>
                 <div className="pb-4"/>
@@ -52,15 +32,20 @@ render(){
                 
             </div>
             <div className="pb-4"/>    
-            <BurgerElement {...this.state.burger[this.state.burger.length-1]}></BurgerElement>
+            <BurgerElement  {...props.burger[props.burger.length-1]}></BurgerElement>
          
     </div>
+    
     <div className='pt-10'></div>
-    <SubmitOrder  price={this.state.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price)}/>
+    <div onClick={()=>setVisibleModal(true)} >
+    <SubmitOrder  price={props.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price)}/>
+    </div>
+    {visibleModal &&
+             <Modal onClose={()=>setVisibleModal(false)} header=''  > 
+             <OrderDetails number={Math.floor(Math.random()*1000000)}/>                 
+             </Modal>}        
     </>
     )
-}
-
 }
 BurgerConstructor.propTypes = {
     burger: PropTypes.arrayOf(burgerPropTypes.isRequired)
