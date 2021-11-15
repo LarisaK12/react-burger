@@ -1,0 +1,4 @@
+.ingretients_tab{
+    display:flex;
+    flex-wrap:wrap;
+}

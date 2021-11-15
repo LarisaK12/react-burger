@@ -1,31 +1,68 @@
 import React from 'react';
-import styles from './burger-constructor.module.css'
-import {CurrencyIcon , LockIcon  ,DeleteIcon ,DragIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import {ConstructorElement , Button    } from '@ya.praktikum/react-developer-burger-ui-components';
-
+import PropTypes from 'prop-types';
+import styles from './burger-constructor.module.css';
+import BurgerElement from '../burger-element/burger-element';
+import SubmitOrder from '../submit-order/submit-order';
+//import Modal from '../modal/modal';
+const burgerPropTypes = PropTypes.shape({
+    _id:PropTypes.string,
+    type: PropTypes.string,
+    isLocked:PropTypes.bool,
+    text:PropTypes.string,
+    price:PropTypes.number,
+    thumbnail:PropTypes.string
+})
 class BurgerConstructor extends React.Component {
     state={
-        burger:[
-            {
-                "_id":"60666c42cc7b410027a1a9b1",
-                "type": "top",
-                "isLocked":true,
-                "text":"Краторная булка N-200i",
-                "price":200,
-                "thumbnail":"https://code.s3.yandex.net/react/code/bun-02.png"
-        }
-        ]
+        burger:[]
+        ,
+     visibleModal:false
     }
-render(){
+    constructor(props){
+        super(props);
+        this.state = {
+            burger:props.burger,
+            visibleModal:false,
+        }
+    }
+    // handleOpenModal=()=> {
+    //     this.setState((prevState,props)=>({...prevState, visibleModal: true }));
+    //   }
     
-    return <div className={styles.burger}>
-
-<ConstructorElement
-       {...this.state.burger[0]}
-      />
-     
+    //     handleCloseModal=()=> {
+    //     this.setState((prevState,props)=>({...prevState, visibleModal: false }));
+    //   }
+render(){
+    // const modal = (
+    //     <Modal header="" onClose={this.handleCloseModal}> 
+    //      </Modal>
+    //   );
+    return (
+        this.state.burger.length > 1 &&<>
+    <div className={styles.burger} onClick={this.handleOpenModal}>
+            <BurgerElement  {...this.state.burger[0]}></BurgerElement>
+            <div className="pb-4"/>
+            <div className={styles.scrollable}>
+                {this.state.burger.filter(ingr=>ingr.type=='undefined').map((ingredient, index)=>
+                <span key={index}>
+                <BurgerElement {...ingredient}></BurgerElement>
+                <div className="pb-4"/>
+                </span>
+                )}
+                
+            </div>
+            <div className="pb-4"/>    
+            <BurgerElement {...this.state.burger[this.state.burger.length-1]}></BurgerElement>
+         
     </div>
+    <div className='pt-10'></div>
+    <SubmitOrder  price={this.state.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price)}/>
+    </>
+    )
 }
 
 }
+BurgerConstructor.propTypes = {
+    burger: PropTypes.arrayOf(burgerPropTypes.isRequired)
+  }; 
 export default BurgerConstructor

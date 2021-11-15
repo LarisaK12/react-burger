@@ -1,4 +1,22 @@
+.mainDiv{
+    flex:1 1 auto;
+    margin: 0 auto;
+}
 .ingredients{
 flex:1 1 auto;
 margin: 0 auto;
+height: 550px;
+overflow-y: auto;
+overflow-x: hidden;
+}
+.ingredients::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+  }
+.ingredients::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+  }
+.item_center{
+    flex: 1 1 auto; 
+    margin: 0 auto;
 }

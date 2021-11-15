@@ -1,3 +1,23 @@
 .burger{
-    
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    flex-grow: 1;
+    width: 600px;
+    align-items:stretch;
 }
+
+.scrollable{
+    flex:1 1 auto;
+    margin: 1 auto;
+    height: 368px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    }
+.scrollable::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+  }
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+  }
