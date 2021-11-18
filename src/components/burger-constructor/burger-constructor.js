@@ -18,6 +18,7 @@ function BurgerConstructor (props){
     const [visibleModal, setVisibleModal] =useState(false);
     
     return (
+        
         props.burger.length > 1 &&<>
     <div className={styles.burger} >
             <BurgerElement  {...props.burger[0]}></BurgerElement>
@@ -37,7 +38,7 @@ function BurgerConstructor (props){
     </div>
     
     <div className='pt-10'></div>
-    <div onClick={()=>setVisibleModal(true)} >
+    <div onClick={()=>setVisibleModal(!visibleModal)} >
     <SubmitOrder  price={props.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price)}/>
     </div>
     {visibleModal &&

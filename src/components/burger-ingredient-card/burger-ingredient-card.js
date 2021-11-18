@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import styles from './burger-ingredient-card.module.css';
 import {Counter  ,CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
-import BurgerIngredientDetails from '../burger-ingredient-details/burger-ingredient-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 function BurgerIngredientCard (props){
     const [currentIngredientId, setCurrentIngredientId] =useState(null);
     
      return(
+         <>
      <div className={styles.ingredient_card}  onClick={()=>{if(currentIngredientId)setCurrentIngredientId(null); else setCurrentIngredientId(props.ingredient._id)}}>
          {props.counter &&  <Counter count={props.counter} size="default"/>}
          <img src={props.ingredient.image} className={`ml-4 mr-4 mb-1 ${styles.img}`} alt={props.ingredient.name} />         
@@ -16,11 +17,13 @@ function BurgerIngredientCard (props){
             <CurrencyIcon type="primary" />
          </span>
          <p className={`text text_type_main-small mt-1 ${styles.item_center}`} >{props.ingredient.name}</p>
-         {currentIngredientId &&
-             <Modal onClose={()=>setCurrentIngredientId(null)} header='Детали ингредиента'  > 
-             <BurgerIngredientDetails ingredient={props.ingredient}/>                 
-             </Modal>}        
+         
      </div>
+     {currentIngredientId &&
+             <Modal onClose={()=>setCurrentIngredientId(null)} header='Детали ингредиента'  > 
+             <IngredientDetails ingredient={props.ingredient}/>                 
+             </Modal>}        
+     </>
      ) 
 }
 const ingredientPropTypes = PropTypes.shape({

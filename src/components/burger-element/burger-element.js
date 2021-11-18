@@ -4,6 +4,7 @@ import styles from './burger-element.module.css';
 import { DragIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import {ConstructorElement    } from '@ya.praktikum/react-developer-burger-ui-components';
 function BurgerElement (props){
+    
     return (
     
         <span className={styles.element}>
@@ -23,4 +24,4 @@ BurgerElement.propTypes = {
     thumbnail:PropTypes.string
  }
  
-export default BurgerElement;
+export default React.memo(BurgerElement);

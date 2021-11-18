@@ -18,46 +18,38 @@ const burgerIngredientPrpTypes= PropTypes.shape(
     image_large:PropTypes.string,
     __v:PropTypes.any
  });
-class BurgerIngredients extends React.Component{
-    state={
-     ingredients:[],  
-     current:'bun'
-    };
-    constructor(props){
-       super(props);
-       this.state={
-          ingredients:props.ingredients,
-          current:'bun'
-       }
-    }
-    setCurrent=(value)=>{        
-        this.setState((prevState)=>({...prevState,current:value}));
-        const element = document.getElementById(value);
+function BurgerIngredients (props){
+    const [ingredients,setIngredients] =React.useState([]);
+    const [currentTab, setCurrentTab] = React.useState('bun');
+    React.useEffect(()=>{
+        const element = document.getElementById(currentTab);
         element.scrollIntoView({behavior:'smooth'});
-    }
-    render(){      
-        return (<div className={" pt-10"}>
-        <p className="text text_type_main-large">Соберите бургер</p>
-        <div className="mt-5 mb-10" style={{ display: 'flex' }}>
-            <Tab value="bun" active={this.state.current === 'bun'} onClick={this.setCurrent}>
-                Булки
-            </Tab>
-            <Tab value="sauce" active={this.state.current === 'sauce'} onClick={this.setCurrent}>
-                Соусы
-            </Tab>
-            <Tab value="main" active={this.state.current === 'main'} onClick={this.setCurrent}>
-                Начинки
-            </Tab>
-        </div>
-        <div className={styles.ingredients}>
-            <BurgerIngredientsTab id='bun' tabname='Булки' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type==='bun')} ></BurgerIngredientsTab>
-            <BurgerIngredientsTab id='sauce' tabname='Соусы' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type==='sauce')}></BurgerIngredientsTab>
-            <BurgerIngredientsTab id='main' tabname='Начинки' ingredients={this.state.ingredients.filter(ingredient=>ingredient.type==='main')}></BurgerIngredientsTab>
-        </div>
+    },[currentTab])
+    React.useEffect(()=>{
+        setIngredients(props.ingredients);
+    },[props])
+         
+    return (<div className={" pt-10"}>
+    <p className="text text_type_main-large">Соберите бургер</p>
+    <div className="mt-5 mb-10" style={{ display: 'flex' }}>
+        <Tab value="bun" active={currentTab === 'bun'} onClick={()=>setCurrentTab('bun')}>
+            Булки
+        </Tab>
+        <Tab value="sauce" active={currentTab === 'sauce'} onClick={()=>setCurrentTab('sauce')}>
+            Соусы
+        </Tab>
+        <Tab value="main" active={currentTab === 'main'} onClick={()=>setCurrentTab('main')}>
+            Начинки
+        </Tab>
+    </div>
+    <div className={styles.ingredients}>
+        <BurgerIngredientsTab id='bun' tabname='Булки' ingredients={ingredients.filter(ingredient=>ingredient.type==='bun')} ></BurgerIngredientsTab>
+        <BurgerIngredientsTab id='sauce' tabname='Соусы' ingredients={ingredients.filter(ingredient=>ingredient.type==='sauce')}></BurgerIngredientsTab>
+        <BurgerIngredientsTab id='main' tabname='Начинки' ingredients={ingredients.filter(ingredient=>ingredient.type==='main')}></BurgerIngredientsTab>
+    </div>
 
-        </div>
-        )
-    }
+    </div>
+    )    
 }
 BurgerIngredients.propTypes = {
     ingredients:PropTypes.arrayOf(burgerIngredientPrpTypes.isRequired).isRequired

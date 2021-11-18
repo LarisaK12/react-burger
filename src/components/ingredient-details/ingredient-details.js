@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './burger-ingredient-details.module.css';
-function BurgerIngredientDetails(props){
+import styles from './ingredient-details.module.css';
+function IngredientDetails(props){
+    
 return(
     <div className={`${styles.main} ${styles.flexcol}`}>
         <img src={props.ingredient.image_large} alt={props.ingredient.name}></img>
@@ -45,7 +46,7 @@ const ingredientPropTypes = PropTypes.shape({
     image_large:PropTypes.string,    
 })
 
-BurgerIngredientDetails.propTypes={
+IngredientDetails.propTypes={
 ingredient:ingredientPropTypes
 }
-export default BurgerIngredientDetails;
+export default IngredientDetails;
