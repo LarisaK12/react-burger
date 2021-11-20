@@ -14,8 +14,7 @@ const burgerIngredientPrpTypes= PropTypes.shape(
         price:PropTypes.number,
         image:PropTypes.string,
         image_mobile:PropTypes.string,
-        image_large:PropTypes.string,
-        __v:PropTypes.any
+        image_large:PropTypes.string
      });
 function BurgerIngredientsTab (props){
  

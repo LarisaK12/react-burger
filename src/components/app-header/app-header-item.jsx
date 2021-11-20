@@ -12,7 +12,7 @@ function HeaderItem(props){
 }
 HeaderItem.propTypes={
     text:PropTypes.string,
-    children:PropTypes.any,
+    children:PropTypes.element,
     onClick:PropTypes.func
 }
 export default HeaderItem

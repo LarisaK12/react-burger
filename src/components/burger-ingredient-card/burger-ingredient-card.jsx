@@ -6,10 +6,14 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 function BurgerIngredientCard (props){
     const [currentIngredientId, setCurrentIngredientId] =useState(null);
-    
+    const openModal=()=>{
+        if(currentIngredientId)setCurrentIngredientId(null); 
+        else setCurrentIngredientId(props.ingredient._id)
+    }
+    const closeModal=()=>setCurrentIngredientId(null);
      return(
          <>
-     <div className={styles.ingredient_card}  onClick={()=>{if(currentIngredientId)setCurrentIngredientId(null); else setCurrentIngredientId(props.ingredient._id)}}>
+     <div className={styles.ingredient_card}  onClick={openModal}>
          {props.counter &&  <Counter count={props.counter} size="default"/>}
          <img src={props.ingredient.image} className={`ml-4 mr-4 mb-1 ${styles.img}`} alt={props.ingredient.name} />         
          <span className={styles.price_div}>
@@ -20,7 +24,7 @@ function BurgerIngredientCard (props){
          
      </div>
      {currentIngredientId &&
-             <Modal onClose={()=>setCurrentIngredientId(null)} header='Детали ингредиента'  > 
+             <Modal onClose={closeModal} header='Детали ингредиента'  > 
              <IngredientDetails ingredient={props.ingredient}/>                 
              </Modal>}        
      </>

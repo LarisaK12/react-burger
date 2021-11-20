@@ -4,29 +4,25 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import React from 'react';
 import Modal from '../modal/modal';
-import {Button } from '@ya.praktikum/react-developer-burger-ui-components';
-const api = 'https://norma.nomoreparties.space/api/ingredients';
+import {INGREDIENTS_URL} from '../../utils/burger-constants';
 
 function App() {
    const [ingredients, setIngredients]= React.useState([]);
    const[burger, setBurger] = React.useState([]);
-   const[error,setError] = React.useState('');
-   const[tryAgain,setTrayAgain] = React.useState(true);
+   const[error,setError] = React.useState(null);
    React.useEffect(
-     ()=>{
-      const fetchData = async () => {
-         setError('');
-         await fetch(api)
-         .then(res=>res.json())
-         .then(data=>{
-            if(data.success) setIngredients(data.data)
-            else throw new Error("Нет данных")
-         })
-         .catch(e=>setError(e))
-         
+     ()=>{        
+      const fetchData = async () => { 
+         try{        
+            const result = await fetch(INGREDIENTS_URL)
+            const resultObj = await result.json();
+            if(!resultObj.success) throw new Error("Нет данных")
+            setIngredients(resultObj.data);            
+         }
+         catch(e){setError(e)}
       }    
-      if(tryAgain){fetchData();setTrayAgain(false);}
-      },[tryAgain]
+      fetchData();
+      },[]
    );
    React.useEffect(
      ()=>{
@@ -92,9 +88,8 @@ function App() {
        <div className='ml-10'/>
        <div id='react-modals' className={styles.modal}></div> 
        <section className={`mt-25 ${styles.section}`}><BurgerConstructor burger={burger}/></section> 
-       {error&&<Modal header='Печалька :(' onClose={()=>setError('')}>
+       {error&&<Modal header='Печалька :(' onClose={()=>setError(null)}>
           <span className='text text_type_main-medium'>{`"${error}"`}</span>
-          <Button onClick={()=>setTrayAgain(true)} >Попробовать снова</Button>
           </Modal>}
       </main>
       

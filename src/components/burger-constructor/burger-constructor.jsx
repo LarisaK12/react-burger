@@ -16,15 +16,20 @@ const burgerPropTypes = PropTypes.shape({
 function BurgerConstructor (props){
     
     const [visibleModal, setVisibleModal] =useState(false);
-    
-    return (
-        
-        props.burger.length > 1 &&<>
+    const top = props.burger.filter(b=>b.type==='top')[0];
+    const bottom = props.burger.filter(b=>b.type==='bottom')[0];
+    const middleIngredients = props.burger.filter(ingr=>ingr.type==='undefined');
+    const orderNumber =Math.floor(Math.random()*1000000);
+    const closeModal=()=>setVisibleModal(false);
+    const burgerPrice =props.burger.length===0?0:props.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price);
+    const onSubmit =()=>setVisibleModal(!visibleModal);
+    return (        
+        Boolean(props.burger.length ) &&<>
     <div className={styles.burger} >
-            <BurgerElement  {...props.burger[0]}></BurgerElement>
+            <BurgerElement  {...top} isLocked={true}></BurgerElement>
             <div className="pb-4"/>
             <div className={styles.scrollable}>
-                {props.burger.filter(ingr=>ingr.type=='undefined').map((ingredient, index)=>
+                {middleIngredients.map((ingredient, index)=>
                 <span key={index}>
                 <BurgerElement {...ingredient}></BurgerElement>
                 <div className="pb-4"/>
@@ -33,17 +38,17 @@ function BurgerConstructor (props){
                 
             </div>
             <div className="pb-4"/>    
-            <BurgerElement  {...props.burger[props.burger.length-1]}></BurgerElement>
+            <BurgerElement  {...bottom} isLocked={true}></BurgerElement>
          
     </div>
     
     <div className='pt-10'></div>
-    <div onClick={()=>setVisibleModal(!visibleModal)} >
-    <SubmitOrder  price={props.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price)}/>
+    <div onClick={onSubmit} >
+    <SubmitOrder  price={burgerPrice}/>
     </div>
     {visibleModal &&
-             <Modal onClose={()=>setVisibleModal(false)} header=''  > 
-             <OrderDetails number={Math.floor(Math.random()*1000000)}/>                 
+             <Modal onClose={closeModal} header=''  > 
+             <OrderDetails number={orderNumber}/>                 
              </Modal>}        
     </>
     )

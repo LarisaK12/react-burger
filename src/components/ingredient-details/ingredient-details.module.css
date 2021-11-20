@@ -1,14 +1,18 @@
-.flexcol{
+.details_part{
     display: flex;
     flex-direction: column;
     align-items: center;
     align-content: center;
 }
-.flexrow{
+.details{
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.main{
+.details_card{
     min-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
 }

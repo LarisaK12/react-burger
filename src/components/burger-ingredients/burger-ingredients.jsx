@@ -15,20 +15,18 @@ const burgerIngredientPrpTypes= PropTypes.shape(
     price:PropTypes.number,
     image:PropTypes.string,
     image_mobile:PropTypes.string,
-    image_large:PropTypes.string,
-    __v:PropTypes.any
+    image_large:PropTypes.string
  });
 function BurgerIngredients (props){
-    const [ingredients,setIngredients] =React.useState([]);
+    //const [ingredients,setIngredients] =React.useState([]);
     const [currentTab, setCurrentTab] = React.useState('bun');
     React.useEffect(()=>{
         const element = document.getElementById(currentTab);
         element.scrollIntoView({behavior:'smooth'});
     },[currentTab])
-    React.useEffect(()=>{
-        setIngredients(props.ingredients);
-    },[props])
-         
+    const buns = props.ingredients.filter(ingredient=>ingredient.type==='bun');
+    const sauces = props.ingredients.filter(ingredient=>ingredient.type==='sauce');
+    const main  = props.ingredients.filter(ingredient=>ingredient.type==='main');
     return (<div className={" pt-10"}>
     <p className="text text_type_main-large">Соберите бургер</p>
     <div className="mt-5 mb-10" style={{ display: 'flex' }}>
@@ -43,9 +41,9 @@ function BurgerIngredients (props){
         </Tab>
     </div>
     <div className={styles.ingredients}>
-        <BurgerIngredientsTab id='bun' tabname='Булки' ingredients={ingredients.filter(ingredient=>ingredient.type==='bun')} ></BurgerIngredientsTab>
-        <BurgerIngredientsTab id='sauce' tabname='Соусы' ingredients={ingredients.filter(ingredient=>ingredient.type==='sauce')}></BurgerIngredientsTab>
-        <BurgerIngredientsTab id='main' tabname='Начинки' ingredients={ingredients.filter(ingredient=>ingredient.type==='main')}></BurgerIngredientsTab>
+        <BurgerIngredientsTab id='bun' tabname='Булки' ingredients={buns} ></BurgerIngredientsTab>
+        <BurgerIngredientsTab id='sauce' tabname='Соусы' ingredients={sauces}></BurgerIngredientsTab>
+        <BurgerIngredientsTab id='main' tabname='Начинки' ingredients={main}></BurgerIngredientsTab>
     </div>
 
     </div>
