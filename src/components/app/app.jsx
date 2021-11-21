@@ -85,11 +85,11 @@ function App() {
            
       <main className={styles.main}>
        <section className={styles.section}><BurgerIngredients ingredients={ingredients}/></section>
-       <div className='ml-10'/>
-       <div id='react-modals' className={styles.modal}></div> 
+       <div className="ml-10"/>
+       <div id="react-modals" className={styles.modal}></div> 
        <section className={`mt-25 ${styles.section}`}><BurgerConstructor burger={burger}/></section> 
-       {error&&<Modal header='Печалька :(' onClose={()=>setError(null)}>
-          <span className='text text_type_main-medium'>{`"${error}"`}</span>
+       {error&&<Modal header="Печалька :(" onClose={()=>setError(null)}>
+          <span className="text text_type_main-medium">{`"${error}"`}</span>
           </Modal>}
       </main>
       
