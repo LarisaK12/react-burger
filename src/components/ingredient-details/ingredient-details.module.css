@@ -1,0 +1,18 @@
+.details_part{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+.details{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.details_card{
+    min-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}

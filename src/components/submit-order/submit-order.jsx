@@ -1,7 +1,7 @@
-import React from "react";
-import styles from './submit-order.module.css';
+import PropTypes from 'prop-types';
 import {Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import {CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
+import {CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './submit-order.module.css';
 function SubmitOrder (props){
     return(
     <span className={styles.submit}>
@@ -12,5 +12,7 @@ function SubmitOrder (props){
     </span>
     )
 }
-
+SubmitOrder.propTypes ={
+    price:PropTypes.number
+}
 export default SubmitOrder
