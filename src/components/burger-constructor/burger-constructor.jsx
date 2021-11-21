@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import BurgerElement from '../burger-element/burger-element';

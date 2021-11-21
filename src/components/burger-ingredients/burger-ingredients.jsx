@@ -18,7 +18,6 @@ const burgerIngredientPrpTypes= PropTypes.shape(
     image_large:PropTypes.string
  });
 function BurgerIngredients (props){
-    //const [ingredients,setIngredients] =React.useState([]);
     const [currentTab, setCurrentTab] = React.useState('bun');
     React.useEffect(()=>{
         const element = document.getElementById(currentTab);
