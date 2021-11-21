@@ -40,9 +40,9 @@ function BurgerIngredients (props){
         </Tab>
     </div>
     <div className={styles.ingredients}>
-        <BurgerIngredientsTab id='bun' tabname='Булки' ingredients={buns} ></BurgerIngredientsTab>
-        <BurgerIngredientsTab id='sauce' tabname='Соусы' ingredients={sauces}></BurgerIngredientsTab>
-        <BurgerIngredientsTab id='main' tabname='Начинки' ingredients={main}></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="bun" tabname="Булки" ingredients={buns} ></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="sauce" tabname="Соусы" ingredients={sauces}></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="main" tabname="Начинки" ingredients={main}></BurgerIngredientsTab>
     </div>
 
     </div>

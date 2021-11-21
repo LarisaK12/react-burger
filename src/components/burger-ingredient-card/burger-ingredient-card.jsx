@@ -24,7 +24,7 @@ function BurgerIngredientCard (props){
          
      </div>
      {currentIngredientId &&
-             <Modal onClose={closeModal} header='Детали ингредиента'  > 
+             <Modal onClose={closeModal} header="Детали ингредиента"  > 
              <IngredientDetails ingredient={props.ingredient}/>                 
              </Modal>}        
      </>

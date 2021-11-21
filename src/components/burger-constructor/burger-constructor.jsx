@@ -42,12 +42,12 @@ function BurgerConstructor (props){
          
     </div>
     
-    <div className='pt-10'></div>
+    <div className="pt-10"></div>
     <div onClick={onSubmit} >
     <SubmitOrder  price={burgerPrice}/>
     </div>
     {visibleModal &&
-             <Modal onClose={closeModal} header=''  > 
+             <Modal onClose={closeModal} header=""  > 
              <OrderDetails number={orderNumber}/>                 
              </Modal>}        
     </>
