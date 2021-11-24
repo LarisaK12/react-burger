@@ -5,11 +5,13 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import React from 'react';
 import Modal from '../modal/modal';
 import {INGREDIENTS_URL} from '../../utils/burger-constants';
-
+import { IngredientsContext, OrderContext } from '../../utils/appContext';
+import { OrderReducer } from '../../utils/order-reducer';
+const orderInitialState = {burger:[],price:0, orderId:null, orderName:''};
 function App() {
-   const [ingredients, setIngredients]= React.useState([]);
-   const[burger, setBurger] = React.useState([]);
-   const[error,setError] = React.useState(null);
+   const [ ingredients, setIngredients]= React.useState([]);
+   const [ order, orderDispatcher] = React.useReducer(OrderReducer, orderInitialState);
+   const [ error, setError] = React.useState(null);
    React.useEffect(
      ()=>{        
       const fetchData = async () => { 
@@ -24,74 +26,33 @@ function App() {
       fetchData();
       },[]
    );
+   //это временно для первичного заполнения
    React.useEffect(
      ()=>{
-        setBurger([
-         {
-             "_id":"60666c42cc7b410027a1a9b1",
-             "type": "top",
-             "isLocked":true,
-             "text":"Краторная булка N-200i",
-             "price":200,
-             "thumbnail":"https://code.s3.yandex.net/react/code/bun-02.png"
-     },
-     
-     {
-         "_id":"60666c42cc7b410027a1a9b3",
-         "type": "undefined",
-         "isLocked":false,            
-         "text":"Филе Люминесцентного тетраодонтимформа",
-         "price":988,
-         "thumbnail":"https://code.s3.yandex.net/react/code/meat-03.png",
-      },
-     {
-         "_id":"60666c42cc7b410027a1a9b5",
-         "type": "undefined",
-         "isLocked":false,
-         "text":"Говяжий метеорит (отбивная)",
-         "price":3000,
-         "thumbnail":"https://code.s3.yandex.net/react/code/meat-04.png"
-     },  
-     {
-        "_id":"60666c42cc7b410027a1a9b3",
-        "type": "undefined",
-        "isLocked":false,            
-        "text":"Филе Люминесцентного тетраодонтимформа",
-        "price":988,
-        "thumbnail":"https://code.s3.yandex.net/react/code/meat-03.png",
-     },
-     {
-        "_id":"60666c42cc7b410027a1a9bf",
-        "type": "undefined",
-         "isLocked":false,
-        "text":"Сыр с астероидной плесенью",
-        "price":4142,
-        "thumbnail":"https://code.s3.yandex.net/react/code/cheese.png",
-     },
-     {
-         "_id":"60666c42cc7b410027a1a9b1",
-         "type": "bottom",
-         "isLocked":true,
-         "text":"Краторная булка N-200i",
-         "price":200,
-         "thumbnail":"https://code.s3.yandex.net/react/code/bun-02.png"
-   }
-     ])
-     },[]
+      if(ingredients.length>3) {
+         orderDispatcher({type:"add", item:ingredients[0],place:1} );
+         orderDispatcher({type:"add", item:ingredients[2],place:2} );
+         orderDispatcher({type:"add", item:ingredients[3],place:3} );
+      }
+     },[ingredients]
    )
    return (
     <>
       <header><AppHeader></AppHeader></header>
-           
+      <IngredientsContext.Provider value={{ingredients, setIngredients}}>
+      <OrderContext.Provider value={{order, orderDispatcher}}>
       <main className={styles.main}>
-       <section className={styles.section}><BurgerIngredients ingredients={ingredients}/></section>
+       <section className={styles.section}><BurgerIngredients /></section>
        <div className="ml-10"/>
        <div id="react-modals" className={styles.modal}></div> 
-       <section className={`mt-25 ${styles.section}`}><BurgerConstructor burger={burger}/></section> 
+       <section className={`mt-25 ${styles.section}`}><BurgerConstructor /></section> 
        {error&&<Modal header="Печалька :(" onClose={()=>setError(null)}>
           <span className="text text_type_main-medium">{`"${error}"`}</span>
           </Modal>}
       </main>
+      </OrderContext.Provider>
+      </IngredientsContext.Provider>
+      
       
     </>
    );

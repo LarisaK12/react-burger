@@ -1,32 +1,51 @@
-import {useState} from 'react';
-import PropTypes from 'prop-types';
+import React, {useState, useContext} from 'react';
 import styles from './burger-constructor.module.css';
 import BurgerElement from '../burger-element/burger-element';
 import SubmitOrder from '../submit-order/submit-order';
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
-const burgerPropTypes = PropTypes.shape({
-    _id:PropTypes.string,
-    type: PropTypes.string,
-    isLocked:PropTypes.bool,
-    text:PropTypes.string,
-    price:PropTypes.number,
-    thumbnail:PropTypes.string
-})
-function BurgerConstructor (props){
-    
+import { OrderContext } from '../../utils/appContext';
+import {GET_ORDER_ID_URL} from '../../utils/burger-constants';
+
+function BurgerConstructor (){
+    const{ order, orderDispatcher } = useContext(OrderContext);
     const [visibleModal, setVisibleModal] =useState(false);
-    const top = props.burger.filter(b=>b.type==='top')[0];
-    const bottom = props.burger.filter(b=>b.type==='bottom')[0];
-    const middleIngredients = props.burger.filter(ingr=>ingr.type==='undefined');
-    const orderNumber =Math.floor(Math.random()*1000000);
+    const top = order.burger.filter(b=>b.type==='top')[0];
+    const bottom = order.burger.filter(b=>b.type==='bottom')[0];
+    const middleIngredients = order.burger.filter(ingr=>ingr.type==='undefined');
     const closeModal=()=>setVisibleModal(false);
-    const burgerPrice =props.burger.length===0?0:props.burger.map(ingr=>ingr.price).reduce((s,price)=>s+price);
-    const onSubmit =()=>setVisibleModal(!visibleModal);
+    const onSubmit =()=>{
+        getOrderId(order.burger).then((id)=>{
+            if(typeof id === 'number')
+            {
+                orderDispatcher({type:"setOrderId", orderId: id});
+                setVisibleModal(true);
+            }
+            //else ??
+        })
+    }
+    const getOrderId = async (burger)=>{
+        try{        
+            const result = await fetch(GET_ORDER_ID_URL,{
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({ingredients:burger.map(ingr=>ingr._id)})
+              });
+            const resultObj = await result.json();
+            if(!resultObj.success) throw new Error("Нет данных")
+            return resultObj.order.number;
+         }
+         catch(e){
+             console.log(e)
+            return null;
+        };
+    }
     return (        
-        Boolean(props.burger.length ) &&<>
+        Boolean(order.burger.length ) &&<>
     <div className={styles.burger} >
-            <BurgerElement  {...top} isLocked={true}></BurgerElement>
+            <BurgerElement  {...top} isLocked={true}></BurgerElement>{/*переделать на подкласс*/}
             <div className="pb-4"/>
             <div className={styles.scrollable}>
                 {middleIngredients.map((ingredient, index)=>
@@ -38,22 +57,19 @@ function BurgerConstructor (props){
                 
             </div>
             <div className="pb-4"/>    
-            <BurgerElement  {...bottom} isLocked={true}></BurgerElement>
+            <BurgerElement  {...bottom} isLocked={true}></BurgerElement>{/*переделать на подкласс*/}
          
     </div>
     
     <div className="pt-10"></div>
     <div onClick={onSubmit} >
-    <SubmitOrder  price={burgerPrice}/>
+    <SubmitOrder  />
     </div>
     {visibleModal &&
              <Modal onClose={closeModal} header=""  > 
-             <OrderDetails number={orderNumber}/>                 
+             <OrderDetails />                 
              </Modal>}        
     </>
     )
 }
-BurgerConstructor.propTypes = {
-    burger: PropTypes.arrayOf(burgerPropTypes.isRequired)
-  }; 
 export default BurgerConstructor

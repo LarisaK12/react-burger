@@ -10,7 +10,7 @@
 .scrollable{
     flex:1 1 auto;
     margin: 1 auto;
-    height: 368px;
+    max-height: 368px;
     overflow-y: auto;
     overflow-x: hidden;
     }
