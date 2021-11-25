@@ -25,7 +25,7 @@ switch(action.type){
                 "thumbnail":action.item.image
             });
         }
-        else{//обычный ингредиент добавится один раз, если место указано неверно, то перед нижней булкой (если она есть)
+        else{//обычный ингредиент добавится один раз, если место указано неверно, то перед нижней булкой (если она есть)или просто в последнюю позицию
             let place ;
             if(burgerIngredients.filter(ingr=>ingr.type!=="undefined").length)
                 place = (action.place>burgerIngredients.length-2 || action.place<1)?burgerIngredients.length-2:action.place;

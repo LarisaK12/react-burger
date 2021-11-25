@@ -4,11 +4,12 @@ import BurgerElement from '../burger-element/burger-element';
 import SubmitOrder from '../submit-order/submit-order';
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
-import { OrderContext } from '../../utils/appContext';
+import { OrderContext, ErrorContext } from '../../utils/appContext';
 import {GET_ORDER_ID_URL} from '../../utils/burger-constants';
 
 function BurgerConstructor (){
     const{ order, orderDispatcher } = useContext(OrderContext);
+    const{ setError } = useContext(ErrorContext);
     const [visibleModal, setVisibleModal] =useState(false);
     const top = order.burger.filter(b=>b.type==='top')[0];
     const bottom = order.burger.filter(b=>b.type==='bottom')[0];
@@ -21,7 +22,7 @@ function BurgerConstructor (){
                 orderDispatcher({type:"setOrderId", orderId: id});
                 setVisibleModal(true);
             }
-            //else ??
+            else setError("Не удалось создать заказ. Попробуйте снова.");
         })
     }
     const getOrderId = async (burger)=>{
@@ -45,7 +46,7 @@ function BurgerConstructor (){
     return (        
         Boolean(order.burger.length ) &&<>
     <div className={styles.burger} >
-            <BurgerElement  {...top} isLocked={true}></BurgerElement>{/*переделать на подкласс*/}
+            {top && <BurgerElement  {...top} isLocked={true}></BurgerElement>}
             <div className="pb-4"/>
             <div className={styles.scrollable}>
                 {middleIngredients.map((ingredient, index)=>
@@ -57,7 +58,7 @@ function BurgerConstructor (){
                 
             </div>
             <div className="pb-4"/>    
-            <BurgerElement  {...bottom} isLocked={true}></BurgerElement>{/*переделать на подкласс*/}
+            {bottom && <BurgerElement  {...bottom} isLocked={true}></BurgerElement>}
          
     </div>
     

@@ -5,7 +5,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import React from 'react';
 import Modal from '../modal/modal';
 import {INGREDIENTS_URL} from '../../utils/burger-constants';
-import { IngredientsContext, OrderContext } from '../../utils/appContext';
+import { ErrorContext, IngredientsContext, OrderContext } from '../../utils/appContext';
 import { OrderReducer } from '../../utils/order-reducer';
 const orderInitialState = {burger:[],price:0, orderId:null, orderName:''};
 function App() {
@@ -30,9 +30,11 @@ function App() {
    React.useEffect(
      ()=>{
       if(ingredients.length>3) {
-         orderDispatcher({type:"add", item:ingredients[0],place:1} );
+         orderDispatcher({type:"add", item:ingredients[8],place:1} );
          orderDispatcher({type:"add", item:ingredients[2],place:2} );
          orderDispatcher({type:"add", item:ingredients[3],place:3} );
+         orderDispatcher({type:"add", item:ingredients[0],place:3} );
+         orderDispatcher({type:"add", item:ingredients[7],place:3} );
       }
      },[ingredients]
    )
@@ -41,6 +43,7 @@ function App() {
       <header><AppHeader></AppHeader></header>
       <IngredientsContext.Provider value={{ingredients, setIngredients}}>
       <OrderContext.Provider value={{order, orderDispatcher}}>
+         <ErrorContext.Provider value={{error, setError}}>
       <main className={styles.main}>
        <section className={styles.section}><BurgerIngredients /></section>
        <div className="ml-10"/>
@@ -50,6 +53,7 @@ function App() {
           <span className="text text_type_main-medium">{`"${error}"`}</span>
           </Modal>}
       </main>
+      </ErrorContext.Provider>
       </OrderContext.Provider>
       </IngredientsContext.Provider>
       
