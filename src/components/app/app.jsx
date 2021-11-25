@@ -19,7 +19,7 @@ function App() {
             const result = await fetch(INGREDIENTS_URL)
             const resultObj = await result.json();
             if(!resultObj.success) throw new Error("Нет данных")
-            setIngredients(resultObj.data);            
+            setIngredients(resultObj.data);           
          }
          catch(e){setError(e)}
       }    
@@ -32,7 +32,7 @@ function App() {
       if(ingredients.length>3) {
          orderDispatcher({type:"add", item:ingredients[8],place:1} );
          orderDispatcher({type:"add", item:ingredients[2],place:2} );
-         orderDispatcher({type:"add", item:ingredients[3],place:3} );
+         orderDispatcher({type:"add", item:ingredients[1],place:3} );
          orderDispatcher({type:"add", item:ingredients[0],place:3} );
          orderDispatcher({type:"add", item:ingredients[7],place:3} );
       }

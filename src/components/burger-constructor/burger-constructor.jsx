@@ -15,15 +15,18 @@ function BurgerConstructor (){
     const bottom = order.burger.filter(b=>b.type==='bottom')[0];
     const middleIngredients = order.burger.filter(ingr=>ingr.type==='undefined');
     const closeModal=()=>setVisibleModal(false);
+    
     const onSubmit =()=>{
+        orderDispatcher({type:"setOrderId", orderId: null}); //если этого не сделать, то будет отображаться "старый" номер               
+        setVisibleModal(true);
         getOrderId(order.burger).then((id)=>{
             if(typeof id === 'number')
             {
-                orderDispatcher({type:"setOrderId", orderId: id});
-                setVisibleModal(true);
+                orderDispatcher({type:"setOrderId", orderId: id});                
             }
             else setError("Не удалось создать заказ. Попробуйте снова.");
         })
+        
     }
     const getOrderId = async (burger)=>{
         try{        
