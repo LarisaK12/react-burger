@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import CloseImg from '../../images/close.svg'
-import ModalOverlay from '../modalOverlay/modalOverlay';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 function Modal (props) {
   const { children, header, onClose } = props;
   const modalRoot = document.getElementById("react-modals");
@@ -13,6 +13,7 @@ function Modal (props) {
   React.useEffect(() => {
     document.addEventListener('keydown', onKeydown);
     return () => document.removeEventListener('keydown', onKeydown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   return (ReactDOM.createPortal(
       <ModalOverlay onClick={onClose}>
