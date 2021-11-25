@@ -12,7 +12,7 @@ switch(action.type){
                 "_id":action.item._id,
                 "type": "top",
                 "isLocked":true,
-                "text":action.item.name,
+                "text":action.item.name+"(верх)",
                 "price":action.item.price,
                 "thumbnail":action.item.image
             }) ;
@@ -20,7 +20,7 @@ switch(action.type){
                 "_id":action.item._id,
                 "type": "bottom",
                 "isLocked":true,
-                "text":action.item.name,
+                "text":action.item.name+"(низ)",
                 "price":action.item.price,
                 "thumbnail":action.item.image
             });

@@ -5,8 +5,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import React from 'react';
 import Modal from '../modal/modal';
 import {INGREDIENTS_URL} from '../../utils/burger-constants';
-import { ErrorContext, IngredientsContext, OrderContext } from '../../utils/appContext';
-import { OrderReducer } from '../../utils/order-reducer';
+import { ErrorContext, IngredientsContext, OrderContext } from '../../services/app-context';
+import { OrderReducer } from '../../services/order-reducer';
 const orderInitialState = {burger:[],price:0, orderId:null, orderName:''};
 function App() {
    const [ ingredients, setIngredients]= React.useState([]);
@@ -40,7 +40,7 @@ function App() {
    )
    return (
     <>
-      <header><AppHeader></AppHeader></header>
+      <header><AppHeader/></header>
       <IngredientsContext.Provider value={{ingredients, setIngredients}}>
       <OrderContext.Provider value={{order, orderDispatcher}}>
          <ErrorContext.Provider value={{error, setError}}>

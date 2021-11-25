@@ -4,7 +4,7 @@ import BurgerElement from '../burger-element/burger-element';
 import SubmitOrder from '../submit-order/submit-order';
 import OrderDetails from '../order-details/order-details';
 import Modal from '../modal/modal';
-import { OrderContext, ErrorContext } from '../../utils/appContext';
+import { OrderContext, ErrorContext } from '../../services/app-context';
 import {GET_ORDER_ID_URL} from '../../utils/burger-constants';
 
 function BurgerConstructor (){
@@ -53,10 +53,10 @@ function BurgerConstructor (){
             <div className="pb-4"/>
             <div className={styles.scrollable}>
                 {middleIngredients.map((ingredient, index)=>
-                <span key={index}>
+                <React.Fragment key={index}>{/*надо придумать, что сделать ключом. Index нежелательно, а у ингредиентов нет уникального поля*/}
                 <BurgerElement {...ingredient}></BurgerElement>
                 <div className="pb-4"/>
-                </span>
+                </React.Fragment>
                 )}
                 
             </div>
@@ -66,9 +66,7 @@ function BurgerConstructor (){
     </div>
     
     <div className="pt-10"></div>
-    <div onClick={onSubmit} >
-    <SubmitOrder  />
-    </div>
+    <SubmitOrder onClick={onSubmit} />
     {visibleModal &&
              <Modal onClose={closeModal} header=""  > 
              <OrderDetails />                 

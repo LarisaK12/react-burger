@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import styles from './order-details.module.css';
 import DoneGif from '../../images/done.gif';
-import { OrderContext } from "../../utils/appContext";
+import { OrderContext } from "../../services/app-context";
 
 function OrderDetails(){
     

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import CloseImg from '../../images/close.svg'
-import ModalOverlay from '../modalOverlay/modalOverlay';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 function Modal (props) {
   const { children, header, onClose } = props;
   const modalRoot = document.getElementById("react-modals");
