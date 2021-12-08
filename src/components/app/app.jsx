@@ -1,64 +1,48 @@
-import styles from './app.module.css';
-import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import React from 'react';
-import Modal from '../modal/modal';
-import {INGREDIENTS_URL} from '../../utils/burger-constants';
-import { ErrorContext, IngredientsContext, OrderContext } from '../../services/app-context';
-import { OrderReducer } from '../../services/order-reducer';
-const orderInitialState = {burger:[],price:0, orderId:null, orderName:''};
+import styles from "./app.module.css";
+import AppHeader from "../app-header/app-header";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import React from "react";
+import Modal from "../modal/modal";
+import { useSelector, useDispatch } from "react-redux";
+import { getIngredients } from "../../services/actions/ingredients";
+import { CLEAR_ERROR } from "../../services/actions/error";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 function App() {
-   const [ ingredients, setIngredients]= React.useState([]);
-   const [ order, orderDispatcher] = React.useReducer(OrderReducer, orderInitialState);
-   const [ error, setError] = React.useState(null);
-   React.useEffect(
-     ()=>{        
-      const fetchData = async () => { 
-         try{        
-            const result = await fetch(INGREDIENTS_URL)
-            const resultObj = await result.json();
-            if(!resultObj.success) throw new Error("Нет данных")
-            setIngredients(resultObj.data);           
-         }
-         catch(e){setError(e)}
-      }    
-      fetchData();
-      },[]
-   );
-   //это временно для первичного заполнения
-   React.useEffect(
-     ()=>{
-      if(ingredients.length>3) {
-         orderDispatcher({type:"add", item:ingredients[8],place:1} );
-         orderDispatcher({type:"add", item:ingredients[2],place:2} );
-         orderDispatcher({type:"add", item:ingredients[1],place:3} );
-         orderDispatcher({type:"add", item:ingredients[0],place:3} );
-         orderDispatcher({type:"add", item:ingredients[7],place:3} );
-      }
-     },[ingredients]
-   )
-   return (
+  const { error } = useSelector((store) => store.error);
+  const dispatcher = useDispatch();
+  React.useEffect(() => {
+    dispatcher(getIngredients());
+  }, [dispatcher]);
+
+  return (
     <>
-      <header><AppHeader/></header>
-      <IngredientsContext.Provider value={{ingredients, setIngredients}}>
-      <OrderContext.Provider value={{order, orderDispatcher}}>
-         <ErrorContext.Provider value={{error, setError}}>
+      <header>
+        <AppHeader />
+      </header>
       <main className={styles.main}>
-       <section className={styles.section}><BurgerIngredients /></section>
-       <div className="ml-10"/>
-       <div id="react-modals" className={styles.modal}></div> 
-       <section className={`mt-25 ${styles.section}`}><BurgerConstructor /></section> 
-       {error&&<Modal header="Печалька :(" onClose={()=>setError(null)}>
-          <span className="text text_type_main-medium">{`"${error}"`}</span>
-          </Modal>}
+        <DndProvider backend={HTML5Backend}>
+          <section className={`pl-9 ${styles.section}`}>
+            <BurgerIngredients />
+          </section>
+          <div className="ml-10" />
+          <div id="react-modals" className={styles.modal}></div>
+          <section className={`mt-25 pr-9 ${styles.section}`}>
+            <BurgerConstructor />
+          </section>
+        </DndProvider>
+        {error && (
+          <Modal
+            header="Печалька :("
+            onClose={() => dispatcher({ type: CLEAR_ERROR })}
+          >
+            <span className="text text_type_main-medium">{`"${error}"`}</span>
+          </Modal>
+        )}
       </main>
-      </ErrorContext.Provider>
-      </OrderContext.Provider>
-      </IngredientsContext.Provider>
-      
-      
     </>
-   );
+  );
 }
 export default App;
