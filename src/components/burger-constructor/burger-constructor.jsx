@@ -8,7 +8,10 @@ import { RESET_ORDER } from "../../services/actions/order-details";
 import { useSelector, useDispatch } from "react-redux";
 import { submitOrder } from "../../services/actions/order-details";
 import { SET_ERROR } from "../../services/actions/error";
-import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
+import {
+  ADD_INGREDIENT,
+  CLEAR_INGREDIENTS,
+} from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 
 function BurgerConstructor() {
@@ -21,10 +24,15 @@ function BurgerConstructor() {
   const middleIngredients = burger
     ? burger.filter((ingr) => ingr.type === "undefined")
     : null;
-  const closeModal = () => dispatch({ type: RESET_ORDER });
+  const closeModal = () => {
+    dispatch({ type: RESET_ORDER });
+    dispatch({ type: CLEAR_INGREDIENTS });
+  };
 
   const onSubmit = () => {
-    dispatch(submitOrder(burger.map((ingr) => ingr._id)));
+    if (burger.filter((i) => i.type !== "undefined").length === 0)
+      dispatch({ type: SET_ERROR, error: "Без булок мы готовить не умеем." });
+    else dispatch(submitOrder(burger.map((ingr) => ingr._id)));
   };
 
   const [, dropTarget] = useDrop({

@@ -1,5 +1,5 @@
-import { INGREDIENTS_URL } from "../../utils/burger-constants";
-
+import { API_URL, INGREDIENTS_URL } from "../../utils/burger-constants";
+import { checkResponse } from "../../utils/utils";
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
@@ -9,8 +9,8 @@ export function getIngredients() {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
-    fetch(INGREDIENTS_URL)
-      .then((result) => result.json())
+    fetch(`${API_URL}${INGREDIENTS_URL}`)
+      .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
           dispatch({

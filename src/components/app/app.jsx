@@ -19,16 +19,13 @@ function App() {
 
   return (
     <>
-      <header>
-        <AppHeader />
-      </header>
+      <AppHeader />
       <main className={styles.main}>
         <DndProvider backend={HTML5Backend}>
           <section className={`pl-9 ${styles.section}`}>
             <BurgerIngredients />
           </section>
           <div className="ml-10" />
-          <div id="react-modals" className={styles.modal}></div>
           <section className={`mt-25 pr-9 ${styles.section}`}>
             <BurgerConstructor />
           </section>

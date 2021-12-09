@@ -43,6 +43,6 @@ export const tabReducer = (state = initialState, action) => {
         current: newCurrent,
       };
     default:
-      return { ...state };
+      return state;
   }
 };

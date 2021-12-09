@@ -2,6 +2,7 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   MOVE_INGREDIENT,
+  CLEAR_INGREDIENTS,
 } from "../actions/burger-constructor";
 const initialState = {
   burger: [],
@@ -9,8 +10,10 @@ const initialState = {
 };
 export const burgerConstructor = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_INGREDIENTS:
+      return { ...initialState };
     case ADD_INGREDIENT: //добавить ингредиент в бургер, если это булка и булка уже есть, то заменить
-      if (!action.item) return { ...state };
+      if (!action.item) return state;
       let hasBun = state.burger
         ? state.burger.filter((ingr) => ingr.type === "top").length > 0
           ? 1
@@ -69,10 +72,10 @@ export const burgerConstructor = (state = initialState, action) => {
     case REMOVE_INGREDIENT: //если бургер не пуст и ингредиент есть, то удалить. если есть два и более одинаковых ингредиентов, то удалить только нужный
       if (
         !state.burger ||
-        action.place < 1 ||
-        action.place > state.burger.length - 2
+        action.place < 0 ||
+        action.place > state.burger.length - 1
       )
-        return { ...state };
+        return state;
       let newburger = [...state.burger];
       newburger.splice(action.place, 1);
 

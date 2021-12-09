@@ -70,13 +70,13 @@ function BurgerElement(props) {
   );
 }
 BurgerElement.propTypes = {
-  _id: PropTypes.string,
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
-  text: PropTypes.string,
-  price: PropTypes.number,
-  thumbnail: PropTypes.string,
-  place: PropTypes.number,
+  _id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  isLocked: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  place: PropTypes.number.isRequired,
 };
 
 export default React.memo(BurgerElement);

@@ -1,4 +1,5 @@
-import { GET_ORDER_ID_URL } from "../../utils/burger-constants";
+import { API_URL, GET_ORDER_ID_URL } from "../../utils/burger-constants";
+import { checkResponse } from "../../utils/utils";
 export const SUBMIT_ORDER_REQUEST = "SUBMIT_ORDER_REQUEST";
 export const SUBMIT_ORDER_SUCCESS = "SUBMIT_ORDER_SUCCESS";
 export const SUBMIT_ORDER_FAILED = "SUBMIT_ORDER_FAILED";
@@ -9,14 +10,14 @@ export function submitOrder(data) {
     dispatch({
       type: SUBMIT_ORDER_REQUEST,
     });
-    fetch(GET_ORDER_ID_URL, {
+    fetch(`${API_URL}${GET_ORDER_ID_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify({ ingredients: data }),
     })
-      .then((result) => result.json())
+      .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
           dispatch({

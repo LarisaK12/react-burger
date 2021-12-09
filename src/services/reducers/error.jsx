@@ -9,6 +9,6 @@ export const errorReducer = (state = InitialState, action) => {
     case CLEAR_ERROR:
       return InitialState;
     default:
-      return { ...state };
+      return state ;
   }
 };
