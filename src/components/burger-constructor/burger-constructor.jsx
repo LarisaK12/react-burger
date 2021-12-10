@@ -30,7 +30,7 @@ function BurgerConstructor() {
   };
 
   const onSubmit = () => {
-    if (burger.filter((i) => i.type !== "undefined").length === 0)
+    if (!burger || burger.filter((i) => i.type !== "undefined").length === 0)
       dispatch({ type: SET_ERROR, error: "Без булок мы готовить не умеем." });
     else dispatch(submitOrder(burger.map((ingr) => ingr._id)));
   };
