@@ -1,5 +1,5 @@
 .modal{
-    position: relative;
+    position: fixed;
     border: #4C4CFF33;
   border-radius: 10px;
   background-color: #1C1C21;
