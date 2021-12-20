@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
-import { useDrag } from "react-dnd";
+import { useDrag, DragPreviewImage } from "react-dnd";
 
 function BurgerIngredientCard(props) {
   const dispatch = useDispatch();
@@ -17,9 +17,12 @@ function BurgerIngredientCard(props) {
         ).length
       : 0
   );
-  const [, dragRef] = useDrag({
+  const [{ isDrag }, dragRef, preview] = useDrag({
     type: "ingredient",
     item: { itemId: props.ingredient._id },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
   });
   const openModal = () => {
     dispatch({ type: SET_CURRENT_INGREDIENT, id: props.ingredient._id });
@@ -27,6 +30,7 @@ function BurgerIngredientCard(props) {
 
   return (
     <>
+      <DragPreviewImage connect={preview} src={props.ingredient.image} />
       <div className={styles.ingredient_card} onClick={openModal} ref={dragRef}>
         {counter !== 0 && <Counter count={counter} size="default" />}
         <img

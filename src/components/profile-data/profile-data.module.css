@@ -1,0 +1,16 @@
+.main{
+  
+    width: 600px;
+    height: min-content;
+   background-color: transparent;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   margin: auto;  
+ }
+ .item{
+     flex: 1 1 auto;
+     margin: 0 auto;
+     
+ }
+ 

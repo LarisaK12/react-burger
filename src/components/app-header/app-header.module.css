@@ -2,16 +2,27 @@ nav{
     background: #1C1C21;    
     
 }
+header{
+    width: 100%;
+}
 .header{
     display: flex;
     flex-direction: row; 
     flex-grow:0;
-    max-width: 1200px;
-    margin: 0 auto;
+    justify-content: space-around;
+      
 }
+
 .logo{    
-    flex-grow: 1;
-    padding: 0 100px;
+    position: absolute;
+    margin: 0,auto;
+    
+}
+.left{
+    justify-self: left;
+}
+.right{
+    justify-self: right;
 }
 .nav{
     display: flex;
