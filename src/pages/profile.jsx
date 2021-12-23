@@ -3,42 +3,84 @@ import AppHeader from "../components/app-header/app-header";
 import ProfileData from "../components/profile-data/profile-data";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
-
+import { useLocation, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../services/actions/login";
 export const ProfilePage = () => {
-  return (
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.profile);
+  React.useEffect(() => {
+    if (location.pathname === "/exit") {
+      dispatch(logout());
+    }
+  }, [location, dispatch]);
+  return !user ? (
+    <Redirect to="/" />
+  ) : (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <section className={`pl-9 ${styles.section}`}>
+        <section className={styles.section}>
           <nav>
-            <NavLink
-              to="/profile"
-              className={styles.link}
-              activeClassName={styles.alink}
-            >
-              <p className="text text_type_main-medium mt-3 mb-3">Профиль</p>
-            </NavLink>
-            <NavLink
-              to="/orders"
-              className={styles.link}
-              activeClassName={styles.alink}
-            >
-              <p className="text text_type_main-medium mt-3 mb-3">
-                История заказов
+            <div className={styles.divLink}>
+              <NavLink
+                className={"text text_type_main-medium " + styles.link}
+                to="/profile"
+              >
+                <p
+                  className={
+                    location.pathname === "/profile"
+                      ? styles.alink
+                      : styles.link
+                  }
+                >
+                  {" "}
+                  Профиль
+                </p>
+              </NavLink>
+            </div>
+            <div className={styles.divLink}>
+              <NavLink
+                className={"text text_type_main-medium " + styles.link}
+                to="/order"
+              >
+                <p
+                  className={
+                    location.pathname === "/order" ? styles.alink : styles.link
+                  }
+                >
+                  {" "}
+                  История заказов
+                </p>
+              </NavLink>
+            </div>
+            <div className={styles.divLink}>
+              <NavLink
+                className={"text text_type_main-medium " + styles.link}
+                to="/exit"
+              >
+                <p
+                  className={
+                    location.pathname === "/exit" ? styles.alink : styles.link
+                  }
+                >
+                  {" "}
+                  Выход
+                </p>
+              </NavLink>
+            </div>
+
+            <div className={`pt-20 ${styles.divLink}`}>
+              <p className="text text_type_main-small mt-3 mb-3">
+                В этом разделе вы можете изменить свои персональные данные
               </p>
-            </NavLink>
-            <NavLink
-              to=""
-              className={styles.link}
-              activeClassName={styles.alink}
-            >
-              <p className="text text_type_main-medium mt-3 mb-3">Выход</p>
-            </NavLink>
+            </div>
           </nav>
         </section>
         <span className="mr-15"></span>
         <section className={styles.section}>
-          <ProfileData />
+          {location.pathname === "/profile" && <ProfileData />}
         </section>
       </main>
     </>

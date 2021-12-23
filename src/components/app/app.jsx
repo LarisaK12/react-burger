@@ -10,17 +10,51 @@ import {
   ResetPasswordPage,
   ProfilePage,
 } from "../../pages";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "../../services/actions/profile";
 function App() {
+  const {
+    user,
+    profileRequest,
+    profileRequestFailed,
+    setProfileRequest,
+    regRequest,
+    forgotPassRequest,
+    resetPassRequest,
+  } = useSelector((store) => store.profile);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (
+      !user &&
+      !profileRequest &&
+      !profileRequestFailed &&
+      !setProfileRequest &&
+      !regRequest &&
+      !forgotPassRequest &&
+      !resetPassRequest
+    )
+      dispatch(getUser());
+  }, [
+    dispatch,
+    user,
+    profileRequest,
+    profileRequestFailed,
+    setProfileRequest,
+    regRequest,
+    forgotPassRequest,
+    resetPassRequest,
+  ]);
+
   return (
     <Router>
       <Switch>
-        <ProtectedRoute path="/" exact={true}>
+        <Route path="/" exact={true}>
           <ConstructorPage />
-        </ProtectedRoute>
-        <ProtectedRoute path="/constructor" exact={true}>
+        </Route>
+        <Route path="/constructor" exact={true}>
           <ConstructorPage />
-        </ProtectedRoute>
+        </Route>
         <Route path="/login" exact={true}>
           <LoginPage />
         </Route>
@@ -36,6 +70,13 @@ function App() {
         <ProtectedRoute path="/profile" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
+        <ProtectedRoute path="/exit" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/order" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+
         <Route>
           <Code404Page />
         </Route>

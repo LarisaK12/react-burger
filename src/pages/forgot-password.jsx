@@ -5,12 +5,63 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
+import { forgotPassword } from "../services/actions/profile";
+import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+import { useHistory, Redirect } from "react-router-dom";
+import { Awaiter } from "../components/awaiter/awaiter";
 export const ForgotPasswordPage = () => {
   const [emailValue, setEmailValue] = React.useState("");
+
+  const {
+    profileRequest,
+    profileRequestFailed,
+    passwordResetRequired,
+    message,
+  } = useSelector((store) => store.profile);
+  const { loggedIn } = useSelector((store) => store.login);
+  const { error } = useSelector((store) => store.error);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const resetPassword = (e) => {
+    e.preventDefault();
+    dispatch({ type: CLEAR_ERROR });
+    dispatch(forgotPassword({ email: emailValue }));
+  };
   const onChangeEmail = (e) => {
     setEmailValue(e.target.value);
   };
-  return (
+  React.useEffect(() => {
+    if (profileRequestFailed && emailValue)
+      dispatch({
+        type: SET_ERROR,
+        error: message,
+      });
+    else if (
+      passwordResetRequired &&
+      !profileRequest &&
+      !profileRequestFailed
+    ) {
+      history.replace({ pathname: "/reset-password" });
+    }
+  }, [
+    dispatch,
+    profileRequestFailed,
+    emailValue,
+    passwordResetRequired,
+    message,
+    profileRequest,
+    history,
+  ]);
+
+  return loggedIn ? (
+    <Redirect to="/" />
+  ) : profileRequest ? (
+    <>
+      <AppHeader />
+      <Awaiter />
+    </>
+  ) : (
     <>
       <AppHeader />
       <div className={styles.main}>
@@ -30,12 +81,13 @@ export const ForgotPasswordPage = () => {
           </div>
           <span className="mb-6"></span>
           <div className={styles.item}>
-            <Button type="primary" size="small">
+            <Button type="primary" size="small" onClick={resetPassword}>
               Восстановить
             </Button>
           </div>
 
           <div className="mt-20">
+            {error && <p className="text text_type_main-small">{error}</p>}
             <p className="text text_type_main-small">
               Вспомнили пароль? <a href="/login">Войти</a>
             </p>

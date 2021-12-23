@@ -3,20 +3,32 @@
     max-width: fit-content;
     display: flex;
     flex-direction: row;
-    margin:0 auto;
+    margin:100px  auto;
     justify-content: center;
 }
 .section{
+  background: #131316;
   flex:1 1 auto;
   max-width: 600px;
   border-radius: 10px 10px 0 0; 
 }
+.divLink{
+  padding: 20px;
+  background: #131316;
+}
 .alink{
-    color: white;    
-    
+  background: #131316;
+    color:#FFFFFF;    
+    padding: 0;
+margin:0;
+text-decoration: none;
 
 }
 .link{
+  background: #131316;
 color: gray;
+padding: 0;
+margin:0;
+
 text-decoration: none;
 }

@@ -1,21 +1,68 @@
 import React from "react";
 import AppHeader from "../components/app-header/app-header";
+import { Awaiter } from "../components/awaiter/awaiter";
 import styles from "./reset-password.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, Redirect, useHistory } from "react-router-dom";
+
 import {
   Input,
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { resetPassword } from "../services/actions/profile";
+import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+
 export const ResetPasswordPage = () => {
   const [value, setValue] = React.useState("");
   const [passValue, setPassValue] = React.useState("");
+  const {
+    user,
+    message,
+    profileRequestFailed,
+    profileRequest,
+    passwordReseted,
+  } = useSelector((store) => store.profile);
+  const { error } = useSelector((store) => store.error);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const sendClick = (e) => {
+    e.preventDefault();
+    dispatch({ type: CLEAR_ERROR });
+    dispatch(resetPassword({ password: passValue, token: value }));
+  };
+  React.useEffect(() => {
+    if (profileRequestFailed && passValue)
+      dispatch({
+        type: SET_ERROR,
+        error: message,
+      });
+    else if (passwordReseted && !profileRequest && !profileRequestFailed) {
+      history.replace({ pathname: "/login" });
+    }
+  }, [
+    dispatch,
+    profileRequestFailed,
+    passwordReseted,
+    passValue,
+    message,
+    profileRequest,
+    history,
+  ]);
   const onChange = (e) => {
     setValue(e.target.value);
   };
   const onChangePass = (e) => {
     setPassValue(e.target.value);
   };
-  return (
+  return user ? (
+    <Redirect to="/" />
+  ) : profileRequest ? (
+    <>
+      <AppHeader />
+      <Awaiter />
+    </>
+  ) : (
     <>
       <AppHeader />
       <div className={styles.main}>
@@ -45,14 +92,15 @@ export const ResetPasswordPage = () => {
           </div>
           <span className="mb-6"></span>
           <div className={styles.item}>
-            <Button type="primary" size="small">
+            <Button type="primary" size="small" onClick={sendClick}>
               Восстановить
             </Button>
           </div>
 
           <div className="mt-20">
+            {error && <p className="text text_type_main-small">{error}</p>}
             <p className="text text_type_main-small">
-              Вспомнили пароль? <a href="/login">Войти</a>
+              Вспомнили пароль? <Link to="/login">Войти</Link>
             </p>
           </div>
         </div>

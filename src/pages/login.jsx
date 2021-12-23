@@ -1,33 +1,40 @@
 import React from "react";
 import AppHeader from "../components/app-header/app-header";
 import styles from "./login.module.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Login } from "../services/actions/profile";
-import { SET_ERROR } from "../services/actions/error";
+import { login } from "../services/actions/login";
+import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Awaiter } from "../components/awaiter/awaiter";
+import { getUser } from "../services/actions/profile";
 
 export const LoginPage = () => {
   const [emailValue, setEmailValue] = React.useState("");
   const [passValue, setPassValue] = React.useState("");
-  const { user, profileRequestFailed } = useSelector((store) => store.profile);
   const { error } = useSelector((store) => store.error);
+  const { loginRequestFailed, loginRequest } = useSelector(
+    (store) => store.login
+  );
+  const { profileRequest, user } = useSelector((store) => store.profile);
   const dispatch = useDispatch();
+  const location = useLocation();
   const LogInClick = (e) => {
     e.preventDefault();
-    dispatch(Login({ email: emailValue, password: passValue }));
+    dispatch({ type: CLEAR_ERROR });
+    dispatch(login({ email: emailValue, password: passValue }));
   };
   React.useEffect(() => {
-    if (profileRequestFailed)
+    if (loginRequestFailed)
       dispatch({
         type: SET_ERROR,
         error: "Проверьте правильность логина и пароля",
       });
-  }, [dispatch, profileRequestFailed]);
+  }, [dispatch, loginRequestFailed]);
 
   const onChangeEmail = (e) => {
     setEmailValue(e.target.value);
@@ -35,16 +42,17 @@ export const LoginPage = () => {
   const onChangePass = (e) => {
     setPassValue(e.target.value);
   };
-  if (user) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/",
-        }}
-      />
-    );
-  }
-  return (
+
+  return user ? (
+    <Redirect
+      to={location.state?.from === "/exit" ? "/" : location.state?.from || "/"}
+    />
+  ) : loginRequest || profileRequest ? (
+    <>
+      <AppHeader />
+      <Awaiter />
+    </>
+  ) : (
     <>
       <AppHeader />
       <div className={styles.main}>

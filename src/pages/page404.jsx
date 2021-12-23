@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import AppHeader from "../components/app-header/app-header";
 import styles from "./page404.module.css";
 
@@ -13,9 +13,9 @@ export const Code404Page = () => {
           </section>
           <section className={styles.section}>
             <p className="text text_type_main-large">Страница не найдена</p>
-            <a href="/">
+            <Link to="/">
               <span className="text text_type_main-medium">на главную</span>
-            </a>
+            </Link>
           </section>
         </div>
       </main>

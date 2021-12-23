@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import HeaderItem from "./app-header-item";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   BurgerIcon,
   ListIcon,

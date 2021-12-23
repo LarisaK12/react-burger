@@ -6,6 +6,8 @@ const REGISTER_URL = "/auth/register ";
 const LOGOUT_URL = "/auth/logout";
 const TOKEN_URL = "/auth/token";
 const USER_URL = "/auth/user";
+const FORGOT_PASSWORD_URL = "/password-reset";
+const RESET_PASSWORD_URL = "/password-reset/reset";
 export {
   INGREDIENTS_URL,
   GET_ORDER_ID_URL,
@@ -15,4 +17,6 @@ export {
   REGISTER_URL,
   TOKEN_URL,
   USER_URL,
+  RESET_PASSWORD_URL,
+  FORGOT_PASSWORD_URL,
 };
