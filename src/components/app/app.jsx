@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../services/actions/profile";
+import { getIngredients } from "../../services/actions/ingredients";
 import ModalSwitch from "../modal-switch/modal-switch";
 function App() {
   const {
@@ -14,7 +15,6 @@ function App() {
     resetPassRequest,
   } = useSelector((store) => store.profile);
   const dispatch = useDispatch();
-
   React.useEffect(() => {
     if (
       !user &&
@@ -36,6 +36,9 @@ function App() {
     forgotPassRequest,
     resetPassRequest,
   ]);
+  React.useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <Router>

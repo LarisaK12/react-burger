@@ -4,16 +4,12 @@ import BurgerIngredients from "../components/burger-ingredients/burger-ingredien
 import React from "react";
 import Modal from "../components/modal/modal";
 import { useSelector, useDispatch } from "react-redux";
-import { getIngredients } from "../services/actions/ingredients";
 import { CLEAR_ERROR } from "../services/actions/error";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 export const ConstructorPage = () => {
   const { error } = useSelector((store) => store.error);
   const dispatcher = useDispatch();
-  React.useEffect(() => {
-    dispatcher(getIngredients());
-  }, [dispatcher]);
 
   return (
     <>
