@@ -5,25 +5,14 @@ import BurgerIngredientsTab from "../burger-ingredients-tab/burger-ingredients-t
 import { useSelector, useDispatch } from "react-redux";
 import { SET_ERROR, CLEAR_ERROR } from "../../services/actions/error";
 import { SET_TAB } from "../../services/actions/tab";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { CLEAR_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
 
 function BurgerIngredients() {
   const { ingredientsRequest, ingredientsFailed } = useSelector(
     (store) => store.ingredients
   );
   const { tabs, current } = useSelector((store) => store.tab);
-  const currentIngredientId = useSelector(
-    (store) => store.currentIngredient.id
-  );
-  const currentIngredient = useSelector((store) =>
-    store.ingredients.ingredients.find((i) => i._id === currentIngredientId)
-  );
   const dispatch = useDispatch();
-  const closeModal = () => {
-    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
-  };
+
   React.useEffect(() => {
     const element = document.getElementById(current);
     element.scrollIntoView();
@@ -68,11 +57,6 @@ function BurgerIngredients() {
           tabname="Начинки"
         ></BurgerIngredientsTab>
       </div>
-      {currentIngredientId && (
-        <Modal onClose={closeModal} header="Детали ингредиента">
-          <IngredientDetails ingredient={currentIngredient} />
-        </Modal>
-      )}
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import AppHeader from "../components/app-header/app-header";
 import ProfileData from "../components/profile-data/profile-data";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
@@ -19,7 +18,6 @@ export const ProfilePage = () => {
     <Redirect to="/" />
   ) : (
     <>
-      <AppHeader />
       <main className={styles.main}>
         <section className={styles.section}>
           <nav>

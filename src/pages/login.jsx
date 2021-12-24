@@ -1,5 +1,4 @@
 import React from "react";
-import AppHeader from "../components/app-header/app-header";
 import styles from "./login.module.css";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -51,12 +50,10 @@ export const LoginPage = () => {
     />
   ) : profileRequest ? (
     <>
-      <AppHeader />
       <Awaiter />
     </>
   ) : (
     <>
-      <AppHeader />
       <div className={styles.main}>
         <div className={styles.inner}>
           <p className="text text_type_main-large mb-6">Вход</p>

@@ -58,12 +58,10 @@ export const ForgotPasswordPage = () => {
     <Redirect to="/" />
   ) : profileRequest ? (
     <>
-      <AppHeader />
       <Awaiter />
     </>
   ) : (
     <>
-      <AppHeader />
       <div className={styles.main}>
         <div className={styles.inner}>
           <p className="text text_type_main-large mb-6">

@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import AppHeader from "../components/app-header/app-header";
 import styles from "./page404.module.css";
 
 export const Code404Page = () => {
   return (
     <>
-      <AppHeader />
       <main className={styles.main}>
         <div>
           <section className={styles.section}>

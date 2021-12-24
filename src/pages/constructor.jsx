@@ -1,5 +1,4 @@
 import styles from "./constructor.module.css";
-import AppHeader from "../components/app-header/app-header";
 import BurgerConstructor from "../components/burger-constructor/burger-constructor";
 import BurgerIngredients from "../components/burger-ingredients/burger-ingredients";
 import React from "react";
@@ -18,7 +17,6 @@ export const ConstructorPage = () => {
 
   return (
     <>
-      <AppHeader />
       <main className={styles.main}>
         <DndProvider backend={HTML5Backend}>
           <section className={`pl-9 ${styles.section}`}>

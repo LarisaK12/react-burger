@@ -1,17 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { ProtectedRoute } from "../protected-route/protected-route";
-import {
-  ConstructorPage,
-  LoginPage,
-  Code404Page,
-  RegisterPage,
-  ForgotPasswordPage,
-  ResetPasswordPage,
-  ProfilePage,
-} from "../../pages";
+import { BrowserRouter as Router } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../../services/actions/profile";
+import ModalSwitch from "../modal-switch/modal-switch";
 function App() {
   const {
     user,
@@ -48,39 +39,7 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact={true}>
-          <ConstructorPage />
-        </Route>
-        <Route path="/constructor" exact={true}>
-          <ConstructorPage />
-        </Route>
-        <Route path="/login" exact={true}>
-          <LoginPage />
-        </Route>
-        <Route path="/register" exact={true}>
-          <RegisterPage />
-        </Route>
-        <Route path="/forgot-password" exact={true}>
-          <ForgotPasswordPage />
-        </Route>
-        <Route path="/reset-password" exact={true}>
-          <ResetPasswordPage />
-        </Route>
-        <ProtectedRoute path="/profile" exact={true}>
-          <ProfilePage />
-        </ProtectedRoute>
-        <ProtectedRoute path="/exit" exact={true}>
-          <ProfilePage />
-        </ProtectedRoute>
-        <ProtectedRoute path="/profile/orders" exact={true}>
-          <ProfilePage />
-        </ProtectedRoute>
-
-        <Route>
-          <Code404Page />
-        </Route>
-      </Switch>
+      <ModalSwitch />
     </Router>
   );
 }

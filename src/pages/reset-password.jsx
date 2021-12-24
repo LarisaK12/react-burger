@@ -1,5 +1,4 @@
 import React from "react";
-import AppHeader from "../components/app-header/app-header";
 import { Awaiter } from "../components/awaiter/awaiter";
 import styles from "./reset-password.module.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -58,53 +57,45 @@ export const ResetPasswordPage = () => {
   return user ? (
     <Redirect to="/" />
   ) : profileRequest ? (
-    <>
-      <AppHeader />
-      <Awaiter />
-    </>
+    <Awaiter />
   ) : (
-    <>
-      <AppHeader />
-      <div className={styles.main}>
-        <div className={styles.inner}>
-          <p className="text text_type_main-large mb-6">
-            Восстановление пароля
-          </p>
-          <span className="mb-6"></span>
-          <div className={styles.item}>
-            <PasswordInput
-              size="default"
-              onChange={onChangePass}
-              placeholder="Введите новый пароль"
-              value={passValue}
-              name={"password"}
-            />
-          </div>
-          <span className="mb-6"></span>
-          <div className={styles.item}>
-            <Input
-              type="text"
-              placeholder="Введите код из письма"
-              onChange={onChange}
-              value={value}
-              size="default"
-            />
-          </div>
-          <span className="mb-6"></span>
-          <div className={styles.item}>
-            <Button type="primary" size="small" onClick={sendClick}>
-              Восстановить
-            </Button>
-          </div>
+    <div className={styles.main}>
+      <div className={styles.inner}>
+        <p className="text text_type_main-large mb-6">Восстановление пароля</p>
+        <span className="mb-6"></span>
+        <div className={styles.item}>
+          <PasswordInput
+            size="default"
+            onChange={onChangePass}
+            placeholder="Введите новый пароль"
+            value={passValue}
+            name={"password"}
+          />
+        </div>
+        <span className="mb-6"></span>
+        <div className={styles.item}>
+          <Input
+            type="text"
+            placeholder="Введите код из письма"
+            onChange={onChange}
+            value={value}
+            size="default"
+          />
+        </div>
+        <span className="mb-6"></span>
+        <div className={styles.item}>
+          <Button type="primary" size="small" onClick={sendClick}>
+            Восстановить
+          </Button>
+        </div>
 
-          <div className="mt-20">
-            {error && <p className="text text_type_main-small">{error}</p>}
-            <p className="text text_type_main-small">
-              Вспомнили пароль? <Link to="/login">Войти</Link>
-            </p>
-          </div>
+        <div className="mt-20">
+          {error && <p className="text text_type_main-small">{error}</p>}
+          <p className="text text_type_main-small">
+            Вспомнили пароль? <Link to="/login">Войти</Link>
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
