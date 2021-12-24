@@ -20,11 +20,11 @@ overflow-x: hidden;
     flex: 1 1 auto; 
     margin: 0 auto;
 }
-a:link p{
+.alink p{
   color: #ffffffff;
   text-decoration: none;
 }
-a:visited p{
+.avisited p{
   color: #ffffffff;
   text-decoration: none;
 }

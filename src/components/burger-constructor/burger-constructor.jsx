@@ -12,10 +12,13 @@ import {
   ADD_INGREDIENT,
   CLEAR_INGREDIENTS,
 } from "../../services/actions/burger-constructor";
+import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
 
 function BurgerConstructor() {
+  const history = useHistory();
   const { burger } = useSelector((store) => store.constructor);
+  const { user } = useSelector((store) => store.profile);
   const { ingredients } = useSelector((store) => store.ingredients);
   const { orderId, submitOrderFailed } = useSelector((store) => store.order);
   const dispatch = useDispatch();
@@ -30,6 +33,7 @@ function BurgerConstructor() {
   };
 
   const onSubmit = () => {
+    if (!user) history.replace({ pathname: "/login" });
     if (!burger || burger.filter((i) => i.type !== "undefined").length === 0)
       dispatch({ type: SET_ERROR, error: "Без булок мы готовить не умеем." });
     else dispatch(submitOrder(burger.map((ingr) => ingr._id)));

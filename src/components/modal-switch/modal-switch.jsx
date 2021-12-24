@@ -19,7 +19,6 @@ const ModalSwitch = () => {
   const location = useLocation();
   const history = useHistory();
   let background = location.state && location.state.background;
-  console.log(location);
   const dispatch = useDispatch();
   const closeModal = () => {
     dispatch({ type: CLEAR_CURRENT_INGREDIENT });

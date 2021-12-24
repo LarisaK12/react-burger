@@ -83,19 +83,27 @@ const ProfileData = () => {
         ></PasswordInput>
       </div>
       <span className="mt-6" />
-      <div className={styles.item}>
-        <Button type="primary" size="medium" className="mr-3" onClick={onSave}>
-          Сохранить
-        </Button>
-        <Button
-          type="primary"
-          size="medium"
-          className="ml-3"
-          onClick={onCancel}
-        >
-          Отмена
-        </Button>
-      </div>
+      {((emailValue && emailValue !== user?.email) ||
+        (nameValue && nameValue !== user?.name)) && (
+        <div className={styles.item}>
+          <Button
+            type="primary"
+            size="medium"
+            className="mr-3"
+            onClick={onSave}
+          >
+            Сохранить
+          </Button>
+          <Button
+            type="primary"
+            size="medium"
+            className="ml-3"
+            onClick={onCancel}
+          >
+            Отмена
+          </Button>
+        </div>
+      )}
       <div className={styles.item}>
         <p className="text text_type_main-medium">
           {setProfileRequest ? "Идет сохранение данных" : error}

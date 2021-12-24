@@ -106,9 +106,33 @@ export function getUser() {
           }
         })
         .catch((e) => {
-          dispatch({
-            type: GET_USER_FAILED,
-          });
+          if (
+            ((e.indexOf("expired") > 0 || e.indexOf("invalid") > 0) &&
+              e.indexOf("token") > 0) ||
+            e.indexOf("403")
+          )
+            fetchWithRefresh(`${API_URL}${USER_URL}`, "GET")
+              .then((res) => {
+                if (res && res.success) {
+                  dispatch({
+                    type: GET_USER_SUCCESS,
+                    data: res,
+                  });
+                } else {
+                  dispatch({
+                    type: GET_USER_FAILED,
+                  });
+                }
+              })
+              .catch((e) => {
+                dispatch({
+                  type: GET_USER_FAILED,
+                });
+              });
+          else
+            dispatch({
+              type: GET_USER_FAILED,
+            });
         });
   };
 }
@@ -153,9 +177,36 @@ export function setUser(data) {
           }
         })
         .catch((e) => {
-          dispatch({
-            type: SET_USER_FAILED,
-          });
+          if (
+            (e.indexOf("expired") > 0 || e.indexOf("invalid") > 0) &&
+            e.indexOf("token") > 0
+          )
+            fetchWithRefresh(
+              `${API_URL}${USER_URL}`,
+              "PATCH",
+              JSON.stringify(data)
+            )
+              .then((res) => {
+                if (res && res.success) {
+                  dispatch({
+                    type: SET_USER_SUCCESS,
+                    data: res,
+                  });
+                } else {
+                  dispatch({
+                    type: SET_USER_FAILED,
+                  });
+                }
+              })
+              .catch((e) => {
+                dispatch({
+                  type: SET_USER_FAILED,
+                });
+              });
+          else
+            dispatch({
+              type: SET_USER_FAILED,
+            });
         });
   };
 }

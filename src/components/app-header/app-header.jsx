@@ -13,9 +13,8 @@ function AppHeader() {
   const [currentPage, setCurrentPage] = React.useState("");
   const location = useLocation();
   useEffect(() => {
-    setCurrentPage(
-      location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
-    );
+    if (location.pathname.split("/").length > 1)
+      setCurrentPage(location.pathname.split("/")[1]);
   }, [location]);
   const setConstructor = useCallback(() => {
     setCurrentPage("constructor");

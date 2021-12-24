@@ -15,7 +15,7 @@ export const fetchData = (url, method, data) => {
   }).then(checkResponse);
 };
 export const fetchWithToken = (url, method, data) => {
-  if (!getCookie("accessToken")) return Promise.reject(`Ошибка: токена нет`);
+  if (!getCookie("accessToken")) return Promise.reject(`Ошибка: token invalid`);
   else
     return fetch(url, {
       method: method,
