@@ -25,7 +25,7 @@ export const ResetPasswordPage = () => {
   const { error } = useSelector((store) => store.error);
   const dispatch = useDispatch();
   const history = useHistory();
-  const sendClick = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: CLEAR_ERROR });
     dispatch(resetPassword({ password: passValue, token: value }));
@@ -48,54 +48,61 @@ export const ResetPasswordPage = () => {
     profileRequest,
     history,
   ]);
+
   const onChange = (e) => {
     setValue(e.target.value);
   };
   const onChangePass = (e) => {
     setPassValue(e.target.value);
   };
+  if (history.location.state?.pathname !== "/forgot-password")
+    return <Redirect to="/forgot-password" />;
   return user ? (
     <Redirect to="/" />
   ) : profileRequest ? (
     <Awaiter />
   ) : (
-    <div className={styles.main}>
-      <div className={styles.inner}>
-        <p className="text text_type_main-large mb-6">Восстановление пароля</p>
-        <span className="mb-6"></span>
-        <div className={styles.item}>
-          <PasswordInput
-            size="default"
-            onChange={onChangePass}
-            placeholder="Введите новый пароль"
-            value={passValue}
-            name={"password"}
-          />
-        </div>
-        <span className="mb-6"></span>
-        <div className={styles.item}>
-          <Input
-            type="text"
-            placeholder="Введите код из письма"
-            onChange={onChange}
-            value={value}
-            size="default"
-          />
-        </div>
-        <span className="mb-6"></span>
-        <div className={styles.item}>
-          <Button type="primary" size="small" onClick={sendClick}>
-            Восстановить
-          </Button>
-        </div>
-
-        <div className="mt-20">
-          {error && <p className="text text_type_main-small">{error}</p>}
-          <p className="text text_type_main-small">
-            Вспомнили пароль? <Link to="/login">Войти</Link>
+    <form onSubmit={onSubmit}>
+      <div className={styles.main}>
+        <div className={styles.inner}>
+          <p className="text text_type_main-large mb-6">
+            Восстановление пароля
           </p>
+          <span className="mb-6"></span>
+          <div className={styles.item}>
+            <PasswordInput
+              size="default"
+              onChange={onChangePass}
+              placeholder="Введите новый пароль"
+              value={passValue}
+              name={"password"}
+            />
+          </div>
+          <span className="mb-6"></span>
+          <div className={styles.item}>
+            <Input
+              type="text"
+              placeholder="Введите код из письма"
+              onChange={onChange}
+              value={value}
+              size="default"
+            />
+          </div>
+          <span className="mb-6"></span>
+          <div className={styles.item}>
+            <Button type="primary" size="small">
+              Восстановить
+            </Button>
+          </div>
+
+          <div className="mt-20">
+            {error && <p className="text text_type_main-small">{error}</p>}
+            <p className="text text_type_main-small">
+              Вспомнили пароль? <Link to="/login">Войти</Link>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };

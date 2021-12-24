@@ -53,7 +53,7 @@ export const LoginPage = () => {
       <Awaiter />
     </>
   ) : (
-    <>
+    <form onSubmit={LogInClick}>
       <div className={styles.main}>
         <div className={styles.inner}>
           <p className="text text_type_main-large mb-6">Вход</p>
@@ -76,7 +76,7 @@ export const LoginPage = () => {
           </div>
           <span className="mb-6"></span>
           <div className={styles.item}>
-            <Button type="primary" size="small" onClick={LogInClick}>
+            <Button type="primary" size="small">
               Войти
             </Button>
           </div>
@@ -96,6 +96,6 @@ export const LoginPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </form>
   );
 };

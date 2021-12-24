@@ -26,6 +26,7 @@ const ProfileData = () => {
   };
   const onSave = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     dispatch({ type: CLEAR_ERROR });
     dispatch(
       setUser({ name: nameValue || user.name, email: emailValue || user.email })
@@ -51,65 +52,62 @@ const ProfileData = () => {
     }
   }, [user, dispatch, setProfileRequestFailed]);
   return (
-    <div className={styles.main}>
-      <div className={styles.item}>
-        <Input
-          placeholder="Имя"
-          icon={"EditIcon"}
-          size="default"
-          onChange={onChangeName}
-          value={nameValue || nameValue === "" ? nameValue : user?.name}
-        ></Input>
-      </div>
-      <span className="mb-6"></span>
-      <div className={styles.item}>
-        <EmailInput
-          placeholder="Логин"
-          icon={"EditIcon"}
-          size="default"
-          onChange={onChangeEmail}
-          value={emailValue || emailValue === "" ? emailValue : user?.email}
-        ></EmailInput>
-      </div>
-      <span className="mb-6"></span>
-      <div className={styles.item}>
-        <PasswordInput
-          defaultValue=""
-          placeholder="Пароль"
-          size="default"
-          name="password"
-          value={""}
-          onChange={onChangePass}
-        ></PasswordInput>
-      </div>
-      <span className="mt-6" />
-      {((emailValue && emailValue !== user?.email) ||
-        (nameValue && nameValue !== user?.name)) && (
+    <form onSubmit={onSave}>
+      <div className={styles.main}>
         <div className={styles.item}>
-          <Button
-            type="primary"
-            size="medium"
-            className="mr-3"
-            onClick={onSave}
-          >
-            Сохранить
-          </Button>
-          <Button
-            type="primary"
-            size="medium"
-            className="ml-3"
-            onClick={onCancel}
-          >
-            Отмена
-          </Button>
+          <Input
+            placeholder="Имя"
+            icon={"EditIcon"}
+            size="default"
+            onChange={onChangeName}
+            value={nameValue || nameValue === "" ? nameValue : user?.name}
+          ></Input>
         </div>
-      )}
-      <div className={styles.item}>
-        <p className="text text_type_main-medium">
-          {setProfileRequest ? "Идет сохранение данных" : error}
-        </p>
+        <span className="mb-6"></span>
+        <div className={styles.item}>
+          <EmailInput
+            placeholder="Логин"
+            icon={"EditIcon"}
+            size="default"
+            onChange={onChangeEmail}
+            value={emailValue || emailValue === "" ? emailValue : user?.email}
+          ></EmailInput>
+        </div>
+        <span className="mb-6"></span>
+        <div className={styles.item}>
+          <PasswordInput
+            defaultValue=""
+            placeholder="Пароль"
+            size="default"
+            name="password"
+            value={""}
+            onChange={onChangePass}
+          ></PasswordInput>
+        </div>
+        <span className="mt-6" />
+        {((emailValue && emailValue !== user?.email) ||
+          (nameValue && nameValue !== user?.name)) && (
+          <div className={styles.item}>
+            <Button type="primary" size="medium" className="mr-3">
+              Сохранить
+            </Button>
+            <Button
+              type="primary"
+              size="medium"
+              className="ml-3"
+              onClick={onCancel}
+            >
+              Отмена
+            </Button>
+          </div>
+        )}
+        <div className={styles.item}>
+          <p className="text text_type_main-medium">
+            {setProfileRequest ? "Идет сохранение данных" : error}
+          </p>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };
 export default ProfileData;

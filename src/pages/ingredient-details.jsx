@@ -1,9 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import AppHeader from "../components/app-header/app-header";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import styles from "./ingredient-details.module.css";
-import { getIngredients } from "../services/actions/ingredients";
 import { Awaiter } from "../components/awaiter/awaiter";
 import { useParams } from "react-router-dom";
 
@@ -13,14 +11,13 @@ export const IngredientDetailsPage = () => {
   const currentIngredient = useSelector((store) =>
     store.ingredients.ingredients.find((i) => i._id === id)
   );
-  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(
+  const { ingredientsRequest, ingredientsFailed } = useSelector(
     (store) => store.ingredients
   );
   const dispatcher = useDispatch();
   React.useEffect(() => {
-    if (!ingredients || ingredients.length === 0) dispatcher(getIngredients());
     dispatcher({ type: SET_CURRENT_INGREDIENT, id: id });
-  }, [dispatcher, ingredients, id]);
+  }, [dispatcher, id]);
 
   return ingredientsRequest ? (
     <>

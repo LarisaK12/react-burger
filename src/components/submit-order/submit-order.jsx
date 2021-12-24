@@ -6,14 +6,16 @@ import { useSelector } from "react-redux";
 function SubmitOrder(props) {
   const { price } = useSelector((store) => store.constructor);
   return (
-    <span className={styles.submit}>
-      <p className="text text_type_digits-medium mr-2">{price ? price : 0}</p>
-      <CurrencyIcon type="primary" />
-      <span className="pl-10" />
-      <Button type="primary" size="medium" onClick={props.onClick}>
-        Оформить заказ
-      </Button>
-    </span>
+    <form onSubmit={props.onClick}>
+      <span className={styles.submit}>
+        <p className="text text_type_digits-medium mr-2">{price ? price : 0}</p>
+        <CurrencyIcon type="primary" />
+        <span className="pl-10" />
+        <Button type="primary" size="medium">
+          Оформить заказ
+        </Button>
+      </span>
+    </form>
   );
 }
 SubmitOrder.propTypes = {

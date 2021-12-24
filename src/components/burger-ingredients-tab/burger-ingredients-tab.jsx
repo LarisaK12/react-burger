@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import styles from "./burger-ingredients-tab.module.css";
@@ -15,8 +15,9 @@ function BurgerIngredientsTab(props) {
 
   const dispatch = useDispatch();
 
-  const filteredIngredients = ingredients.filter(
-    (ingredient) => ingredient.type === props.id
+  const filteredIngredients = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === props.id),
+    [ingredients, props.id]
   );
   React.useEffect(() => {
     dispatch({

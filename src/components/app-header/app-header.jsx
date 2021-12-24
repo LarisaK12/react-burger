@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import HeaderItem from "./app-header-item";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import {
   BurgerIcon,
   ListIcon,
@@ -57,9 +57,9 @@ function AppHeader() {
               />
             </HeaderItem>
           </div>
-          <span className={styles.logo}>
+          <Link to="/" className={styles.logo}>
             <Logo />
-          </span>
+          </Link>
           <HeaderItem
             text="личный кабинет"
             onClick={setProfile}

@@ -17,72 +17,68 @@ export const ProfilePage = () => {
   return !user ? (
     <Redirect to="/" />
   ) : (
-    <>
-      <main className={styles.main}>
-        <section className={styles.section}>
-          <nav>
-            <div className={styles.divLink}>
-              <NavLink
-                className={"text text_type_main-medium " + styles.link}
-                to="/profile"
+    <main className={styles.main}>
+      <section className={styles.section}>
+        <nav>
+          <div className={styles.divLink}>
+            <NavLink
+              className={"text text_type_main-medium " + styles.link}
+              to="/profile"
+            >
+              <p
+                className={
+                  location.pathname === "/profile" ? styles.alink : styles.link
+                }
               >
-                <p
-                  className={
-                    location.pathname === "/profile"
-                      ? styles.alink
-                      : styles.link
-                  }
-                >
-                  {" "}
-                  Профиль
-                </p>
-              </NavLink>
-            </div>
-            <div className={styles.divLink}>
-              <NavLink
-                className={"text text_type_main-medium " + styles.link}
-                to="/profile/orders"
-              >
-                <p
-                  className={
-                    location.pathname === "/profile/orders"
-                      ? styles.alink
-                      : styles.link
-                  }
-                >
-                  {" "}
-                  История заказов
-                </p>
-              </NavLink>
-            </div>
-            <div className={styles.divLink}>
-              <NavLink
-                className={"text text_type_main-medium " + styles.link}
-                to="/exit"
-              >
-                <p
-                  className={
-                    location.pathname === "/exit" ? styles.alink : styles.link
-                  }
-                >
-                  {" "}
-                  Выход
-                </p>
-              </NavLink>
-            </div>
-
-            <div className={`pt-20 ${styles.divLink}`}>
-              <p className="text text_type_main-small mt-3 mb-3">
-                В этом разделе вы можете изменить свои персональные данные
+                {" "}
+                Профиль
               </p>
-            </div>
-          </nav>
-        </section>
-        <span className="mr-15"></span>
-        <section className={styles.section}>
-          {location.pathname === "/profile" && <ProfileData />}
-        </section>
-      </main>
-    </>
+            </NavLink>
+          </div>
+          <div className={styles.divLink}>
+            <NavLink
+              className={"text text_type_main-medium " + styles.link}
+              to="/profile/orders"
+            >
+              <p
+                className={
+                  location.pathname === "/profile/orders"
+                    ? styles.alink
+                    : styles.link
+                }
+              >
+                {" "}
+                История заказов
+              </p>
+            </NavLink>
+          </div>
+          <div className={styles.divLink}>
+            <NavLink
+              className={"text text_type_main-medium " + styles.link}
+              to="/exit"
+            >
+              <p
+                className={
+                  location.pathname === "/exit" ? styles.alink : styles.link
+                }
+              >
+                {" "}
+                Выход
+              </p>
+            </NavLink>
+          </div>
+
+          <div className={`pt-20 ${styles.divLink}`}>
+            <p className="text text_type_main-small mt-3 mb-3">
+              В этом разделе вы можете изменить свои персональные данные
+            </p>
+          </div>
+        </nav>
+      </section>
+      <span className="mr-15"></span>
+      <section className={styles.section}>
+        {location.pathname === "/profile" && <ProfileData />}
+      </section>
+    </main>
   );
 };
