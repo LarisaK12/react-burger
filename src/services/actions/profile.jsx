@@ -120,7 +120,7 @@ export function setUser(data) {
     });
     let aToken = getCookie("accessToken");
     if (!aToken) {
-      fetchWithRefresh(`${API_URL}${USER_URL}`, "PATCH", data)
+      fetchWithRefresh(`${API_URL}${USER_URL}`, "PATCH", JSON.stringify(data))
         .then((res) => {
           if (res && res.success) {
             dispatch({
@@ -139,7 +139,7 @@ export function setUser(data) {
           });
         });
     } else
-      fetchWithToken(`${API_URL}${USER_URL}`, "PATCH", data)
+      fetchWithToken(`${API_URL}${USER_URL}`, "PATCH", JSON.stringify(data))
         .then((res) => {
           if (res && res.success) {
             dispatch({

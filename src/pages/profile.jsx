@@ -43,11 +43,13 @@ export const ProfilePage = () => {
             <div className={styles.divLink}>
               <NavLink
                 className={"text text_type_main-medium " + styles.link}
-                to="/order"
+                to="/profile/orders"
               >
                 <p
                   className={
-                    location.pathname === "/order" ? styles.alink : styles.link
+                    location.pathname === "/profile/orders"
+                      ? styles.alink
+                      : styles.link
                   }
                 >
                   {" "}

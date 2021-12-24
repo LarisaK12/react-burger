@@ -11,15 +11,12 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Awaiter } from "../components/awaiter/awaiter";
-import { getUser } from "../services/actions/profile";
 
 export const LoginPage = () => {
   const [emailValue, setEmailValue] = React.useState("");
   const [passValue, setPassValue] = React.useState("");
   const { error } = useSelector((store) => store.error);
-  const { loginRequestFailed, loginRequest } = useSelector(
-    (store) => store.login
-  );
+  const { loginRequestFailed } = useSelector((store) => store.login);
   const { profileRequest, user } = useSelector((store) => store.profile);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -34,6 +31,7 @@ export const LoginPage = () => {
         type: SET_ERROR,
         error: "Проверьте правильность логина и пароля",
       });
+    else dispatch({ type: CLEAR_ERROR });
   }, [dispatch, loginRequestFailed]);
 
   const onChangeEmail = (e) => {
@@ -45,9 +43,13 @@ export const LoginPage = () => {
 
   return user ? (
     <Redirect
-      to={location.state?.from === "/exit" ? "/" : location.state?.from || "/"}
+      to={
+        location.state?.from?.pathname === "/exit"
+          ? "/"
+          : location.state?.from || "/"
+      }
     />
-  ) : loginRequest || profileRequest ? (
+  ) : profileRequest ? (
     <>
       <AppHeader />
       <Awaiter />
@@ -83,7 +85,7 @@ export const LoginPage = () => {
           </div>
 
           <div className="mt-20">
-            {error && <p className="text text_type_main-small">{error}</p>}
+            {error && <p className="text text_type_main-medium">{error}</p>}
             <p className="text text_type_main-small">
               Вы - новый пользователь?{" "}
               <Link to="/register">Зарегистрироваться</Link>

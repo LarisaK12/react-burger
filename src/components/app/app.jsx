@@ -73,7 +73,7 @@ function App() {
         <ProtectedRoute path="/exit" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/order" exact={true}>
+        <ProtectedRoute path="/profile/orders" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
 
