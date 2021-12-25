@@ -4,12 +4,11 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
-import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
-import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
+import { useDrag, DragPreviewImage } from "react-dnd";
+import { Link, useLocation } from "react-router-dom";
 
 function BurgerIngredientCard(props) {
-  const dispatch = useDispatch();
   const counter = useSelector((store) =>
     store.constructor.burger
       ? store.constructor.burger.filter(
@@ -17,17 +16,25 @@ function BurgerIngredientCard(props) {
         ).length
       : 0
   );
-  const [, dragRef] = useDrag({
+  const [{ isDrag }, dragRef, preview] = useDrag({
     type: "ingredient",
     item: { itemId: props.ingredient._id },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
   });
-  const openModal = () => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, id: props.ingredient._id });
-  };
-
+  const location = useLocation();
   return (
-    <>
-      <div className={styles.ingredient_card} onClick={openModal} ref={dragRef}>
+    <Link
+      key={props.ingredient._id}
+      to={{
+        pathname: `/ingredient/${props.ingredient._id}`,
+        state: { background: location },
+      }}
+      className={styles.link}
+    >
+      <DragPreviewImage connect={preview} src={props.ingredient.image} />
+      <div className={styles.ingredient_card} ref={dragRef}>
         {counter !== 0 && <Counter count={counter} size="default" />}
         <img
           src={props.ingredient.image}
@@ -44,7 +51,7 @@ function BurgerIngredientCard(props) {
           {props.ingredient.name}
         </p>
       </div>
-    </>
+    </Link>
   );
 }
 BurgerIngredientCard.propTypes = {

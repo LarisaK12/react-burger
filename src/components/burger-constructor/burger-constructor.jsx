@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "./burger-constructor.module.css";
 import BurgerElement from "../burger-element/burger-element";
 import SubmitOrder from "../submit-order/submit-order";
@@ -12,24 +12,37 @@ import {
   ADD_INGREDIENT,
   CLEAR_INGREDIENTS,
 } from "../../services/actions/burger-constructor";
+import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
 
 function BurgerConstructor() {
+  const history = useHistory();
   const { burger } = useSelector((store) => store.constructor);
+  const { user } = useSelector((store) => store.profile);
   const { ingredients } = useSelector((store) => store.ingredients);
   const { orderId, submitOrderFailed } = useSelector((store) => store.order);
   const dispatch = useDispatch();
-  const top = burger ? burger.filter((b) => b.type === "top")[0] : null;
-  const bottom = burger ? burger.filter((b) => b.type === "bottom")[0] : null;
-  const middleIngredients = burger
-    ? burger.filter((ingr) => ingr.type === "undefined")
-    : null;
+  const top = useMemo(
+    () => (burger ? burger.filter((b) => b.type === "top")[0] : null),
+    [burger]
+  );
+  const bottom = useMemo(
+    () => (burger ? burger.filter((b) => b.type === "bottom")[0] : null),
+    [burger]
+  );
+  const middleIngredients = useMemo(
+    () => (burger ? burger.filter((ingr) => ingr.type === "undefined") : null),
+    [burger]
+  );
   const closeModal = () => {
     dispatch({ type: RESET_ORDER });
     dispatch({ type: CLEAR_INGREDIENTS });
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!user) history.replace({ pathname: "/login" });
     if (!burger || burger.filter((i) => i.type !== "undefined").length === 0)
       dispatch({ type: SET_ERROR, error: "Без булок мы готовить не умеем." });
     else dispatch(submitOrder(burger.map((ingr) => ingr._id)));

@@ -15,7 +15,7 @@ function BurgerElement(props) {
     dispatch({ type: REMOVE_INGREDIENT, place: props.place });
   };
   const ref = React.useRef(null);
-  const [, drop] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "moving",
     hover(item, monitor) {
       if (!ref.current) {
@@ -45,14 +45,13 @@ function BurgerElement(props) {
       item.index = hoverIndex;
     },
   });
-  const [, drag] = useDrag({
+  const [, dragRef] = useDrag({
     type: "moving",
     item: () => {
       return { id: props._id, index: props.index };
     },
   });
-
-  drag(drop(ref));
+  dropRef(dragRef(ref));
 
   return (
     <span className={styles.element} ref={ref}>
