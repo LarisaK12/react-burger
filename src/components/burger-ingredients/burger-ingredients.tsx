@@ -5,24 +5,25 @@ import BurgerIngredientsTab from "../burger-ingredients-tab/burger-ingredients-t
 import { useSelector, useDispatch } from "react-redux";
 import { SET_ERROR, CLEAR_ERROR } from "../../services/actions/error";
 import { SET_TAB } from "../../services/actions/tab";
+import { TMenuTab } from "../../utils/types";
 
 function BurgerIngredients() {
   const { ingredientsRequest, ingredientsFailed } = useSelector(
-    (store) => store.ingredients
+    (store:any) => store.ingredients
   );
-  const { tabs, current } = useSelector((store) => store.tab);
+  const { tabs, current } = useSelector((store:any) => store.tab);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     const element = document.getElementById(current);
-    element.scrollIntoView();
+    element?.scrollIntoView();
   }, [current]);
   React.useEffect(() => {
     if (ingredientsFailed)
       dispatch({ type: SET_ERROR, error: "Не удалось загрузить ингредиенты" });
     else dispatch({ type: CLEAR_ERROR });
   }, [dispatch, ingredientsFailed]);
-  const setActiveTab = (value) => {
+  const setActiveTab = (value:string) => {
     dispatch({ type: SET_TAB, current: value });
   };
 
@@ -36,7 +37,7 @@ function BurgerIngredients() {
           <p className="text text_type_main-large">Загружаем...</p>
         ) : (
           <>
-            {tabs.map((tab, index) => (
+            {tabs.map((tab:TMenuTab, index:number) => (
               <Tab
                 key={index}
                 value={tab.id}
@@ -50,11 +51,11 @@ function BurgerIngredients() {
         )}
       </div>
       <div className={styles.ingredients}>
-        <BurgerIngredientsTab id="bun" tabname="Булки"></BurgerIngredientsTab>
-        <BurgerIngredientsTab id="sauce" tabname="Соусы"></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="bun" title="Булки"></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="sauce" title="Соусы"></BurgerIngredientsTab>
         <BurgerIngredientsTab
           id="main"
-          tabname="Начинки"
+          title="Начинки"
         ></BurgerIngredientsTab>
       </div>
     </div>

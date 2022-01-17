@@ -13,7 +13,7 @@ function App() {
     regRequest,
     forgotPassRequest,
     resetPassRequest,
-  } = useSelector((store) => store.profile);
+  } = useSelector((store:any) => store.profile);
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (

@@ -6,19 +6,19 @@ import { Awaiter } from "../components/awaiter/awaiter";
 import { useParams } from "react-router-dom";
 
 import { SET_CURRENT_INGREDIENT } from "../services/actions/ingredient-details";
+import { TIngredient } from "../utils/types";
 export const IngredientDetailsPage = () => {
-  let { id } = useParams();
-  const currentIngredient = useSelector((store) =>
-    store.ingredients.ingredients.find((i) => i._id === id)
+  let { id }:{id:string} = useParams();
+  const currentIngredient:TIngredient = useSelector((store:any) =>
+    store.ingredients.ingredients.find((i:TIngredient) => i._id === id)
   );
   const { ingredientsRequest, ingredientsFailed } = useSelector(
-    (store) => store.ingredients
+    (store:any) => store.ingredients
   );
   const dispatcher = useDispatch();
   React.useEffect(() => {
     dispatcher({ type: SET_CURRENT_INGREDIENT, id: id });
   }, [dispatcher, id]);
-
   return ingredientsRequest ? (
     <>
       <Awaiter />
@@ -30,7 +30,7 @@ export const IngredientDetailsPage = () => {
       <main className={styles.main}>
         <section className={styles.section}>
           {currentIngredient && (
-            <IngredientDetails ingredient={currentIngredient} />
+            <IngredientDetails {...currentIngredient} />
           )}
         </section>
       </main>

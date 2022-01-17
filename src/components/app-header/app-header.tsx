@@ -37,7 +37,7 @@ function AppHeader() {
             <HeaderItem
               text="конструктор"
               onClick={setConstructor}
-              className={styles.left}
+           
             >
               <BurgerIcon
                 type={
@@ -50,7 +50,7 @@ function AppHeader() {
             <HeaderItem
               text="лента заказов"
               onClick={setOrders}
-              className={styles.left}
+           
             >
               <ListIcon
                 type={currentPage === "orders" ? "primary" : "secondary"}
@@ -63,7 +63,7 @@ function AppHeader() {
           <HeaderItem
             text="личный кабинет"
             onClick={setProfile}
-            className={styles.right}
+           
           >
             <ProfileIcon
               type={currentPage === "profile" ? "primary" : "secondary"}

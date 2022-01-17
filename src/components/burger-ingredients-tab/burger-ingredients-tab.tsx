@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
-import PropTypes from "prop-types";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import styles from "./burger-ingredients-tab.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { SET_RATIO } from "../../services/actions/tab";
 import { useInView } from "react-intersection-observer";
+import { TIngredient, TMenuTab } from "../../utils/types";
 
-function BurgerIngredientsTab(props) {
-  const { ingredients } = useSelector((store) => store.ingredients);
+const BurgerIngredientsTab:React.FC<TMenuTab>=(props) =>{
+  const { ingredients } = useSelector((store:any) => store.ingredients);
   const { ref, inView, entry } = useInView({
     // Массив процентов видимиости, при прохождении которых будет обновляться значение entry
     threshold: [0, 0.25, 0.5, 0.75, 1],
@@ -16,7 +16,7 @@ function BurgerIngredientsTab(props) {
   const dispatch = useDispatch();
 
   const filteredIngredients = useMemo(
-    () => ingredients.filter((ingredient) => ingredient.type === props.id),
+    () => ingredients.filter((ingredient:TIngredient) => ingredient.type === props.id),
     [ingredients, props.id]
   );
   React.useEffect(() => {
@@ -30,21 +30,17 @@ function BurgerIngredientsTab(props) {
   return (
     <>
       <p className="text text_type_main-medium pl-4 pt-6 pb-10" id={props.id}>
-        {props.tabname}
+        {props.title}
       </p>
       <div className={styles.ingretients_tab} ref={ref}>
-        {filteredIngredients.map((ingredient, index) => (
+        {filteredIngredients.map((ingredient:TIngredient) => (
           <BurgerIngredientCard
             key={ingredient._id}
-            ingredient={ingredient}
+            {...ingredient}
           ></BurgerIngredientCard>
         ))}
       </div>
     </>
   );
 }
-BurgerIngredientsTab.propTypes = {
-  id: PropTypes.string.isRequired,
-  tabname: PropTypes.string.isRequired,
-};
 export default BurgerIngredientsTab;
