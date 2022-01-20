@@ -11,6 +11,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions/profile";
 import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+import { TLocationState } from "../utils/types";
 
 export const ResetPasswordPage = () => {
   const [value, setValue] = React.useState("");
@@ -21,11 +22,11 @@ export const ResetPasswordPage = () => {
     profileRequestFailed,
     profileRequest,
     passwordReseted,
-  } = useSelector((store) => store.profile);
-  const { error } = useSelector((store) => store.error);
+  } = useSelector((store:any) => store.profile);
+  const { error } = useSelector((store:any) => store.error);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const onSubmit = (e) => {
+  const history = useHistory<TLocationState>();
+  const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
     dispatch({ type: CLEAR_ERROR });
     dispatch(resetPassword({ password: passValue, token: value }));
@@ -49,10 +50,10 @@ export const ResetPasswordPage = () => {
     history,
   ]);
 
-  const onChange = (e) => {
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  const onChangePass = (e) => {
+  const onChangePass = (e:React.ChangeEvent<HTMLInputElement>) => {
     setPassValue(e.target.value);
   };
   if (history.location.state?.pathname !== "/forgot-password")
@@ -73,7 +74,6 @@ export const ResetPasswordPage = () => {
             <PasswordInput
               size="default"
               onChange={onChangePass}
-              placeholder="Введите новый пароль"
               value={passValue}
               name={"password"}
             />

@@ -15,11 +15,11 @@ export const RegisterPage = () => {
   const [passValue, setPassValue] = React.useState("");
   const [nameValue, setNameValue] = React.useState("");
   const { user, regRequestFailed, regRequest } = useSelector(
-    (store) => store.profile
+    (store:any) => store.profile
   );
-  const { error } = useSelector((store) => store.error);
+  const { error } = useSelector((store:any) => store.error);
   const dispatch = useDispatch();
-  const onSubmit = (e) => {
+  const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
     dispatch({ type: CLEAR_ERROR });
     dispatch(
@@ -30,13 +30,13 @@ export const RegisterPage = () => {
     if (regRequestFailed)
       dispatch({ type: SET_ERROR, error: "Регистрация не прошла" });
   }, [dispatch, regRequestFailed]);
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
-  const onChangeName = (e) => {
+  const onChangeName = (e:React.ChangeEvent<HTMLInputElement>) => {
     setNameValue(e.target.value);
   };
-  const onChangePass = (e) => {
+  const onChangePass = (e:React.ChangeEvent<HTMLInputElement>) => {
     setPassValue(e.target.value);
   };
   if (user) {

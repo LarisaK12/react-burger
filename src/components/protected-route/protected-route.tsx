@@ -11,14 +11,13 @@ export const ProtectedRoute :React.FC<TRouteProps>=(props)=> {
   return (
     <Route
       {...props}
-      render={({ location }) =>
-        user ? (
+      render={() =>
+        user? (
           props.children
         ) : (
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: location },
             }}
           />
         )

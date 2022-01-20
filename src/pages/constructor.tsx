@@ -8,7 +8,7 @@ import { CLEAR_ERROR } from "../services/actions/error";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 export const ConstructorPage = () => {
-  const { error } = useSelector((store) => store.error);
+  const { error } = useSelector((store:any) => store.error);
   const dispatcher = useDispatch();
 
   return (

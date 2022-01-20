@@ -8,14 +8,15 @@ import { logout } from "../services/actions/login";
 export const ProfilePage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { user } = useSelector((store) => store.profile);
+  const { user } = useSelector((store:any) => store.profile);
   React.useEffect(() => {
     if (location.pathname === "/exit") {
       dispatch(logout());
     }
   }, [location, dispatch]);
+  
   return !user ? (
-    <Redirect to="/" />
+    <Redirect to="/login" />
   ) : (
     <main className={styles.main}>
       <section className={styles.section}>
