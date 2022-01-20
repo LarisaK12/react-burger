@@ -14,9 +14,10 @@ import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import AppHeader from "../app-header/app-header";
 import { CLEAR_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
+import { TLocationState } from "../../utils/types";
 
 const ModalSwitch = () => {
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const history = useHistory();
   let background = location.state && location.state.background;
   const dispatch = useDispatch();

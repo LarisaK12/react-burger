@@ -1,5 +1,4 @@
 import React from "react";
-import AppHeader from "../components/app-header/app-header";
 import styles from "./forgot-password.module.css";
 import {
   Input,
@@ -18,17 +17,17 @@ export const ForgotPasswordPage = () => {
     profileRequestFailed,
     passwordResetRequired,
     message,
-  } = useSelector((store) => store.profile);
-  const { loggedIn } = useSelector((store) => store.login);
-  const { error } = useSelector((store) => store.error);
+  } = useSelector((store:any) => store.profile);
+  const { loggedIn } = useSelector((store:any) => store.login);
+  const { error } = useSelector((store:any) => store.error);
   const dispatch = useDispatch();
   const history = useHistory();
-  const onSubmit = (e) => {
+  const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
     dispatch({ type: CLEAR_ERROR });
     dispatch(forgotPassword({ email: emailValue }));
   };
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
   React.useEffect(() => {

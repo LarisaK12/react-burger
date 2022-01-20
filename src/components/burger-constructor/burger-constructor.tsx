@@ -14,24 +14,25 @@ import {
 } from "../../services/actions/burger-constructor";
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
+import {TAddedIngredient, TDraggingElement} from "../../utils/types";
 
 function BurgerConstructor() {
   const history = useHistory();
-  const { burger } = useSelector((store) => store.constructor);
-  const { user } = useSelector((store) => store.profile);
-  const { ingredients } = useSelector((store) => store.ingredients);
-  const { orderId, submitOrderFailed } = useSelector((store) => store.order);
+  const { burger } = useSelector((store:any) => store.constructor);
+  const { user } = useSelector((store:any) => store.profile);
+  const { ingredients } = useSelector((store:any) => store.ingredients);
+  const { orderId, submitOrderFailed } = useSelector((store:any) => store.order);
   const dispatch = useDispatch();
   const top = useMemo(
-    () => (burger ? burger.filter((b) => b.type === "top")[0] : null),
+    () => (burger ? burger.filter((b:TAddedIngredient) => b.type === "top")[0] : null),
     [burger]
   );
   const bottom = useMemo(
-    () => (burger ? burger.filter((b) => b.type === "bottom")[0] : null),
+    () => (burger ? burger.filter((b:TAddedIngredient) => b.type === "bottom")[0] : null),
     [burger]
   );
   const middleIngredients = useMemo(
-    () => (burger ? burger.filter((ingr) => ingr.type === "undefined") : null),
+    () => (burger ? burger.filter((ingr:TAddedIngredient) => ingr.type !== "bottom" && ingr.type !== "top") : null),
     [burger]
   );
   const closeModal = () => {
@@ -39,21 +40,21 @@ function BurgerConstructor() {
     dispatch({ type: CLEAR_INGREDIENTS });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e:React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
     if (!user) history.replace({ pathname: "/login" });
-    if (!burger || burger.filter((i) => i.type !== "undefined").length === 0)
+    if (!burger || burger.filter((i:TAddedIngredient) => i.type === "bottom" || i.type === "top").length === 0)
       dispatch({ type: SET_ERROR, error: "Без булок мы готовить не умеем." });
-    else dispatch(submitOrder(burger.map((ingr) => ingr._id)));
+    else dispatch(submitOrder(burger.map((ingr:TAddedIngredient) => ingr._id)));
   };
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item:TDraggingElement) {
       dispatch({
         type: ADD_INGREDIENT,
-        item: ingredients.filter((ingr) => ingr._id === item.itemId)[0],
+        item: ingredients.filter((ingr:TAddedIngredient) => ingr._id === item.id)[0],
       });
     },
   });
@@ -74,7 +75,7 @@ function BurgerConstructor() {
             <div className="pb-4" />
             {middleIngredients && (
               <div className={styles.scrollable}>
-                {middleIngredients.map((ingredient, index) => (
+                {middleIngredients.map((ingredient:TAddedIngredient, index:number) => (
                   <React.Fragment key={ingredient.place}>
                     <BurgerElement
                       {...ingredient}

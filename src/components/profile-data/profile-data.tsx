@@ -11,35 +11,34 @@ import { setUser } from "../../services/actions/profile";
 import { SET_ERROR, CLEAR_ERROR } from "../../services/actions/error";
 
 const ProfileData = () => {
-  const [emailValue, setEmailValue] = React.useState(null);
-  const [nameValue, setNameValue] = React.useState(null);
+  const [emailValue, setEmailValue] = React.useState<string|null>(null);
+  const [nameValue, setNameValue] = React.useState<string|null>(null);
 
   const { user, setProfileRequest, setProfileRequestFailed } = useSelector(
-    (store) => store.profile
+    (store:any) => store.profile
   );
-  const { error } = useSelector((store) => store.error);
+  const { error } = useSelector((store:any) => store.error);
   const dispatch = useDispatch();
-  const onCancel = (e) => {
-    e.preventDefault();
+  const onCancel = () => {
     setEmailValue(null);
     setNameValue(null);
   };
-  const onSave = (e) => {
-    e.preventDefault();
+  const onSave = (e:React.SyntheticEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     dispatch({ type: CLEAR_ERROR });
     dispatch(
       setUser({ name: nameValue || user.name, email: emailValue || user.email })
     );
   };
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setEmailValue(e.target.value);
   };
-  const onChangePass = (e) => {
+  const onChangePass = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
   };
-  const onChangeName = (e) => {
+  const onChangeName = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setNameValue(e.target.value);
   };
@@ -66,8 +65,7 @@ const ProfileData = () => {
         <span className="mb-6"></span>
         <div className={styles.item}>
           <EmailInput
-            placeholder="Логин"
-            icon={"EditIcon"}
+            name="Email"
             size="default"
             onChange={onChangeEmail}
             value={emailValue || emailValue === "" ? emailValue : user?.email}
@@ -76,8 +74,6 @@ const ProfileData = () => {
         <span className="mb-6"></span>
         <div className={styles.item}>
           <PasswordInput
-            defaultValue=""
-            placeholder="Пароль"
             size="default"
             name="password"
             value={""}
@@ -88,17 +84,21 @@ const ProfileData = () => {
         {((emailValue && emailValue !== user?.email) ||
           (nameValue && nameValue !== user?.name)) && (
           <div className={styles.item}>
-            <Button type="primary" size="medium" className="mr-3">
+            <span className="mr-3">
+            <Button type="primary" size="medium" >
               Сохранить
             </Button>
+            </span>
+            <span className="ml-3">
             <Button
               type="primary"
               size="medium"
-              className="ml-3"
+              
               onClick={onCancel}
             >
               Отмена
             </Button>
+            </span>
           </div>
         )}
         <div className={styles.item}>

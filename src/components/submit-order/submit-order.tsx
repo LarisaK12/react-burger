@@ -1,10 +1,13 @@
-import PropTypes from "prop-types";
+import React from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./submit-order.module.css";
 import { useSelector } from "react-redux";
-function SubmitOrder(props) {
-  const { price } = useSelector((store) => store.constructor);
+type TSubmitOrderProps={
+  onClick : (e:React.SyntheticEvent)=>void
+}
+const SubmitOrder:React.FC<TSubmitOrderProps> = (props) => {
+  const { price } = useSelector((store:any) => store.constructor);
   return (
     <form onSubmit={props.onClick}>
       <span className={styles.submit}>
@@ -18,7 +21,4 @@ function SubmitOrder(props) {
     </form>
   );
 }
-SubmitOrder.propTypes = {
-  onClick: PropTypes.func,
-};
 export default SubmitOrder;

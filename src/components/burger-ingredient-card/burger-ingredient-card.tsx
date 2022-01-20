@@ -1,4 +1,5 @@
-import { ingredientPropTypes } from "../../utils/types";
+import React, {FC} from "react" ;
+import { TIngredient } from "../../utils/types";
 import styles from "./burger-ingredient-card.module.css";
 import {
   Counter,
@@ -8,17 +9,17 @@ import { useSelector } from "react-redux";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 
-function BurgerIngredientCard(props) {
-  const counter = useSelector((store) =>
+const BurgerIngredientCard:FC<TIngredient> = (props) => {
+  const counter = useSelector((store:any) =>
     store.constructor.burger
       ? store.constructor.burger.filter(
-          (ingr) => ingr._id === props.ingredient._id
+          (ingr:TIngredient) => ingr._id === props._id
         ).length
       : 0
   );
-  const [{ isDrag }, dragRef, preview] = useDrag({
+  const [, dragRef, preview] = useDrag({ 
     type: "ingredient",
-    item: { itemId: props.ingredient._id },
+    item: { id: props._id },
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -26,36 +27,33 @@ function BurgerIngredientCard(props) {
   const location = useLocation();
   return (
     <Link
-      key={props.ingredient._id}
+      key={props._id}
       to={{
-        pathname: `/ingredient/${props.ingredient._id}`,
+        pathname: `/ingredient/${props._id}`,
         state: { background: location },
       }}
       className={styles.link}
     >
-      <DragPreviewImage connect={preview} src={props.ingredient.image} />
+      <DragPreviewImage connect={preview} src={props.image} />
       <div className={styles.ingredient_card} ref={dragRef}>
         {counter !== 0 && <Counter count={counter} size="default" />}
         <img
-          src={props.ingredient.image}
+          src={props.image}
           className={`ml-4 mr-4 mb-1 ${styles.img}`}
-          alt={props.ingredient.name}
+          alt={props.name}
         />
         <span className={styles.price_div}>
           <p className="text text_type_digits-default mr-2 ">
-            {props.ingredient.price}
+            {props.price}
           </p>
           <CurrencyIcon type="primary" />
         </span>
         <p className={`text text_type_main-small mt-1 ${styles.item_center}`}>
-          {props.ingredient.name}
+          {props.name}
         </p>
       </div>
     </Link>
   );
 }
-BurgerIngredientCard.propTypes = {
-  ingredient: ingredientPropTypes,
-};
 
 export default BurgerIngredientCard;

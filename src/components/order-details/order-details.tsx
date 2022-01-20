@@ -3,7 +3,7 @@ import DoneGif from "../../images/done.gif";
 import { useSelector } from "react-redux";
 
 function OrderDetails() {
-  const { orderId } = useSelector((store) => store.order);
+  const { orderId } = useSelector((store:any) => store.order);
   return (
     <div className={`${styles.flexcol}`}>
       <p className="text text_type_digits-medium">{orderId}</p>

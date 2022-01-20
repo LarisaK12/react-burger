@@ -10,16 +10,17 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Awaiter } from "../components/awaiter/awaiter";
+import { TLocationState } from "../utils/types";
 
 export const LoginPage = () => {
-  const [emailValue, setEmailValue] = React.useState("");
-  const [passValue, setPassValue] = React.useState("");
-  const { error } = useSelector((store) => store.error);
-  const { loginRequestFailed } = useSelector((store) => store.login);
-  const { profileRequest, user } = useSelector((store) => store.profile);
+  const [emailValue, setEmailValue] = React.useState<string>("");
+  const [passValue, setPassValue] = React.useState<string>("");
+  const { error } = useSelector((store:any) => store.error);
+  const { loginRequestFailed } = useSelector((store:any) => store.login);
+  const { profileRequest, user } = useSelector((store:any) => store.profile);
   const dispatch = useDispatch();
-  const location = useLocation();
-  const LogInClick = (e) => {
+  const location = useLocation<TLocationState>();
+  const LogInClick = (e:React.SyntheticEvent) => {
     e.preventDefault();
     dispatch({ type: CLEAR_ERROR });
     dispatch(login({ email: emailValue, password: passValue }));
@@ -33,13 +34,12 @@ export const LoginPage = () => {
     else dispatch({ type: CLEAR_ERROR });
   }, [dispatch, loginRequestFailed]);
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
-  const onChangePass = (e) => {
+  const onChangePass = (e:React.ChangeEvent<HTMLInputElement>) => {
     setPassValue(e.target.value);
   };
-
   return user ? (
     <Redirect
       to={

@@ -1,17 +1,16 @@
-import PropTypes from 'prop-types';
+import {FC} from 'react';
 import styles from './app-header.module.css';
-function HeaderItem(props){     
+type THeaderItemProps={
+    onClick:()=>void,
+    text:string
+}
+const HeaderItem : FC<THeaderItemProps> =  (props)=>{     
 
     return(<div className="pl-5 pr-5 pt-4" onClick={props.onClick}>
-        <nobr className={styles.nav}>
+    <span className={styles.nav}>
     {props.children}
     <p className="ml-2 text text_type_main-default">{props.text}</p>
-    </nobr>
+    </span>
     </div>)
-}
-HeaderItem.propTypes={
-    text:PropTypes.string,
-    children:PropTypes.element,
-    onClick:PropTypes.func
 }
 export default HeaderItem

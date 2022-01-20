@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./burger-element.module.css";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,20 +8,21 @@ import {
 } from "../../services/actions/burger-constructor";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-function BurgerElement(props) {
+import {TAddedIngredient, TDraggingElement} from "../../utils/types";
+const BurgerElement : React.FC<TAddedIngredient>=(props)=> {
   const dispatch = useDispatch();
   const deleteIngredient = () => {
     dispatch({ type: REMOVE_INGREDIENT, place: props.place });
   };
-  const ref = React.useRef(null);
+  const ref = React.useRef<HTMLSpanElement>(null);
   const [, dropRef] = useDrop({
     accept: "moving",
-    hover(item, monitor) {
+    hover(item:TDraggingElement, monitor:any) {
       if (!ref.current) {
         return;
       }
       const dragIndex = item.index;
-      const hoverIndex = props.index;
+      const hoverIndex = props.index?props.index:0;
       if (dragIndex === hoverIndex) {
         return;
       }
@@ -47,8 +47,8 @@ function BurgerElement(props) {
   });
   const [, dragRef] = useDrag({
     type: "moving",
-    item: () => {
-      return { id: props._id, index: props.index };
+    item: ():TDraggingElement => {
+      return { id: props._id, index: props.index?props.index:0 };
     },
   });
   dropRef(dragRef(ref));
@@ -59,7 +59,7 @@ function BurgerElement(props) {
         <span className="pr-8" />
       ) : (
         <>
-          <DragIcon />
+          <DragIcon type="primary"/>
           <span className="pr-1"></span>
         </>
       )}
@@ -68,14 +68,5 @@ function BurgerElement(props) {
     </span>
   );
 }
-BurgerElement.propTypes = {
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  isLocked: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  place: PropTypes.number.isRequired,
-};
 
 export default React.memo(BurgerElement);
