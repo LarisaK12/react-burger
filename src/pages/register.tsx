@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./login.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+import { setError, clearError } from "../services/actions/error";
 import { register } from "../services/actions/profile";
 import { Redirect, Link } from "react-router-dom";
 import {
@@ -21,14 +21,14 @@ export const RegisterPage = () => {
   const dispatch = useDispatch();
   const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch({ type: CLEAR_ERROR });
+    dispatch(clearError());
     dispatch(
       register({ email: emailValue, password: passValue, name: nameValue })
     );
   };
   React.useEffect(() => {
     if (regRequestFailed)
-      dispatch({ type: SET_ERROR, error: "Регистрация не прошла" });
+      dispatch(setError( "Регистрация не прошла" ));
   }, [dispatch, regRequestFailed]);
   const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);

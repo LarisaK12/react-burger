@@ -7,10 +7,10 @@ import Modal from "../modal/modal";
 import { RESET_ORDER } from "../../services/actions/order-details";
 import { useSelector, useDispatch } from "react-redux";
 import { submitOrder } from "../../services/actions/order-details";
-import { SET_ERROR } from "../../services/actions/error";
+import { setError } from "../../services/actions/error";
 import {
-  ADD_INGREDIENT,
-  CLEAR_INGREDIENTS,
+  addIngredient,
+  clearIngredients,
 } from "../../services/actions/burger-constructor";
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
@@ -37,7 +37,7 @@ function BurgerConstructor() {
   );
   const closeModal = () => {
     dispatch({ type: RESET_ORDER });
-    dispatch({ type: CLEAR_INGREDIENTS });
+    dispatch(clearIngredients());
   };
 
   const onSubmit = (e:React.SyntheticEvent) => {
@@ -45,26 +45,20 @@ function BurgerConstructor() {
     e.preventDefault();
     if (!user) history.replace({ pathname: "/login" });
     if (!burger || burger.filter((i:TAddedIngredient) => i.type === "bottom" || i.type === "top").length === 0)
-      dispatch({ type: SET_ERROR, error: "Без булок мы готовить не умеем." });
+      dispatch(setError( "Без булок мы готовить не умеем." ));
     else dispatch(submitOrder(burger.map((ingr:TAddedIngredient) => ingr._id)));
   };
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item:TDraggingElement) {
-      dispatch({
-        type: ADD_INGREDIENT,
-        item: ingredients.filter((ingr:TAddedIngredient) => ingr._id === item.id)[0],
-      });
+      dispatch(addIngredient(ingredients.filter((ingr:TAddedIngredient) => ingr._id === item.id)[0]));
     },
   });
 
   React.useEffect(() => {
     if (submitOrderFailed)
-      dispatch({
-        type: SET_ERROR,
-        error: "Не удалось отправить заказ. Попробуйте еще раз.",
-      });
+      dispatch(setError("Не удалось отправить заказ. Попробуйте еще раз."));
   }, [dispatch, submitOrderFailed]);
   return (
     <>

@@ -10,7 +10,7 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions/profile";
-import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+import { setError, clearError } from "../services/actions/error";
 import { TLocationState } from "../utils/types";
 
 export const ResetPasswordPage = () => {
@@ -28,15 +28,12 @@ export const ResetPasswordPage = () => {
   const history = useHistory<TLocationState>();
   const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch({ type: CLEAR_ERROR });
+    dispatch(clearError());
     dispatch(resetPassword({ password: passValue, token: value }));
   };
   React.useEffect(() => {
     if (profileRequestFailed && passValue)
-      dispatch({
-        type: SET_ERROR,
-        error: message,
-      });
+      dispatch(setError( message ));
     else if (passwordReseted && !profileRequest && !profileRequestFailed) {
       history.replace({ pathname: "/login" });
     }

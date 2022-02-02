@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../services/actions/profile";
-import { SET_ERROR, CLEAR_ERROR } from "../../services/actions/error";
+import { setError, clearError } from "../../services/actions/error";
 
 const ProfileData = () => {
   const [emailValue, setEmailValue] = React.useState<string|null>(null);
@@ -26,7 +26,7 @@ const ProfileData = () => {
   const onSave = (e:React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    dispatch({ type: CLEAR_ERROR });
+    dispatch(clearError());
     dispatch(
       setUser({ name: nameValue || user.name, email: emailValue || user.email })
     );
@@ -44,7 +44,7 @@ const ProfileData = () => {
   };
   React.useEffect(() => {
     if (setProfileRequestFailed) {
-      dispatch({ type: SET_ERROR, error: "Данные не были сохранены" });
+      dispatch(setError("Данные не были сохранены" ));
 
       setEmailValue(null);
       setNameValue(null);

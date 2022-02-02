@@ -5,7 +5,7 @@ import styles from "./ingredient-details.module.css";
 import { Awaiter } from "../components/awaiter/awaiter";
 import { useParams } from "react-router-dom";
 
-import { SET_CURRENT_INGREDIENT } from "../services/actions/ingredient-details";
+import { setCurrentIngredient } from "../services/actions/ingredient-details";
 import { TIngredient } from "../utils/types";
 export const IngredientDetailsPage = () => {
   let { id }:{id:string} = useParams();
@@ -17,7 +17,7 @@ export const IngredientDetailsPage = () => {
   );
   const dispatcher = useDispatch();
   React.useEffect(() => {
-    dispatcher({ type: SET_CURRENT_INGREDIENT, id: id });
+    dispatcher(setCurrentIngredient(id));
   }, [dispatcher, id]);
   return ingredientsRequest ? (
     <>

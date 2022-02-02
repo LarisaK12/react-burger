@@ -3,7 +3,7 @@ import styles from "./login.module.css";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../services/actions/login";
-import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+import { setError, clearError } from "../services/actions/error";
 import {
   EmailInput,
   PasswordInput,
@@ -22,16 +22,13 @@ export const LoginPage = () => {
   const location = useLocation<TLocationState>();
   const LogInClick = (e:React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch({ type: CLEAR_ERROR });
+    dispatch(clearError());
     dispatch(login({ email: emailValue, password: passValue }));
   };
   React.useEffect(() => {
     if (loginRequestFailed)
-      dispatch({
-        type: SET_ERROR,
-        error: "Проверьте правильность логина и пароля",
-      });
-    else dispatch({ type: CLEAR_ERROR });
+      dispatch(setError("Проверьте правильность логина и пароля"));
+    else dispatch(clearError());
   }, [dispatch, loginRequestFailed]);
 
   const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {

@@ -13,7 +13,7 @@ import {
 import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import AppHeader from "../app-header/app-header";
-import { CLEAR_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
+import { clearCurrentIngredient } from "../../services/actions/ingredient-details";
 import { TLocationState } from "../../utils/types";
 
 const ModalSwitch = () => {
@@ -22,7 +22,7 @@ const ModalSwitch = () => {
   let background = location.state && location.state.background;
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
+    dispatch( clearCurrentIngredient());
 
     history.goBack();
   };
