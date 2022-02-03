@@ -4,7 +4,7 @@ import BurgerElement from "../burger-element/burger-element";
 import SubmitOrder from "../submit-order/submit-order";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { RESET_ORDER } from "../../services/actions/order-details";
+import { resetOrder } from "../../services/actions/order-details";
 import { useSelector, useDispatch } from "react-redux";
 import { submitOrder } from "../../services/actions/order-details";
 import { setError } from "../../services/actions/error";
@@ -36,7 +36,7 @@ function BurgerConstructor() {
     [burger]
   );
   const closeModal = () => {
-    dispatch({ type: RESET_ORDER });
+    dispatch(resetOrder());
     dispatch(clearIngredients());
   };
 

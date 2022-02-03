@@ -48,3 +48,16 @@ export type TLocationState = {
 export type TCookieProps ={
   expires?:number|Date|string
 }
+export type TUser ={
+  email:string,
+  name?:string,
+  password?:string
+}
+export type TResetPassword={
+  password:string,
+  token:string
+}
+export type TOrder={
+  id:number,
+  name:string
+}

@@ -38,8 +38,8 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
+          name: action.user.name,
+          email: action.user.email,
         },
       };
     case LOGOUT_SUCCESS:
@@ -59,8 +59,8 @@ export const profileReducer = (state = initialState, action) => {
     case REG_USER_SUCCESS:
       return {
         user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
+          name: action.user.name,
+          email: action.user.email,
         },
         regRequest: false,
         regRequestFailed: false,
@@ -74,8 +74,8 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...initialState,
         user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
+          name: action.user.name,
+          email: action.user.email,
         },
         profileRequest: false,
         profileRequestFailed: false,
@@ -101,8 +101,8 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...initialState,
         user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
+          name: action.user.name,
+          email: action.user.email,
         },
         setProfileRequest: false,
         setProfileRequestFailed: false,
@@ -126,7 +126,7 @@ export const profileReducer = (state = initialState, action) => {
     case FORGOT_PASS_SUCCESS:
       return {
         ...state,
-        message: action.data.message,
+        message: action.message,
         passwordResetRequired: true,
         profileRequest: false,
         profileRequestFailed: false,
@@ -142,7 +142,7 @@ export const profileReducer = (state = initialState, action) => {
     case RESET_PASS_FAILED:
       return {
         ...state,
-        message: action.data.message,
+        message: action.message,
         passwordResetRequired: false,
         passwordReseted: false,
         profileRequest: false,
@@ -151,7 +151,7 @@ export const profileReducer = (state = initialState, action) => {
     case RESET_PASS_SUCCESS:
       return {
         ...state,
-        message: action.data.message,
+        message: action.message,
         passwordResetRequired: false,
         passwordReseted: true,
         profileRequest: false,

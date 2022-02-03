@@ -25,7 +25,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
       };
     case SUBMIT_ORDER_SUCCESS:
       return {
-        orderId: action.data,
+        orderId: action.order.id,
         submitOrderRequest: false,
         submitOrderFailed: false,
       };
