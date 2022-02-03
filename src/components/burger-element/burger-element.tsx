@@ -7,7 +7,7 @@ import {
   moveIngredient,
 } from "../../services/actions/burger-constructor";
 import { useDispatch } from "react-redux";
-import { useDrag, useDrop } from "react-dnd";
+import {  DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import {TAddedIngredient, TDraggingElement} from "../../utils/types";
 const BurgerElement : React.FC<TAddedIngredient>=(props)=> {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const BurgerElement : React.FC<TAddedIngredient>=(props)=> {
   const ref = React.useRef<HTMLSpanElement>(null);
   const [, dropRef] = useDrop({
     accept: "moving",
-    hover(item:TDraggingElement, monitor:any) {
+    hover(item:TDraggingElement, monitor:DropTargetMonitor<TDraggingElement,unknown>) {
       if (!ref.current) {
         return;
       }
@@ -30,7 +30,8 @@ const BurgerElement : React.FC<TAddedIngredient>=(props)=> {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      if(clientOffset === null) return;
+      const hoverClientY =  clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }

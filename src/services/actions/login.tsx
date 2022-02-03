@@ -5,7 +5,7 @@ import {
   fetchData,
 } from "../../utils/utils";
 import { API_URL, LOGIN_URL, LOGOUT_URL } from "../../utils/burger-constants";
-import {TUser} from "../../utils/types"
+import {AppThunk, TUser} from "../../utils/types"
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -66,7 +66,7 @@ export const logoutFailed=():ILogoutFailed=>{
   }
 }
 export function login(data:TUser) {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(loginRequest());
     fetchData(`${API_URL}${LOGIN_URL}`, "POST", JSON.stringify(data))
       .then((res) => {
@@ -85,7 +85,7 @@ export function login(data:TUser) {
   };
 }
 export function logout() {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(logoutRequest());
     if (!getCookie("refreshToken"))
       dispatch(logoutSucccess());

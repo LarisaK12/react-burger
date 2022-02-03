@@ -1,5 +1,5 @@
 import { API_URL, GET_ORDER_ID_URL } from "../../utils/burger-constants";
-import { TOrder } from "../../utils/types";
+import { AppThunk, TOrder } from "../../utils/types";
 import { checkResponse } from "../../utils/utils";
 export const SUBMIT_ORDER_REQUEST = "SUBMIT_ORDER_REQUEST";
 export const SUBMIT_ORDER_SUCCESS = "SUBMIT_ORDER_SUCCESS";
@@ -33,7 +33,7 @@ export const resetOrder = ():IResetOrder=>{
   }
 }
 export function submitOrder(data:ReadonlyArray<string>) {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(submitOrderRequest());
     fetch(`${API_URL}${GET_ORDER_ID_URL}`, {
       method: "POST",

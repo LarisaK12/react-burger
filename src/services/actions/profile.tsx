@@ -12,7 +12,7 @@ import {
   FORGOT_PASSWORD_URL,
   RESET_PASSWORD_URL,
 } from "../../utils/burger-constants";
-import { TResetPassword, TUser } from "../../utils/types";
+import { AppThunk, TResetPassword, TUser } from "../../utils/types";
 
 export const GET_USER_REQUEST = "GET_USER_REQUEST";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
@@ -129,7 +129,7 @@ export const regUserResult = (isSuccess:boolean, user?:TUser|null):IRegUserResul
 }
 
 export function register(data:TUser) {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(regUserRequest());
     fetchData(`${API_URL}${REGISTER_URL}`, "POST", JSON.stringify(data))
       .then((res) => {
@@ -149,7 +149,7 @@ export function register(data:TUser) {
 }
 
 export function getUser() {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(getUserRequest());
     let aToken = getCookie("accessToken");
     if (!aToken) {
@@ -197,7 +197,7 @@ export function getUser() {
 }
 
 export function setUser(data:TUser) {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(setUserRequest());
     let aToken = getCookie("accessToken");
     if (!aToken) {
@@ -250,7 +250,7 @@ export function setUser(data:TUser) {
 }
 
 export function forgotPassword(data:TUser) {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(forgotPasswordRequest());
     fetchData(`${API_URL}${FORGOT_PASSWORD_URL}`, "POST", JSON.stringify(data))
       .then((res) => {
@@ -266,7 +266,7 @@ export function forgotPassword(data:TUser) {
   };
 }
 export function resetPassword(data:TResetPassword) {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(resetPassRequest());
     fetchData(`${API_URL}${RESET_PASSWORD_URL}`, "POST", JSON.stringify(data))
       .then((res) => {

@@ -1,5 +1,5 @@
 import { API_URL, INGREDIENTS_URL } from "../../utils/burger-constants";
-import { TIngredient } from "../../utils/types";
+import { AppThunk, TIngredient } from "../../utils/types";
 import { checkResponse } from "../../utils/utils";
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
@@ -32,7 +32,7 @@ export const getIngredientsFailed =():IGetIngredientsFailed=>{
   }
 }
 export function getIngredients() {
-  return function (dispatch:any) {
+  return function (dispatch:AppThunk) {
     dispatch(getIngredientsRequest());
     fetch(`${API_URL}${INGREDIENTS_URL}`)
       .then(checkResponse)

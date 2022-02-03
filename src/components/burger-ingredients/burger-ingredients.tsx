@@ -9,7 +9,7 @@ import { TMenuTab } from "../../utils/types";
 
 function BurgerIngredients() {
   const { ingredientsRequest, ingredientsFailed } = useSelector(
-    (store:any) => store.ingredients
+    (store) => store.ingredients
   );
   const { tabs, current } = useSelector((store) => store.tab);
   const dispatch = useDispatch();
