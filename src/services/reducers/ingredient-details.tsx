@@ -3,7 +3,7 @@ import {
   CLEAR_CURRENT_INGREDIENT,
   TCurrentIngredientActions
 } from "../actions/ingredient-details";
-type TCurrentIngredientState={
+export type TCurrentIngredientState={
   id:string|null|undefined
 }
 const initialState:TCurrentIngredientState = {

@@ -1,19 +1,19 @@
 import React, {FC} from "react" ;
-import { TIngredient } from "../../utils/types";
+import { TAddedIngredient, TIngredient } from "../../utils/types";
 import styles from "./burger-ingredient-card.module.css";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 
 const BurgerIngredientCard:FC<TIngredient> = (props) => {
-  const counter = useSelector((store:any) =>
+  const counter = useSelector((store) =>
     store.constructor.burger
       ? store.constructor.burger.filter(
-          (ingr:TIngredient) => ingr._id === props._id
+          (ingr:TAddedIngredient) => ingr._id === props._id
         ).length
       : 0
   );

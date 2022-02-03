@@ -1,5 +1,5 @@
 import { SET_ERROR, CLEAR_ERROR, TErrorActions } from "../actions/error";
-type TErrorState = {
+export type TErrorState = {
   error:string
 }
 const InitialState:TErrorState = {

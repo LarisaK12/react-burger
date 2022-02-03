@@ -3,12 +3,12 @@ import ProfileData from "../components/profile-data/profile-data";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
 import { useLocation, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../utils/hooks";
 import { logout } from "../services/actions/login";
 export const ProfilePage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { user } = useSelector((store:any) => store.profile);
+  const { user } = useSelector((store) => store.profile);
   React.useEffect(() => {
     if (location.pathname === "/exit") {
       dispatch(logout());

@@ -7,7 +7,7 @@ import {
   LOGOUT_FAILED,
   TLoginActions
 } from "../actions/login";
-type TLoginState={
+export type TLoginState={
   loginRequest: boolean,
   loginRequestFailed: boolean,
   logoutRequest: boolean,

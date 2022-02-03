@@ -1,7 +1,7 @@
 import { TMenuTab } from "../../utils/types";
 import { SET_TAB, SET_RATIO, TTabActions } from "../actions/tab";
 
-type TTabState = {
+export type TTabState = {
   current: string,
   tabs: ReadonlyArray<TMenuTab>
 };

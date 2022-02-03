@@ -6,7 +6,7 @@ import {
   CLEAR_INGREDIENTS,
   TBurgerIngredientActions
 } from "../actions/burger-constructor";
-type TBurgerConstructorState={
+export type TBurgerConstructorState={
   burger : ReadonlyArray<TAddedIngredient>,
   price : number
 }

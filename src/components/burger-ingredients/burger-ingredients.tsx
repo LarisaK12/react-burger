@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsTab from "../burger-ingredients-tab/burger-ingredients-tab";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { setError, clearError } from "../../services/actions/error";
 import { setTab } from "../../services/actions/tab";
 import { TMenuTab } from "../../utils/types";
@@ -11,7 +11,7 @@ function BurgerIngredients() {
   const { ingredientsRequest, ingredientsFailed } = useSelector(
     (store:any) => store.ingredients
   );
-  const { tabs, current } = useSelector((store:any) => store.tab);
+  const { tabs, current } = useSelector((store) => store.tab);
   const dispatch = useDispatch();
 
   React.useEffect(() => {

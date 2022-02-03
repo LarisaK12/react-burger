@@ -1,7 +1,7 @@
 import React from "react";
 import { Awaiter } from "../components/awaiter/awaiter";
 import styles from "./reset-password.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../utils/hooks";
 import { Link, Redirect, useHistory } from "react-router-dom";
 
 import {
@@ -22,8 +22,8 @@ export const ResetPasswordPage = () => {
     profileRequestFailed,
     profileRequest,
     passwordReseted,
-  } = useSelector((store:any) => store.profile);
-  const { error } = useSelector((store:any) => store.error);
+  } = useSelector((store) => store.profile);
+  const { error } = useSelector((store) => store.error);
   const dispatch = useDispatch();
   const history = useHistory<TLocationState>();
   const onSubmit = (e:React.SyntheticEvent) => {
@@ -32,8 +32,9 @@ export const ResetPasswordPage = () => {
     dispatch(resetPassword({ password: passValue, token: value }));
   };
   React.useEffect(() => {
-    if (profileRequestFailed && passValue)
-      dispatch(setError( message ));
+    if (profileRequestFailed && passValue){
+      if(typeof message === "string") dispatch(setError( message ));
+    }
     else if (passwordReseted && !profileRequest && !profileRequestFailed) {
       history.replace({ pathname: "/login" });
     }

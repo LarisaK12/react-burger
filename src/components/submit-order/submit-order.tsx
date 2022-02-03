@@ -2,12 +2,12 @@ import React from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./submit-order.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 type TSubmitOrderProps={
   onClick : (e:React.SyntheticEvent)=>void
 }
 const SubmitOrder:React.FC<TSubmitOrderProps> = (props) => {
-  const { price } = useSelector((store:any) => store.constructor);
+  const { price } = useSelector((store) => store.constructor);
   return (
     <form onSubmit={props.onClick}>
       <span className={styles.submit}>

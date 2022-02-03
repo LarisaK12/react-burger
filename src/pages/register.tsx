@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./login.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../utils/hooks";
 import { setError, clearError } from "../services/actions/error";
 import { register } from "../services/actions/profile";
 import { Redirect, Link } from "react-router-dom";
@@ -15,9 +15,9 @@ export const RegisterPage = () => {
   const [passValue, setPassValue] = React.useState("");
   const [nameValue, setNameValue] = React.useState("");
   const { user, regRequestFailed, regRequest } = useSelector(
-    (store:any) => store.profile
+    (store) => store.profile
   );
-  const { error } = useSelector((store:any) => store.error);
+  const { error } = useSelector((store) => store.error);
   const dispatch = useDispatch();
   const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();

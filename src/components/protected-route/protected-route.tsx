@@ -1,12 +1,12 @@
 import { Redirect, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import React from "react";
 type TRouteProps ={
   path:string,
   exact?:boolean
 }
 export const ProtectedRoute :React.FC<TRouteProps>=(props)=> {
-  const { user } = useSelector((store:any) => store.profile);
+  const { user } = useSelector((store) => store.profile);
 
   return (
     <Route

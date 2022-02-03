@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./login.module.css";
 import { Link, Redirect, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../utils/hooks";
 import { login } from "../services/actions/login";
 import { setError, clearError } from "../services/actions/error";
 import {
@@ -15,9 +15,9 @@ import { TLocationState } from "../utils/types";
 export const LoginPage = () => {
   const [emailValue, setEmailValue] = React.useState<string>("");
   const [passValue, setPassValue] = React.useState<string>("");
-  const { error } = useSelector((store:any) => store.error);
-  const { loginRequestFailed } = useSelector((store:any) => store.login);
-  const { profileRequest, user } = useSelector((store:any) => store.profile);
+  const { error } = useSelector((store) => store.error);
+  const { loginRequestFailed } = useSelector((store) => store.login);
+  const { profileRequest, user } = useSelector((store) => store.profile);
   const dispatch = useDispatch();
   const location = useLocation<TLocationState>();
   const LogInClick = (e:React.SyntheticEvent) => {

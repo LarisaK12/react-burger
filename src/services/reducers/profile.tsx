@@ -18,7 +18,7 @@ import {
 } from "../actions/profile";
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS, TLoginActions } from "../actions/login";
 import { TUser } from "../../utils/types";
-type TProfileState = {
+export type TProfileState = {
   user: null|undefined|TUser,
   passwordResetRequired: boolean,
   passwordReseted: boolean,

@@ -5,7 +5,7 @@ import {
   GET_INGREDIENTS_FAILED,
   TIngredientActions
 } from "../actions/ingredients";
-type TIngredientsState={
+export type TIngredientsState={
   ingredients:ReadonlyArray<TIngredient>,
   ingredientsRequest:boolean,
   ingredientsFailed:boolean

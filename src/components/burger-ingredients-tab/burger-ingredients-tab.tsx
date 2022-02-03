@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import styles from "./burger-ingredients-tab.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { setRatio } from "../../services/actions/tab";
 import { useInView } from "react-intersection-observer";
 import { TIngredient, TMenuTab } from "../../utils/types";
 
 const BurgerIngredientsTab:React.FC<TMenuTab>=(props) =>{
-  const { ingredients } = useSelector((store:any) => store.ingredients);
+  const { ingredients } = useSelector((store) => store.ingredients);
   const { ref, inView, entry } = useInView({
     // Массив процентов видимиости, при прохождении которых будет обновляться значение entry
     threshold: [0, 0.25, 0.5, 0.75, 1],

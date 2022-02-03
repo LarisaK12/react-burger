@@ -5,7 +5,7 @@ import SubmitOrder from "../submit-order/submit-order";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import { resetOrder } from "../../services/actions/order-details";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { submitOrder } from "../../services/actions/order-details";
 import { setError } from "../../services/actions/error";
 import {
@@ -18,10 +18,10 @@ import {TAddedIngredient,TIngredient, TDraggingElement} from "../../utils/types"
 
 function BurgerConstructor() {
   const history = useHistory();
-  const { burger } = useSelector((store:any) => store.constructor);
-  const { user } = useSelector((store:any) => store.profile);
-  const { ingredients } = useSelector((store:any) => store.ingredients);
-  const { orderId, submitOrderFailed } = useSelector((store:any) => store.order);
+  const { burger } = useSelector((store) => store.constructor);
+  const { user } = useSelector((store) => store.profile);
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const { orderId, submitOrderFailed } = useSelector((store) => store.order);
   const dispatch = useDispatch();
   const top = useMemo(
     () => (burger ? burger.filter((b:TAddedIngredient) => b.type === "top")[0] : null),

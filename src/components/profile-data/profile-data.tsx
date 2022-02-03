@@ -6,7 +6,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { setUser } from "../../services/actions/profile";
 import { setError, clearError } from "../../services/actions/error";
 
@@ -15,9 +15,9 @@ const ProfileData = () => {
   const [nameValue, setNameValue] = React.useState<string|null>(null);
 
   const { user, setProfileRequest, setProfileRequestFailed } = useSelector(
-    (store:any) => store.profile
+    (store) => store.profile
   );
-  const { error } = useSelector((store:any) => store.error);
+  const { error } = useSelector((store) => store.error);
   const dispatch = useDispatch();
   const onCancel = () => {
     setEmailValue(null);
@@ -28,7 +28,7 @@ const ProfileData = () => {
     e.preventDefault();
     dispatch(clearError());
     dispatch(
-      setUser({ name: nameValue || user.name, email: emailValue || user.email })
+      setUser({ name: nameValue || user?.name , email: emailValue || user?.email || '' })
     );
   };
   const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +59,7 @@ const ProfileData = () => {
             icon={"EditIcon"}
             size="default"
             onChange={onChangeName}
-            value={nameValue || nameValue === "" ? nameValue : user?.name}
+            value={nameValue || nameValue === "" ? nameValue : user?.name || ''}
           ></Input>
         </div>
         <span className="mb-6"></span>
@@ -68,7 +68,7 @@ const ProfileData = () => {
             name="Email"
             size="default"
             onChange={onChangeEmail}
-            value={emailValue || emailValue === "" ? emailValue : user?.email}
+            value={emailValue || emailValue === "" ? emailValue : user?.email || ''}
           ></EmailInput>
         </div>
         <span className="mb-6"></span>

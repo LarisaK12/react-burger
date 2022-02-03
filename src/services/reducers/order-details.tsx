@@ -5,7 +5,7 @@ import {
   RESET_ORDER,
   TOrderActions,
 } from "../actions/order-details";
-type TOrderState = {
+export type TOrderState = {
   orderId: null|undefined|number,
   submitOrderRequest: boolean,
   submitOrderFailed: boolean,
