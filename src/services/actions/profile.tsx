@@ -67,7 +67,7 @@ export interface IRegUserRequest{
 }
 export interface IRegUserResult{
   readonly type:typeof REG_USER_FAILED | typeof REG_USER_SUCCESS,
-  readonly user?:TUser
+  readonly user?:TUser|null
 }
 
 export type TProfileActions = IResetPassRequest | IResetPassResult |IForgotPassRequest |IForgotPassResult
@@ -121,7 +121,7 @@ export const regUserRequest=():IRegUserRequest=>{
     type: REG_USER_REQUEST
   }
 }
-export const regUserResult = (isSuccess:boolean, user?:TUser):IRegUserResult=>{
+export const regUserResult = (isSuccess:boolean, user?:TUser|null):IRegUserResult=>{
   return{
     type:  isSuccess? REG_USER_SUCCESS: REG_USER_FAILED,
     user

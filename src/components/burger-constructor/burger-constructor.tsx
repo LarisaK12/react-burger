@@ -14,7 +14,7 @@ import {
 } from "../../services/actions/burger-constructor";
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
-import {TAddedIngredient, TDraggingElement} from "../../utils/types";
+import {TAddedIngredient,TIngredient, TDraggingElement} from "../../utils/types";
 
 function BurgerConstructor() {
   const history = useHistory();
@@ -52,7 +52,7 @@ function BurgerConstructor() {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item:TDraggingElement) {
-      dispatch(addIngredient(ingredients.filter((ingr:TAddedIngredient) => ingr._id === item.id)[0]));
+      dispatch(addIngredient(ingredients.filter((ingr:TIngredient) => ingr._id === item.id)[0]));
     },
   });
 

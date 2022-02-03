@@ -3,13 +3,19 @@ import {
   SUBMIT_ORDER_SUCCESS,
   SUBMIT_ORDER_FAILED,
   RESET_ORDER,
+  TOrderActions,
 } from "../actions/order-details";
-const initialState = {
+type TOrderState = {
+  orderId: null|undefined|number,
+  submitOrderRequest: boolean,
+  submitOrderFailed: boolean,
+};
+const initialState:TOrderState = {
   orderId: null,
   submitOrderRequest: false,
   submitOrderFailed: false,
 };
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state:TOrderState = initialState, action:TOrderActions):TOrderState => {
   switch (action.type) {
     case SUBMIT_ORDER_FAILED:
       return {
@@ -25,7 +31,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
       };
     case SUBMIT_ORDER_SUCCESS:
       return {
-        orderId: action.order.id,
+        orderId: action.order?.id,
         submitOrderRequest: false,
         submitOrderFailed: false,
       };

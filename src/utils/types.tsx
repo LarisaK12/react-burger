@@ -26,10 +26,11 @@ export type TDraggingElement={
   id:string,
   index:number
 }
+export type TMenuTabName=   "bun"|"sauce"|"main";
 export type TMenuTab={
-  id: string,
+  id: TMenuTabName,
   title: string,
-  ratio?: number,
+  ratio: number,
 }
 export type TMenu={
  current:string,

@@ -5,15 +5,24 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  TLoginActions
 } from "../actions/login";
-const initialState = {
+type TLoginState={
+  loginRequest: boolean,
+  loginRequestFailed: boolean,
+  logoutRequest: boolean,
+  logoutRequestFailed: boolean,
+  loggedIn?:boolean
+}
+const initialState:TLoginState = {
   loginRequest: false,
   loginRequestFailed: false,
   logoutRequest: false,
   logoutRequestFailed: false,
+  loggedIn: false
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state:TLoginState = initialState, action:TLoginActions):TLoginState => {
   switch (action.type) {
     case LOGIN_FAILED:
       return {
@@ -43,7 +52,6 @@ export const loginReducer = (state = initialState, action) => {
     case LOGOUT_SUCCESS:
       return {
         ...initialState,
-        user: null,
         loggedIn: false,
       };
     default:

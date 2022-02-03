@@ -2,7 +2,7 @@ export const SET_TAB:"SET_TAB" = "SET_TAB";
 export const SET_RATIO:"SET_RATIO" = "SET_RATIO";
 export interface ISetTab{
     readonly type: typeof SET_TAB,
-    readonly current:string
+    readonly current:string,
 }
 export interface ISetRatio{
     readonly type: typeof SET_RATIO,

@@ -51,11 +51,12 @@ function BurgerIngredients() {
         )}
       </div>
       <div className={styles.ingredients}>
-        <BurgerIngredientsTab id="bun" title="Булки"></BurgerIngredientsTab>
-        <BurgerIngredientsTab id="sauce" title="Соусы"></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="bun" title="Булки" ratio={1}></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="sauce" title="Соусы" ratio={0}></BurgerIngredientsTab>
         <BurgerIngredientsTab
           id="main"
           title="Начинки"
+          ratio={0}
         ></BurgerIngredientsTab>
       </div>
     </div>
