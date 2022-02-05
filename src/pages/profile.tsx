@@ -6,6 +6,8 @@ import styles from "./profile.module.css";
 import { useLocation, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "../utils/hooks";
 import { logout } from "../services/actions/login";
+import {startConnection, closeConnection} from "../services/actions/ws";
+
 export const ProfilePage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -15,7 +17,11 @@ export const ProfilePage = () => {
       dispatch(logout());
     }
   }, [location, dispatch]);
-  
+  React.useEffect(()=>{
+     dispatch(startConnection("personal"));
+return ()=>{ dispatch(closeConnection())}
+  },[dispatch])
+    
   return !user ? (
     <Redirect to="/login" />
   ) : (

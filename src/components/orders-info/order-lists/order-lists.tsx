@@ -6,17 +6,19 @@ const OrderLists:React.FC<TOrderLists>=(props)=>{
         <div className={styles.main}>
             <div className="mr-9">
             <p className="mb-6 text text_type_main-medium">Готовы:</p>
-            {props.ready && props.ready.map((orderId:number, index:number) => (
+            {props.ready.slice(0,10) && props.ready.slice(0,10).map((orderId:number, index:number) => (
                 <div className="mb-2" key={index}>
-                <p className={`text text_type_digits-medium ${styles.green}`} >{orderId}</p>
+                <p className={`text text_type_digits-small ${styles.green}`} >{orderId}</p>
                   </div>
                 ))}
+            
             </div>
+            
             <div>
             <p className="mb-6  text text_type_main-medium">В работе:</p>
             {props.waiting && props.waiting.map((orderId:number, index:number) => (
                 <div className="mb-2" key={index}>
-                <p className="text text_type_digits-medium" >{orderId}</p>
+                <p className="text text_type_digits-small" >{orderId}</p>
                   </div>
                 ))}
             

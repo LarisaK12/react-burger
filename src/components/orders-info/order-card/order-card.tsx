@@ -9,19 +9,19 @@ const OrderCard:React.FC<TOrder> = (props)=>{
     
 return(
     <Link
-      key={props.id}
+      key={props.number}
       to={{
-        pathname:  `${location.pathname}${location.pathname[location.pathname.length-1]==="/"?"":"/"}${props.id}`,
+        pathname:  `${location.pathname}${location.pathname[location.pathname.length-1]==="/"?"":"/"}${props.number}`,
         state: { background: location },
       }}
       className={styles.link}
     >
 <div className={`p-6 mt-3 mb-3 ${styles.card}`}>
-    <div className={styles.row}><p className="text text_type_digits-default" >#{props.id}</p>
+    <div className={styles.row}><p className="text text_type_digits-default" >#{props.number}</p>
     <p className="text text_type_main-default text_color_inactive" >{dateToString(props.createdAt)}</p>
     </div>
     <p className="mt-6 mb-6 text text_type_main-medium">{props.name}</p>
-    {props.status && <p className={`mt-2 mb-6 text text_type_main-small ${props.status==="выполнен"?styles.green:""}`}>{props.status}</p>}
+    {props.status && <p className={`mt-2 mb-6 text text_type_main-small ${props.status==="done"?styles.green:""}`}>{props.status==="done"?"готов":props.status}</p>}
     {props.ingredients && <IngredientRow  ingredients={props.ingredients} ></IngredientRow>}   
     
 </div>

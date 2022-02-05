@@ -48,6 +48,14 @@ export const refreshToken = () => {
       body: JSON.stringify({ token: getCookie("refreshToken") }),
     }).then(checkResponse);
 };
+export const getToken =()=>{
+  var token = getCookie("accessToken");
+  if(!token){
+    refreshToken();
+    token = getCookie("accessToken");
+  }
+  return token;
+}
 export function getCookie(name:string):string|undefined {
   const matches = document.cookie.match(
     new RegExp(
@@ -82,11 +90,12 @@ export function deleteCookie(name:string) {
 }
 
 export function dateToString(dt:Date):string{
-  var day = dt.getFullYear()=== new Date().getFullYear() &&
-    dt.getMonth()=== new Date().getMonth() ? (dt.getDay() === new Date().getDay()?"сегодня":
-     new Date().getDay()-dt.getDay() === 1?"вчера":`${new Date().getDay()-dt.getDay()} дня назад`
-    ) :null;
-    if(day === null) day=`${dt.getFullYear()}-${dt.getMonth()}-${dt.getDay()}`;
-    return `${day}, ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
+  return dt.toString();
+  // var day = dt.getFullYear()=== new Date().getFullYear() &&
+  //   dt.getMonth()=== new Date().getMonth() ? (dt.getDay() === new Date().getDay()?"сегодня":
+  //    new Date().getDay()-dt.getDay() === 1?"вчера":`${new Date().getDay()-dt.getDay()} дня назад`
+  //   ) :null;
+  //   if(day === null) day=`${dt.getFullYear()}-${dt.getMonth()}-${dt.getDay()}`;
+  //   return `${day}, ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
     
 }

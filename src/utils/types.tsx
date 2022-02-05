@@ -10,6 +10,7 @@ import { TTabActions } from "../services/actions/tab";
 import {store} from "../services/store";
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
+import { TWSActions } from "../services/actions/ws";
 export type TOrderQuantity = {
   title:string,
   quantity:number
@@ -78,8 +79,9 @@ export type TResetPassword={
   token:string
 }
 export type TOrderShortDetails={
-  id:number,
-  name:string
+  number:number,
+  name?:string,
+  _id?:string
 }
 export type TOrderIngredients={
   ingredients:ReadonlyArray<string>,
@@ -91,8 +93,14 @@ export type TOrder =TOrderShortDetails &TOrderIngredients &{
   updatedAt:Date
 }
 
+export type TWSResponse = {
+  success :boolean,
+  orders:ReadonlyArray<TOrder>,
+  total:number,
+  totalToday:number
+}
 export type RootState = ReturnType<typeof store.getState>;
-export type TApplicationActions = TLoginActions|TProfileActions|TErrorActions|TIngredientActions|TBurgerIngredientActions|TCurrentIngredientActions|TOrderActions|TTabActions;
+export type TApplicationActions = TWSActions | TLoginActions|TProfileActions|TErrorActions|TIngredientActions|TBurgerIngredientActions|TCurrentIngredientActions|TOrderActions|TTabActions;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
   ThunkAction<ReturnType, Action, RootState, TApplicationActions>

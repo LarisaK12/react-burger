@@ -1,6 +1,6 @@
 import { API_URL, GET_ORDER_ID_URL } from "../../utils/burger-constants";
 import { AppThunk, TOrderShortDetails } from "../../utils/types";
-import { checkResponse } from "../../utils/utils";
+import { checkResponse, fetchWithToken, getToken } from "../../utils/utils";
 export const SUBMIT_ORDER_REQUEST = "SUBMIT_ORDER_REQUEST";
 export const SUBMIT_ORDER_SUCCESS = "SUBMIT_ORDER_SUCCESS";
 export const SUBMIT_ORDER_FAILED = "SUBMIT_ORDER_FAILED";
@@ -35,17 +35,12 @@ export const resetOrder = ():IResetOrder=>{
 export function submitOrder(data:ReadonlyArray<string>) {
   return function (dispatch:AppThunk) {
     dispatch(submitOrderRequest());
-    fetch(`${API_URL}${GET_ORDER_ID_URL}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({ ingredients: data }),
-    })
-      .then(checkResponse)
-      .then((res) => {
+    let token=getToken();
+    if(!token) dispatch(submitOrderResult(false));
+    fetchWithToken(`${API_URL}${GET_ORDER_ID_URL}`, "POST",JSON.stringify({ ingredients: data }))
+       .then((res) => {
         if (res && res.success) {
-          dispatch(submitOrderResult(true,{id:res.order.number, name:res.name}));
+          dispatch(submitOrderResult(true,{number:res.order.number, _id:res.name}));
         } else {
           dispatch(submitOrderResult(false));
         }
@@ -53,5 +48,7 @@ export function submitOrder(data:ReadonlyArray<string>) {
       .catch((e) => {
         dispatch(submitOrderResult(false));
       });
+
+      
   };
 }
