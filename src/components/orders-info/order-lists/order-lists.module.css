@@ -1,0 +1,13 @@
+.main{
+    background: #131316;
+    max-width: fit-content;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    
+}
+.green{
+    color: #00CCCC;
+    
+}

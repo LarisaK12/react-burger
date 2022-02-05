@@ -1,0 +1,18 @@
+.price_div{
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+ }
+.horizontal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    width: 500px;
+   
+
+}

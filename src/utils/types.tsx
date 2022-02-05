@@ -10,7 +10,14 @@ import { TTabActions } from "../services/actions/tab";
 import {store} from "../services/store";
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
-
+export type TOrderQuantity = {
+  title:string,
+  quantity:number
+}
+export type TOrderLists ={
+  ready:ReadonlyArray<number>,
+  waiting:ReadonlyArray<number>,
+}
 export type TIngredient = {
   _id: string,
   name: string,
@@ -70,10 +77,20 @@ export type TResetPassword={
   password:string,
   token:string
 }
-export type TOrder={
+export type TOrderShortDetails={
   id:number,
   name:string
 }
+export type TOrderIngredients={
+  ingredients:ReadonlyArray<string>,
+}
+export type TOrder =TOrderShortDetails &TOrderIngredients &{
+  price?:number,
+  status:string|null,
+  createdAt:Date,
+  updatedAt:Date
+}
+
 export type RootState = ReturnType<typeof store.getState>;
 export type TApplicationActions = TLoginActions|TProfileActions|TErrorActions|TIngredientActions|TBurgerIngredientActions|TCurrentIngredientActions|TOrderActions|TTabActions;
 export type AppDispatch = typeof store.dispatch;

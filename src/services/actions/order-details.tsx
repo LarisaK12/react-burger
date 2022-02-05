@@ -1,5 +1,5 @@
 import { API_URL, GET_ORDER_ID_URL } from "../../utils/burger-constants";
-import { AppThunk, TOrder } from "../../utils/types";
+import { AppThunk, TOrderShortDetails } from "../../utils/types";
 import { checkResponse } from "../../utils/utils";
 export const SUBMIT_ORDER_REQUEST = "SUBMIT_ORDER_REQUEST";
 export const SUBMIT_ORDER_SUCCESS = "SUBMIT_ORDER_SUCCESS";
@@ -10,7 +10,7 @@ export interface ISubmitOrderRequest{
 }
 export interface ISubmitOrderResult{
   readonly type: typeof SUBMIT_ORDER_SUCCESS | typeof SUBMIT_ORDER_FAILED,
-  readonly order?:TOrder
+  readonly order?:TOrderShortDetails
 }
 export interface IResetOrder{
   readonly type:typeof RESET_ORDER
@@ -21,7 +21,7 @@ export const submitOrderRequest=():ISubmitOrderRequest=>{
     type:SUBMIT_ORDER_REQUEST
   }
 }
-export const submitOrderResult=(isSuccess:boolean,order?:TOrder):ISubmitOrderResult=>{
+export const submitOrderResult=(isSuccess:boolean,order?:TOrderShortDetails):ISubmitOrderResult=>{
   return {
     type: isSuccess? SUBMIT_ORDER_SUCCESS : SUBMIT_ORDER_FAILED,
     order

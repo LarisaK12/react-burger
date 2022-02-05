@@ -1,0 +1,29 @@
+.main{
+    position: relative;
+    display:flex;
+    flex-direction:row; 
+    width: 100%;
+    justify-content: space-between;   
+    align-items: center;
+}
+.img_container{
+    position: relative;
+    display:flex;
+    flex-direction:row; 
+    height: 72px;
+}
+.item{
+    position: absolute;
+    border-radius: 100px; 
+    object-fit: cover;
+    height:72px;
+    width: 72px;
+    background-color: #000000;   
+    border: 3px solid  #5e1383;  
+
+}
+.price_div{
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+ }

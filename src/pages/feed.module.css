@@ -1,0 +1,29 @@
+.main{
+    background: #131316;
+    max-width: fit-content;
+    display: flex;
+    flex-direction: row;
+    margin:0 auto;
+    justify-content:space-between;
+    
+}
+.section{
+  max-width: 670px;
+  
+
+}
+.scrollable{
+  height: 700px;
+overflow-y: auto;
+overflow-x: hidden;
+
+padding: 0 30px 0 0  ;
+}
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2F2F37;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+

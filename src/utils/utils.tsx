@@ -52,7 +52,8 @@ export function getCookie(name:string):string|undefined {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
-        name.replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") +
+      // eslint-disable-next-line no-useless-escape
+      name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
         "=([^;]*)"
     )
   );
@@ -73,10 +74,19 @@ export function setCookie(name:string, value:string|null, props?:TCookieProps) {
   value = value?encodeURIComponent(value as string):'';
   let updatedCookie = name + "=" + value;
   updatedCookie +=";expires="+props.expires;
-  
   document.cookie = updatedCookie;
 }
 
 export function deleteCookie(name:string) {
   setCookie(name, null, { expires: -1 });
+}
+
+export function dateToString(dt:Date):string{
+  var day = dt.getFullYear()=== new Date().getFullYear() &&
+    dt.getMonth()=== new Date().getMonth() ? (dt.getDay() === new Date().getDay()?"сегодня":
+     new Date().getDay()-dt.getDay() === 1?"вчера":`${new Date().getDay()-dt.getDay()} дня назад`
+    ) :null;
+    if(day === null) day=`${dt.getFullYear()}-${dt.getMonth()}-${dt.getDay()}`;
+    return `${day}, ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
+    
 }

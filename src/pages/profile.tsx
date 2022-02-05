@@ -1,5 +1,6 @@
 import React from "react";
 import ProfileData from "../components/profile-data/profile-data";
+import ProfileOrdersData from "../components/profile-orders-data/profile-orders-data";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
 import { useLocation, Redirect } from "react-router-dom";
@@ -79,6 +80,7 @@ export const ProfilePage = () => {
       <span className="mr-15"></span>
       <section className={styles.section}>
         {location.pathname === "/profile" && <ProfileData />}
+        {location.pathname === "/profile/orders" && <ProfileOrdersData />}
       </section>
     </main>
   );

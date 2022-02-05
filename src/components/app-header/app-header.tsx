@@ -21,8 +21,8 @@ function AppHeader() {
     history.replace({ pathname: "/" });
   }, [history]);
   const setOrders = useCallback(() => {
-    setCurrentPage("orders");
-    history.replace({ pathname: "/orders" });
+    setCurrentPage("feed");
+    history.replace({ pathname: "/feed" });
   }, [history]);
   const setProfile = useCallback(() => {
     setCurrentPage("profile");
@@ -53,7 +53,7 @@ function AppHeader() {
            
             >
               <ListIcon
-                type={currentPage === "orders" ? "primary" : "secondary"}
+                type={currentPage === "feed" ? "primary" : "secondary"}
               />
             </HeaderItem>
           </div>
