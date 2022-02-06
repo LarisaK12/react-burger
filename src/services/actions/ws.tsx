@@ -35,8 +35,12 @@ export interface ICloseConnection{
     readonly type:typeof WS_CLOSE_CONNECTION
 }
 export type TWSActions = IStartConnection | IConnectionStarted |IConnectionError |IConnectionClosed |IGetMessage |ISendMessage | ICloseConnection;
-export const startConnection=(mode:string):IStartConnection=>{
+export const startConnection=(mode:string):IStartConnection|IConnectionError=>{
     const token = getToken();
+    if(mode === "personal" && !token) 
+    return{
+        type:WS_CONNECTION_ERROR
+    }
     const wsUrl = mode === "personal"?`${WS_URL}${USER_ORDERS_URL}?token=${token}`:`${WS_URL}${ORDERS_ALL_URL}`;
     return{
         type:WS_CONNECTION_START,

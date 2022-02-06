@@ -38,7 +38,9 @@ export const fetchWithRefresh = (url:string, method:string, data?:string) => {
   });
 };
 export const refreshToken = () => {
-  if (!getCookie("refreshToken")) return Promise.reject(`Ошибка: токена нет`);
+  if (!getCookie("refreshToken")) {
+    console.log(getCookie("refreshToken"));
+    return Promise.reject(`Ошибка: токена нет`);}
   else
     return fetch(`${API_URL}${TOKEN_URL}`, {
       method: "POST",
@@ -51,7 +53,7 @@ export const refreshToken = () => {
 export const getToken =()=>{
   var token = getCookie("accessToken");
   if(!token){
-    refreshToken();
+    refreshToken().catch((e)=>{return null});
     token = getCookie("accessToken");
   }
   return token;
@@ -89,13 +91,18 @@ export function deleteCookie(name:string) {
   setCookie(name, null, { expires: -1 });
 }
 
-export function dateToString(dt:Date):string{
-  return dt.toString();
-  // var day = dt.getFullYear()=== new Date().getFullYear() &&
-  //   dt.getMonth()=== new Date().getMonth() ? (dt.getDay() === new Date().getDay()?"сегодня":
-  //    new Date().getDay()-dt.getDay() === 1?"вчера":`${new Date().getDay()-dt.getDay()} дня назад`
-  //   ) :null;
-  //   if(day === null) day=`${dt.getFullYear()}-${dt.getMonth()}-${dt.getDay()}`;
-  //   return `${day}, ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
+export function dateToString(dtime:Date):string{
+  try{
+    var dt = new Date(dtime);
+    var day = dt.getFullYear()=== new Date().getFullYear() &&
+    dt.getMonth()=== new Date().getMonth() ? (dt.getDay() === new Date().getDay()?"сегодня":
+     new Date().getDay()-dt.getDay() === 1?"вчера":`${new Date().getDay()-dt.getDay()} дня назад`
+    ) :null;
+    if(day === null) day=`${dt.getFullYear()}-${dt.getMonth()}-${dt.getDay()}`;
+    return `${day}, ${dt.toLocaleTimeString()}`
+  
+  }catch(e){
+    return dtime.toString();
+  }
     
 }

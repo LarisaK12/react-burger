@@ -1,22 +1,24 @@
 import styles from "./order-ingredients-list.module.css";
-import React from "react";
+import React, { useMemo } from "react";
 import { TOrderIngredients,TIngredient } from "../../../utils/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "../../../utils/hooks";
 
 const OrderIngredientsList:React.FC<TOrderIngredients>=(props)=>{
     const { ingredients } = useSelector((store) => store.ingredients);
-
-    var selectedIngreients:Array<TIngredient&{cnt:number}>=[];
+    const selectedIngreients = useMemo(()=>{
+    var si:Array<TIngredient&{cnt:number}>=[];
       props.ingredients.forEach(
           (i)=>{
               let ingr = ingredients.find((ingr)=>ingr._id===i)
           if(ingr){
-            selectedIngreients.some(c=>c._id===i)?selectedIngreients[selectedIngreients.findIndex(c=>c._id===i)].cnt++:
-            selectedIngreients.push({...ingr, cnt:1})
+            si.some(c=>c._id===i)?si[si.findIndex(c=>c._id===i)].cnt++:
+            si.push({...ingr, cnt:1})
           }
         }
-      )   
+      );
+      return si; 
+    },[props, ingredients])  
  
 return(
     <div className={styles.scrollable}>

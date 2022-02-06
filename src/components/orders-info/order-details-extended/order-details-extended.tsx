@@ -9,15 +9,16 @@ import {TIngredient} from "../../../utils/types";
 
 const OrderDetailsExtended:React.FC<TOrder> = (props)=>{
     const { ingredients } = useSelector((store) => store.ingredients);
-    
-    var selectedIngreients:Array<TIngredient>=[];
+    const selectedIngreients = useMemo(()=>{
+    var si:Array<TIngredient>=[];
       props.ingredients.forEach(
           (i)=>{
               let ingr = ingredients.find((ingr)=>ingr._id===i)
-              if(ingr) selectedIngreients.push({...ingr})
+              if(ingr) si.push({...ingr})
           }        
       )   
- 
+      return si;
+        },[ingredients,props])
     const price = useMemo(()=>selectedIngreients.length === 0?0: selectedIngreients.map((ingr)=>ingr.price).reduce((s,price)=>s+price),[selectedIngreients]);
     
 return(
