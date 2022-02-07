@@ -2,16 +2,16 @@ import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsTab from "../burger-ingredients-tab/burger-ingredients-tab";
-import { useSelector, useDispatch } from "react-redux";
-import { SET_ERROR, CLEAR_ERROR } from "../../services/actions/error";
-import { SET_TAB } from "../../services/actions/tab";
+import { useSelector, useDispatch } from "../../utils/hooks";
+import { setError, clearError } from "../../services/actions/error";
+import { setTab } from "../../services/actions/tab";
 import { TMenuTab } from "../../utils/types";
 
 function BurgerIngredients() {
   const { ingredientsRequest, ingredientsFailed } = useSelector(
-    (store:any) => store.ingredients
+    (store) => store.ingredients
   );
-  const { tabs, current } = useSelector((store:any) => store.tab);
+  const { tabs, current } = useSelector((store) => store.tab);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -20,11 +20,11 @@ function BurgerIngredients() {
   }, [current]);
   React.useEffect(() => {
     if (ingredientsFailed)
-      dispatch({ type: SET_ERROR, error: "Не удалось загрузить ингредиенты" });
-    else dispatch({ type: CLEAR_ERROR });
+      dispatch(setError("Не удалось загрузить ингредиенты" ));
+    else dispatch(clearError());
   }, [dispatch, ingredientsFailed]);
   const setActiveTab = (value:string) => {
-    dispatch({ type: SET_TAB, current: value });
+    dispatch(setTab(value));
   };
 
   return (
@@ -51,11 +51,12 @@ function BurgerIngredients() {
         )}
       </div>
       <div className={styles.ingredients}>
-        <BurgerIngredientsTab id="bun" title="Булки"></BurgerIngredientsTab>
-        <BurgerIngredientsTab id="sauce" title="Соусы"></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="bun" title="Булки" ratio={1}></BurgerIngredientsTab>
+        <BurgerIngredientsTab id="sauce" title="Соусы" ratio={0}></BurgerIngredientsTab>
         <BurgerIngredientsTab
           id="main"
           title="Начинки"
+          ratio={0}
         ></BurgerIngredientsTab>
       </div>
     </div>

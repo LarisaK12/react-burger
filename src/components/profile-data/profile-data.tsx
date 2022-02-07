@@ -6,18 +6,18 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { setUser } from "../../services/actions/profile";
-import { SET_ERROR, CLEAR_ERROR } from "../../services/actions/error";
+import { setError, clearError } from "../../services/actions/error";
 
 const ProfileData = () => {
   const [emailValue, setEmailValue] = React.useState<string|null>(null);
   const [nameValue, setNameValue] = React.useState<string|null>(null);
 
   const { user, setProfileRequest, setProfileRequestFailed } = useSelector(
-    (store:any) => store.profile
+    (store) => store.profile
   );
-  const { error } = useSelector((store:any) => store.error);
+  const { error } = useSelector((store) => store.error);
   const dispatch = useDispatch();
   const onCancel = () => {
     setEmailValue(null);
@@ -26,9 +26,9 @@ const ProfileData = () => {
   const onSave = (e:React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    dispatch({ type: CLEAR_ERROR });
+    dispatch(clearError());
     dispatch(
-      setUser({ name: nameValue || user.name, email: emailValue || user.email })
+      setUser({ name: nameValue || user?.name , email: emailValue || user?.email || '' })
     );
   };
   const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ const ProfileData = () => {
   };
   React.useEffect(() => {
     if (setProfileRequestFailed) {
-      dispatch({ type: SET_ERROR, error: "Данные не были сохранены" });
+      dispatch(setError("Данные не были сохранены" ));
 
       setEmailValue(null);
       setNameValue(null);
@@ -59,7 +59,7 @@ const ProfileData = () => {
             icon={"EditIcon"}
             size="default"
             onChange={onChangeName}
-            value={nameValue || nameValue === "" ? nameValue : user?.name}
+            value={nameValue || nameValue === "" ? nameValue : user?.name || ''}
           ></Input>
         </div>
         <span className="mb-6"></span>
@@ -68,7 +68,7 @@ const ProfileData = () => {
             name="Email"
             size="default"
             onChange={onChangeEmail}
-            value={emailValue || emailValue === "" ? emailValue : user?.email}
+            value={emailValue || emailValue === "" ? emailValue : user?.email || ''}
           ></EmailInput>
         </div>
         <span className="mb-6"></span>

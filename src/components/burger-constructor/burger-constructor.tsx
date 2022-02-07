@@ -4,24 +4,24 @@ import BurgerElement from "../burger-element/burger-element";
 import SubmitOrder from "../submit-order/submit-order";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { RESET_ORDER } from "../../services/actions/order-details";
-import { useSelector, useDispatch } from "react-redux";
+import { resetOrder } from "../../services/actions/order-details";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { submitOrder } from "../../services/actions/order-details";
-import { SET_ERROR } from "../../services/actions/error";
+import { setError } from "../../services/actions/error";
 import {
-  ADD_INGREDIENT,
-  CLEAR_INGREDIENTS,
+  addIngredient,
+  clearIngredients,
 } from "../../services/actions/burger-constructor";
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
-import {TAddedIngredient, TDraggingElement} from "../../utils/types";
+import {TAddedIngredient,TIngredient, TDraggingElement} from "../../utils/types";
 
 function BurgerConstructor() {
   const history = useHistory();
-  const { burger } = useSelector((store:any) => store.constructor);
-  const { user } = useSelector((store:any) => store.profile);
-  const { ingredients } = useSelector((store:any) => store.ingredients);
-  const { orderId, submitOrderFailed } = useSelector((store:any) => store.order);
+  const { burger } = useSelector((store) => store.constructor);
+  const { user } = useSelector((store) => store.profile);
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const { orderId, submitOrderFailed } = useSelector((store) => store.order);
   const dispatch = useDispatch();
   const top = useMemo(
     () => (burger ? burger.filter((b:TAddedIngredient) => b.type === "top")[0] : null),
@@ -36,8 +36,8 @@ function BurgerConstructor() {
     [burger]
   );
   const closeModal = () => {
-    dispatch({ type: RESET_ORDER });
-    dispatch({ type: CLEAR_INGREDIENTS });
+    dispatch(resetOrder());
+    dispatch(clearIngredients());
   };
 
   const onSubmit = (e:React.SyntheticEvent) => {
@@ -45,26 +45,20 @@ function BurgerConstructor() {
     e.preventDefault();
     if (!user) history.replace({ pathname: "/login" });
     if (!burger || burger.filter((i:TAddedIngredient) => i.type === "bottom" || i.type === "top").length === 0)
-      dispatch({ type: SET_ERROR, error: "Без булок мы готовить не умеем." });
+      dispatch(setError( "Без булок мы готовить не умеем." ));
     else dispatch(submitOrder(burger.map((ingr:TAddedIngredient) => ingr._id)));
   };
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item:TDraggingElement) {
-      dispatch({
-        type: ADD_INGREDIENT,
-        item: ingredients.filter((ingr:TAddedIngredient) => ingr._id === item.id)[0],
-      });
+      dispatch(addIngredient(ingredients.filter((ingr:TIngredient) => ingr._id === item.id)[0]));
     },
   });
 
   React.useEffect(() => {
     if (submitOrderFailed)
-      dispatch({
-        type: SET_ERROR,
-        error: "Не удалось отправить заказ. Попробуйте еще раз.",
-      });
+      dispatch(setError("Не удалось отправить заказ. Попробуйте еще раз."));
   }, [dispatch, submitOrderFailed]);
   return (
     <>

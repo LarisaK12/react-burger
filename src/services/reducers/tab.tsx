@@ -1,6 +1,11 @@
-import { SET_TAB } from "../actions/tab";
-import { SET_RATIO } from "../actions/tab";
-const initialState = {
+import { TMenuTab } from "../../utils/types";
+import { SET_TAB, SET_RATIO, TTabActions } from "../actions/tab";
+
+export type TTabState = {
+  current: string,
+  tabs: ReadonlyArray<TMenuTab>
+};
+const initialState:TTabState = {
   current: "bun",
   tabs: [
     {
@@ -20,7 +25,7 @@ const initialState = {
     },
   ],
 };
-export const tabReducer = (state = initialState, action) => {
+export const tabReducer = (state:TTabState = initialState, action:TTabActions):TTabState => {
   switch (action.type) {
     case SET_TAB:
       return {
@@ -35,7 +40,7 @@ export const tabReducer = (state = initialState, action) => {
         t.id === action.id ? { ...t, ratio: action.ratio } : t
       );
       let newCurrent = newTabs.reduce((prev, next) => {
-        return prev.ratio < next.ratio ? next : prev;
+        return  prev.ratio < next.ratio ? next : prev;
       }, newTabs[0]).id;
       return {
         ...state,

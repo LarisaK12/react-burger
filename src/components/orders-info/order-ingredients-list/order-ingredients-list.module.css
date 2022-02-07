@@ -1,0 +1,39 @@
+.item{
+    border-radius: 100px; 
+    height:72px;
+    width: 72px;
+    background-color: #000000;   
+    border: 3px solid  #5e1383;   
+    object-fit: cover;   
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    justify-content:space-between;
+   
+
+}
+.container p{
+  flex-grow: 10;
+}
+.price_div{
+    display: flex;
+    flex-direction: row;   
+    
+ }
+ .scrollable{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 300px;
+ }
+ .scrollable::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2F2F37;
+  }
+  .scrollable::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+  }
+  
+  

@@ -1,0 +1,27 @@
+.card{
+    display: flex;
+    flex-direction:column;
+    max-width: 550px;
+    border-radius: 10px;
+  background-color:  #1C1C21;
+  
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.green{
+  color: #00CCCC;
+  
+}
+.link {
+  color: #ffffff;
+  text-decoration: none;  
+}
+.link p {
+  color: #ffffff;
+  text-decoration: none;  
+}

@@ -1,9 +1,9 @@
 import styles from "./order-details.module.css";
 import DoneGif from "../../images/done.gif";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 
 function OrderDetails() {
-  const { orderId } = useSelector((store:any) => store.order);
+  const { orderId } = useSelector((store) => store.order);
   return (
     <div className={`${styles.flexcol}`}>
       <p className="text text_type_digits-medium">{orderId}</p>

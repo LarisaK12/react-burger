@@ -4,9 +4,9 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../utils/hooks";
 import { forgotPassword } from "../services/actions/profile";
-import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+import { setError, clearError } from "../services/actions/error";
 import { useHistory, Redirect, Link } from "react-router-dom";
 import { Awaiter } from "../components/awaiter/awaiter";
 export const ForgotPasswordPage = () => {
@@ -17,25 +17,23 @@ export const ForgotPasswordPage = () => {
     profileRequestFailed,
     passwordResetRequired,
     message,
-  } = useSelector((store:any) => store.profile);
-  const { loggedIn } = useSelector((store:any) => store.login);
-  const { error } = useSelector((store:any) => store.error);
+  } = useSelector((store) => store.profile);
+  const { loggedIn } = useSelector((store) => store.login);
+  const { error } = useSelector((store) => store.error);
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch({ type: CLEAR_ERROR });
+    dispatch(clearError());
     dispatch(forgotPassword({ email: emailValue }));
   };
   const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
   React.useEffect(() => {
-    if (profileRequestFailed && emailValue)
-      dispatch({
-        type: SET_ERROR,
-        error: message,
-      });
+    if (profileRequestFailed && emailValue){
+      if(typeof message === "string") dispatch(setError(message));
+    }
     else if (
       passwordResetRequired &&
       !profileRequest &&

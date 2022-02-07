@@ -1,0 +1,14 @@
+.scrollable{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 600px;
+    padding: 0 30px 0 0  ;
+   }
+   .scrollable::-webkit-scrollbar {
+      width: 8px;
+      background-color: #2F2F37;
+    }
+    .scrollable::-webkit-scrollbar-thumb {
+      background-color: #8585ad;
+    }
+   

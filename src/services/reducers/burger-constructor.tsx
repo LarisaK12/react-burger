@@ -1,14 +1,20 @@
+import { TAddedIngredient } from "../../utils/types";
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   MOVE_INGREDIENT,
   CLEAR_INGREDIENTS,
+  TBurgerIngredientActions
 } from "../actions/burger-constructor";
-const initialState = {
+export type TBurgerConstructorState={
+  burger : ReadonlyArray<TAddedIngredient>,
+  price : number
+}
+const initialState:TBurgerConstructorState = {
   burger: [],
   price: 0,
 };
-export const burgerConstructor = (state = initialState, action) => {
+export const burgerConstructor = (state:TBurgerConstructorState = initialState, action:TBurgerIngredientActions):TBurgerConstructorState => {
   switch (action.type) {
     case CLEAR_INGREDIENTS:
       return { ...initialState };
@@ -45,16 +51,11 @@ export const burgerConstructor = (state = initialState, action) => {
       } else {
         //обычный ингредиент добавится один раз, если место указано неверно, то перед нижней булкой (если она есть)или просто в последнюю позицию
 
-        let isOutOfRange =
-          !action.place ||
-          action.place < hasBun ||
-          action.place > burgerIngredients.length - 1 - hasBun;
-        let place = isOutOfRange //если место указано неверно, то ингрединт добавится перед нижней булкой
-          ? burgerIngredients.length - hasBun
-          : action.place;
+        let place = burgerIngredients.length - hasBun// ингрединт добавится перед нижней булкой
+          
         burgerIngredients.splice(place, 0, {
           _id: action.item._id,
-          type: "undefined",
+          type: undefined,
           isLocked: false,
           text: action.item.name,
           price: action.item.price,

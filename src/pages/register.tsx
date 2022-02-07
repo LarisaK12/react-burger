@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./login.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { SET_ERROR, CLEAR_ERROR } from "../services/actions/error";
+import { useSelector, useDispatch } from "../utils/hooks";
+import { setError, clearError } from "../services/actions/error";
 import { register } from "../services/actions/profile";
 import { Redirect, Link } from "react-router-dom";
 import {
@@ -15,20 +15,20 @@ export const RegisterPage = () => {
   const [passValue, setPassValue] = React.useState("");
   const [nameValue, setNameValue] = React.useState("");
   const { user, regRequestFailed, regRequest } = useSelector(
-    (store:any) => store.profile
+    (store) => store.profile
   );
-  const { error } = useSelector((store:any) => store.error);
+  const { error } = useSelector((store) => store.error);
   const dispatch = useDispatch();
   const onSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch({ type: CLEAR_ERROR });
+    dispatch(clearError());
     dispatch(
       register({ email: emailValue, password: passValue, name: nameValue })
     );
   };
   React.useEffect(() => {
     if (regRequestFailed)
-      dispatch({ type: SET_ERROR, error: "Регистрация не прошла" });
+      dispatch(setError( "Регистрация не прошла" ));
   }, [dispatch, regRequestFailed]);
   const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);

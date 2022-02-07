@@ -6,7 +6,7 @@ export const checkResponse = (res:Response) => {
   }
   return Promise.reject(`Ошибка ${res.status}: ${res.json()}`);
 };
-export const fetchData = (url:string, method:string, data:string) => {
+export const fetchData = (url:string, method:string, data?:string) => {
   return fetch(url, {
     method: method,
     headers: {
@@ -15,7 +15,7 @@ export const fetchData = (url:string, method:string, data:string) => {
     body: data,
   }).then(checkResponse);
 };
-export const fetchWithToken = (url:string, method:string, data:string) => {
+export const fetchWithToken = (url:string, method:string, data?:string) => {
   if (!getCookie("accessToken")) return Promise.reject(`Ошибка: token invalid`);
   else
     return fetch(url, {
@@ -27,7 +27,7 @@ export const fetchWithToken = (url:string, method:string, data:string) => {
       body: data,
     }).then(checkResponse);
 };
-export const fetchWithRefresh = (url:string, method:string, data:string) => {
+export const fetchWithRefresh = (url:string, method:string, data?:string) => {
   return refreshToken().then((res) => {
     if (res && res.success) {
       let aToken = res.accessToken.split("Bearer ")[1];
@@ -38,7 +38,9 @@ export const fetchWithRefresh = (url:string, method:string, data:string) => {
   });
 };
 export const refreshToken = () => {
-  if (!getCookie("refreshToken")) return Promise.reject(`Ошибка: токена нет`);
+  if (!getCookie("refreshToken")) {
+    console.log(getCookie("refreshToken"));
+    return Promise.reject(`Ошибка: токена нет`);}
   else
     return fetch(`${API_URL}${TOKEN_URL}`, {
       method: "POST",
@@ -48,18 +50,27 @@ export const refreshToken = () => {
       body: JSON.stringify({ token: getCookie("refreshToken") }),
     }).then(checkResponse);
 };
+export const getToken =()=>{
+  var token = getCookie("accessToken");
+  if(!token){
+    refreshToken().catch((e)=>{return null});
+    token = getCookie("accessToken");
+  }
+  return token;
+}
 export function getCookie(name:string):string|undefined {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
-        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+      // eslint-disable-next-line no-useless-escape
+      name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
         "=([^;]*)"
     )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name:string, value:string|null, props:TCookieProps) {
+export function setCookie(name:string, value:string|null, props?:TCookieProps) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -72,10 +83,26 @@ export function setCookie(name:string, value:string|null, props:TCookieProps) {
   }
   value = value?encodeURIComponent(value as string):'';
   let updatedCookie = name + "=" + value;
-  
+  updatedCookie +=";expires="+props.expires;
   document.cookie = updatedCookie;
 }
 
 export function deleteCookie(name:string) {
   setCookie(name, null, { expires: -1 });
+}
+
+export function dateToString(dtime:Date):string{
+  try{
+    var dt = new Date(dtime);
+    var day = dt.getFullYear()=== new Date().getFullYear() &&
+    dt.getMonth()=== new Date().getMonth() ? (dt.getDay() === new Date().getDay()?"сегодня":
+     new Date().getDay()-dt.getDay() === 1?"вчера":`${new Date().getDay()-dt.getDay()} дня назад`
+    ) :null;
+    if(day === null) day=`${dt.getFullYear()}-${dt.getMonth()}-${dt.getDay()}`;
+    return `${day}, ${dt.toLocaleTimeString()}`
+  
+  }catch(e){
+    return dtime.toString();
+  }
+    
 }

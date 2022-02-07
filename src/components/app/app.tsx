@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { getUser } from "../../services/actions/profile";
 import { getIngredients } from "../../services/actions/ingredients";
 import ModalSwitch from "../modal-switch/modal-switch";
@@ -13,7 +13,7 @@ function App() {
     regRequest,
     forgotPassRequest,
     resetPassRequest,
-  } = useSelector((store:any) => store.profile);
+  } = useSelector((store) => store.profile );
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (

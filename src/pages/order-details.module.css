@@ -1,0 +1,18 @@
+.main{
+    background: #131316;
+    max-width: fit-content;
+    display: flex;
+    flex-direction: row;
+    margin:0  auto;
+    justify-content: center;
+}
+.section{
+  background: #131316;
+  flex:1 1 auto;
+  
+  border-radius: 10px 10px 0 0; 
+}
+.window{
+  min-width: 500px;
+  min-height: 500px;
+}

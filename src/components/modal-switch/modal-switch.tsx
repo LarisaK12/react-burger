@@ -9,12 +9,16 @@ import {
   ResetPasswordPage,
   ProfilePage,
   IngredientDetailsPage,
+  OrderDetailsPage,
+  FeedPage
 } from "../../pages";
 import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import AppHeader from "../app-header/app-header";
-import { CLEAR_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
+import { clearCurrentIngredient } from "../../services/actions/ingredient-details";
 import { TLocationState } from "../../utils/types";
+
+
 
 const ModalSwitch = () => {
   const location = useLocation<TLocationState>();
@@ -22,7 +26,7 @@ const ModalSwitch = () => {
   let background = location.state && location.state.background;
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch({ type: CLEAR_CURRENT_INGREDIENT });
+    dispatch( clearCurrentIngredient());
 
     history.goBack();
   };
@@ -51,14 +55,25 @@ const ModalSwitch = () => {
         <Route path="/reset-password" exact={true}>
           <ResetPasswordPage />
         </Route>
+        <Route path="/feed/:id" exact={true}>
+          <OrderDetailsPage />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <FeedPage />
+        </Route>
+        
         <ProtectedRoute path="/profile" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
+        
         <ProtectedRoute path="/exit" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
         <ProtectedRoute path="/profile/orders" exact={true}>
           <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders/:id" exact={true}>
+          <OrderDetailsPage />
         </ProtectedRoute>
 
         <Route>
@@ -74,6 +89,29 @@ const ModalSwitch = () => {
             </Modal>
           }
         />
+        
+      )}
+      {background && (
+        <Route
+          path="/feed/:id"
+          children={
+            <Modal onClose={closeModal} header="Детали заказа">
+              <OrderDetailsPage />
+            </Modal>
+          }
+        />
+        
+      )}
+      {background && (
+        <Route
+          path="/profile/orders/:id"
+          children={
+            <Modal onClose={closeModal} header="Детали заказа">
+              <OrderDetailsPage />
+            </Modal>
+          }
+        />
+        
       )}
     </>
   );

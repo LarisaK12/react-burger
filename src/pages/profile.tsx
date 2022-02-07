@@ -1,20 +1,27 @@
 import React from "react";
 import ProfileData from "../components/profile-data/profile-data";
+import ProfileOrdersData from "../components/profile-orders-data/profile-orders-data";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
 import { useLocation, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../utils/hooks";
 import { logout } from "../services/actions/login";
+import {startConnection, closeConnection} from "../services/actions/ws";
+
 export const ProfilePage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { user } = useSelector((store:any) => store.profile);
+  const { user } = useSelector((store) => store.profile);
   React.useEffect(() => {
     if (location.pathname === "/exit") {
       dispatch(logout());
     }
   }, [location, dispatch]);
-  
+  React.useEffect(()=>{
+     dispatch(startConnection("personal"));
+return ()=>{ dispatch(closeConnection())}
+  },[dispatch])
+    
   return !user ? (
     <Redirect to="/login" />
   ) : (
@@ -79,6 +86,7 @@ export const ProfilePage = () => {
       <span className="mr-15"></span>
       <section className={styles.section}>
         {location.pathname === "/profile" && <ProfileData />}
+        {location.pathname === "/profile/orders" && <ProfileOrdersData />}
       </section>
     </main>
   );

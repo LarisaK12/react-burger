@@ -14,9 +14,27 @@ import {
   RESET_PASS_REQUEST,
   RESET_PASS_FAILED,
   RESET_PASS_SUCCESS,
+  TProfileActions
 } from "../actions/profile";
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/login";
-const initialState = {
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, TLoginActions } from "../actions/login";
+import { TUser } from "../../utils/types";
+export type TProfileState = {
+  user: null|undefined|TUser,
+  passwordResetRequired: boolean,
+  passwordReseted: boolean,
+  message: null|undefined|string,
+  profileRequest: boolean,
+  profileRequestFailed: boolean,
+  setProfileRequest: boolean,
+  setProfileRequestFailed: boolean,
+  regRequest: boolean,
+  regRequestFailed: boolean,
+  resetPassRequest: boolean,
+  resetPassRequestFailed: boolean,
+  forgotPassRequest: boolean,
+  forgotPassRequestFailed: boolean,
+};
+const initialState:TProfileState = {
   user: null,
   passwordResetRequired: false,
   passwordReseted: false,
@@ -32,14 +50,14 @@ const initialState = {
   forgotPassRequest: false,
   forgotPassRequestFailed: false,
 };
-export const profileReducer = (state = initialState, action) => {
+export const profileReducer = (state:TProfileState = initialState, action:TProfileActions|TLoginActions):TProfileState => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {
         ...state,
         user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
+          name: action.user.name,
+          email: action.user.email,
         },
       };
     case LOGOUT_SUCCESS:
@@ -58,12 +76,13 @@ export const profileReducer = (state = initialState, action) => {
       };
     case REG_USER_SUCCESS:
       return {
-        user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
-        },
+        ...initialState,
         regRequest: false,
-        regRequestFailed: false,
+        regRequestFailed: false,        
+        user: action.user?{
+          name: action.user?.name,
+          email: action.user?.email,
+        }:null,
       };
     case GET_USER_REQUEST:
       return {
@@ -73,10 +92,10 @@ export const profileReducer = (state = initialState, action) => {
     case GET_USER_SUCCESS:
       return {
         ...initialState,
-        user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
-        },
+        user: action.user?{
+          name: action.user?.name,
+          email: action.user?.email,
+        }:null,
         profileRequest: false,
         profileRequestFailed: false,
       };
@@ -100,10 +119,10 @@ export const profileReducer = (state = initialState, action) => {
     case SET_USER_SUCCESS:
       return {
         ...initialState,
-        user: {
-          name: action.data.user.name,
-          email: action.data.user.email,
-        },
+        user: action.user?{
+          name: action.user?.name,
+          email: action.user?.email,
+        }:null,
         setProfileRequest: false,
         setProfileRequestFailed: false,
       };
@@ -118,7 +137,7 @@ export const profileReducer = (state = initialState, action) => {
     case FORGOT_PASS_FAILED:
       return {
         ...state,
-        message: action.data.message,
+        message: action.message,
         passwordResetRequired: false,
         profileRequest: false,
         profileRequestFailed: true,
@@ -126,7 +145,7 @@ export const profileReducer = (state = initialState, action) => {
     case FORGOT_PASS_SUCCESS:
       return {
         ...state,
-        message: action.data.message,
+        message: action.message,
         passwordResetRequired: true,
         profileRequest: false,
         profileRequestFailed: false,
@@ -142,7 +161,7 @@ export const profileReducer = (state = initialState, action) => {
     case RESET_PASS_FAILED:
       return {
         ...state,
-        message: action.data.message,
+        message: action.message,
         passwordResetRequired: false,
         passwordReseted: false,
         profileRequest: false,
@@ -151,7 +170,7 @@ export const profileReducer = (state = initialState, action) => {
     case RESET_PASS_SUCCESS:
       return {
         ...state,
-        message: action.data.message,
+        message: action.message,
         passwordResetRequired: false,
         passwordReseted: true,
         profileRequest: false,
