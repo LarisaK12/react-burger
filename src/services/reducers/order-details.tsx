@@ -55,8 +55,7 @@ export const orderDetailsReducer = (state:TOrderState = initialState, action:TOr
       }
     case GET_ORDER_SUCCESS:
       return{
-        ...initialState,
-        orderId:action.order?.number,
+        ...initialState,        
         order:action.order,
       }
     default:

@@ -151,34 +151,25 @@ export function register(data:TUser) {
 export function getUser() {
   return function (dispatch:AppThunk) {
     dispatch(getUserRequest());
-    let aToken = getCookie("accessToken");
-    if (!aToken) {
-      fetchWithRefresh(`${API_URL}${USER_URL}`, "GET")
+    
+    fetchWithToken(`${API_URL}${USER_URL}`, "GET")
         .then((res) => {
           if (res && res.success) {
             dispatch(getUserResult(true,res.user));
           } else {
             dispatch(getUserResult(false));
+            
           }
         })
         .catch((e) => {
-          dispatch(getUserResult(false));
-        });
-    } else
-      fetchWithToken(`${API_URL}${USER_URL}`, "GET")
-        .then((res) => {
-          if (res && res.success) {
-            dispatch(getUserResult(true,res.user));
-          } else {
-            dispatch(getUserResult(false));
-          }
-        })
-        .catch((e) => {
+          
           if (
             ((e.indexOf("expired") > 0 || e.indexOf("invalid") > 0) &&
               e.indexOf("token") > 0) ||
             e.indexOf("403")
           )
+          {
+          
             fetchWithRefresh(`${API_URL}${USER_URL}`, "GET")
               .then((res) => {
                 if (res && res.success) {
@@ -190,8 +181,11 @@ export function getUser() {
               .catch((e) => {
                 dispatch(getUserResult(false));
               });
-          else
+            }
+          else{
           dispatch(getUserResult(false));
+        
+        }
         });
   };
 }
@@ -199,23 +193,7 @@ export function getUser() {
 export function setUser(data:TUser) {
   return function (dispatch:AppThunk) {
     dispatch(setUserRequest());
-    let aToken = getCookie("accessToken");
-    if (!aToken) {
-      fetchWithRefresh(`${API_URL}${USER_URL}`, "PATCH", JSON.stringify(data))
-        .then((res) => {
-          if (res && res.success) {
-            dispatch(setUserResult(true,res.user));
-          } else {
-            dispatch(setUserResult(false));
-          }
-        })
-        .catch((e) => {
-          dispatch({
-            type: SET_USER_FAILED,
-          });
-        });
-    } else
-      fetchWithToken(`${API_URL}${USER_URL}`, "PATCH", JSON.stringify(data))
+    fetchWithToken(`${API_URL}${USER_URL}`, "PATCH", JSON.stringify(data))
         .then((res) => {
           if (res && res.success) {
             dispatch(setUserResult(true, res.user));

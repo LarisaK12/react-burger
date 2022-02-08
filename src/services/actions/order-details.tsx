@@ -1,6 +1,6 @@
 import { API_URL, GET_ORDER_ID_URL } from "../../utils/burger-constants";
 import { AppThunk, TOrder, TOrderShortDetails } from "../../utils/types";
-import { checkResponse, fetchData, fetchWithToken, getToken } from "../../utils/utils";
+import { fetchData, fetchWithToken, fetchWithRefresh } from "../../utils/utils";
 export const SUBMIT_ORDER_REQUEST:"SUBMIT_ORDER_REQUEST" = "SUBMIT_ORDER_REQUEST";
 export const SUBMIT_ORDER_SUCCESS:"SUBMIT_ORDER_SUCCESS" = "SUBMIT_ORDER_SUCCESS";
 export const SUBMIT_ORDER_FAILED:"SUBMIT_ORDER_FAILED" = "SUBMIT_ORDER_FAILED";
@@ -56,9 +56,9 @@ export const getOrderResult=(isSuccess:boolean,order?:TOrder):IGetOrderResult=>{
 export function submitOrder(data:ReadonlyArray<string>) {
   return function (dispatch:AppThunk) {
     dispatch(submitOrderRequest());
-    let token=getToken();
-    if(!token) dispatch(submitOrderResult(false));
-    fetchWithToken(`${API_URL}${GET_ORDER_ID_URL}`, "POST",JSON.stringify({ ingredients: data }))
+    
+    
+      fetchWithToken(`${API_URL}${GET_ORDER_ID_URL}`, "POST",JSON.stringify({ ingredients: data }))
        .then((res) => {
         if (res && res.success) {
           dispatch(submitOrderResult(true,{number:res.order.number, _id:res.name}));
@@ -67,9 +67,27 @@ export function submitOrder(data:ReadonlyArray<string>) {
         }
       })
       .catch((e) => {
+        if (
+          ((e.indexOf("expired") > 0 || e.indexOf("invalid") > 0) &&
+            e.indexOf("token") > 0) ||
+          e.indexOf("403")
+        )
+          fetchWithRefresh(`${API_URL}${GET_ORDER_ID_URL}`, "POST",JSON.stringify({ ingredients: data }))
+            .then((res) => {
+              if (res && res.success) {
+                dispatch(submitOrderResult(true,{number:res.order.number, _id:res.name}));
+              } else {
+                dispatch(submitOrderResult(false));
+              }
+            })
+            .catch((e) => {
+              dispatch(submitOrderResult(false));
+            });
+        else
         dispatch(submitOrderResult(false));
-      });
 
+      }); 
+    
       
   };
 }
