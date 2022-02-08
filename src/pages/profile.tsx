@@ -7,6 +7,7 @@ import { useLocation, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "../utils/hooks";
 import { logout } from "../services/actions/login";
 import {startConnection, closeConnection} from "../services/actions/ws";
+import { getToken } from "../utils/utils";
 
 export const ProfilePage = () => {
   const location = useLocation();
@@ -17,8 +18,13 @@ export const ProfilePage = () => {
       dispatch(logout());
     }
   }, [location, dispatch]);
-  React.useEffect(()=>{
-     dispatch(startConnection("personal"));
+  React.useEffect(()=>{   
+    getToken().then((res)=>{
+     dispatch(startConnection(res));
+    })
+    .catch((e)=>{
+      dispatch(logout());
+    })
 return ()=>{ dispatch(closeConnection())}
   },[dispatch])
     

@@ -16,30 +16,31 @@ export const fetchData = (url:string, method:string, data?:string) => {
   }).then(checkResponse);
 };
 export const fetchWithToken = (url:string, method:string, data?:string) => {
-  if (!getCookie("accessToken")) return Promise.reject(`Ошибка: token invalid`);
-  else
-    return fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        Authorization: "Bearer " + getCookie("accessToken"),
-      },
-      body: data,
-    }).then(checkResponse);
+ return  getToken().then((res)=>{
+  return fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: "Bearer " + getCookie("accessToken"),
+    },
+    body: data,
+  }).then(checkResponse)
+})
+
+    
 };
 export const fetchWithRefresh = (url:string, method:string, data?:string) => {
   return refreshToken().then((res) => {
-    if (res && res.success) {
-      let aToken = res.accessToken.split("Bearer ")[1];
-      setCookie("accessToken", aToken, { expires: 1200 });
-      setCookie("refreshToken", res.refreshToken, {expires:"never"});
-    }
     return fetchWithToken(url, method, data);
+  })
+  .catch(e=>{
+    return Promise.reject(e);
   });
+    
 };
+// запрашивает новый access токен
 export const refreshToken = () => {
   if (!getCookie("refreshToken")) {
-    console.log(getCookie("refreshToken"));
     return Promise.reject(`Ошибка: токена нет`);}
   else
     return fetch(`${API_URL}${TOKEN_URL}`, {
@@ -50,13 +51,29 @@ export const refreshToken = () => {
       body: JSON.stringify({ token: getCookie("refreshToken") }),
     }).then(checkResponse);
 };
+//отдает токен доступа, если его нет, то пытается достать новый (используя refresh токен), если неудчно - удаляет refresh токен
 export const getToken =()=>{
+  return new Promise<string>((resolve,reject)=>{
   var token = getCookie("accessToken");
   if(!token){
-    refreshToken().catch((e)=>{return null});
-    token = getCookie("accessToken");
+    refreshToken().then((res) => {
+      if (res && res.success) {
+        let aToken = res.accessToken.split("Bearer ")[1];
+        setCookie("accessToken", aToken, { expires: 1200 });
+        setCookie("refreshToken", res.refreshToken, {expires:"never"});
+        resolve(aToken);
+      }
+      reject(`Ошибка: ${res.message}`);      
+    }      
+    ).catch((e)=>{ 
+      deleteCookie("refreshToken");
+      reject(e);
+    })   
+    
   }
-  return token;
+  else resolve(token);
+}
+  )
 }
 export function getCookie(name:string):string|undefined {
   const matches = document.cookie.match(
@@ -105,4 +122,10 @@ export function dateToString(dtime:Date):string{
     return dtime.toString();
   }
     
+}
+export const splitArray =(arr:ReadonlyArray<number>, chunkSize:number)=> {
+  var R = [];
+  for (var i = 0; i < arr.length; i += chunkSize)
+    R.push(arr.slice(i, i + chunkSize));
+  return R;
 }

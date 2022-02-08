@@ -7,7 +7,15 @@
     justify-content: space-around;
     
 }
+.number_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
 .green{
     color: #00CCCC;
     
+}
+.no_wrap{
+  overflow: visible;
 }

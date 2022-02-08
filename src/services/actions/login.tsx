@@ -105,8 +105,7 @@ export function logout() {
           }
         })
         .catch((e) => {
-          console.log(e);
-          dispatch(logoutFailed());
+           dispatch(logoutFailed());
         });
   };
 }

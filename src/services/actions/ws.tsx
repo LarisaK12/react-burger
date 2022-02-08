@@ -1,7 +1,7 @@
 import { TOrder, TWSResponse } from "../../utils/types";
 
 import { WS_URL, ORDERS_ALL_URL,USER_ORDERS_URL   } from "../../utils/burger-constants";
-import { getToken } from "../../utils/utils";
+import { getCookie } from "../../utils/utils";
 export const WS_CONNECTION_START:"WS_CONNECTION_START" ="WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS:"WS_CONNECTION_SUCCESS" ="WS_CONNECTION_SUCCESS";
 export const WS_CONNECTION_ERROR:"WS_CONNECTION_ERROR" ="WS_CONNECTION_ERROR";
@@ -18,7 +18,7 @@ export interface IConnectionStarted{
 }
 export interface IConnectionError{
     readonly type:typeof WS_CONNECTION_ERROR,
-    readonly payload?:Event
+    readonly payload?:Event,
 }
 export interface IConnectionClosed{
     readonly type:typeof WS_CONNECTION_CLOSED
@@ -35,13 +35,8 @@ export interface ICloseConnection{
     readonly type:typeof WS_CLOSE_CONNECTION
 }
 export type TWSActions = IStartConnection | IConnectionStarted |IConnectionError |IConnectionClosed |IGetMessage |ISendMessage | ICloseConnection;
-export const startConnection=(mode:string):IStartConnection|IConnectionError=>{
-    const token = getToken();
-    if(mode === "personal" && !token) 
-    return{
-        type:WS_CONNECTION_ERROR
-    }
-    const wsUrl = mode === "personal"?`${WS_URL}${USER_ORDERS_URL}?token=${token}`:`${WS_URL}${ORDERS_ALL_URL}`;
+export const startConnection=(token :string):IStartConnection|IConnectionError=>{
+    const wsUrl = token?`${WS_URL}${USER_ORDERS_URL}?token=${token}`:`${WS_URL}${ORDERS_ALL_URL}`;
     return{
         type:WS_CONNECTION_START,
         payload:wsUrl
@@ -61,7 +56,7 @@ export const connectionStarted=():IConnectionStarted=>{
 export const connectionError=(evt:Event|undefined):IConnectionError=>{
     return{
         type:WS_CONNECTION_ERROR,
-        payload:evt
+        payload:evt,
     }
 }
 export const connectionClosed=():IConnectionClosed=>{
