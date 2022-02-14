@@ -8,6 +8,7 @@ import {
 import { useSelector } from "../../utils/hooks";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
+import { HOME_PAGE } from "../../utils/burger-constants";
 
 const BurgerIngredientCard:FC<TIngredient> = (props) => {
   const counter = useSelector((store) =>
@@ -29,7 +30,7 @@ const BurgerIngredientCard:FC<TIngredient> = (props) => {
     <Link
       key={props._id}
       to={{
-        pathname: `/ingredient/${props._id}`,
+        pathname: `${HOME_PAGE}/ingredient/${props._id}`,
         state: { background: location },
       }}
       className={styles.link}

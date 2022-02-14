@@ -12,6 +12,7 @@ import {
 import { resetPassword } from "../services/actions/profile";
 import { setError, clearError } from "../services/actions/error";
 import { TLocationState } from "../utils/types";
+import { HOME_PAGE } from "../utils/burger-constants";
 
 export const ResetPasswordPage = () => {
   const [value, setValue] = React.useState("");
@@ -36,7 +37,7 @@ export const ResetPasswordPage = () => {
       if(typeof message === "string") dispatch(setError( message ));
     }
     else if (passwordReseted && !profileRequest && !profileRequestFailed) {
-      history.replace({ pathname: "/login" });
+      history.replace({ pathname: `${HOME_PAGE}/login` });
     }
   }, [
     dispatch,
@@ -54,8 +55,8 @@ export const ResetPasswordPage = () => {
   const onChangePass = (e:React.ChangeEvent<HTMLInputElement>) => {
     setPassValue(e.target.value);
   };
-  if (history.location.state?.pathname !== "/forgot-password")
-    return <Redirect to="/forgot-password" />;
+  if (history.location.state?.pathname !== `${HOME_PAGE}/forgot-password`)
+    return <Redirect to={`${HOME_PAGE}/forgot-password`} />;
   return user ? (
     <Redirect to="/" />
   ) : profileRequest ? (
@@ -96,7 +97,7 @@ export const ResetPasswordPage = () => {
           <div className="mt-20">
             {error && <p className="text text_type_main-small">{error}</p>}
             <p className="text text_type_main-small">
-              Вспомнили пароль? <Link to="/login">Войти</Link>
+              Вспомнили пароль? <Link to={`${HOME_PAGE}/login`}>Войти</Link>
             </p>
           </div>
         </div>

@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import AppHeader from "../app-header/app-header";
 import { clearCurrentIngredient } from "../../services/actions/ingredient-details";
 import { TLocationState } from "../../utils/types";
+import {HOME_PAGE} from "../../utils/burger-constants";
 
 
 
@@ -34,45 +35,45 @@ const ModalSwitch = () => {
     <>
       <AppHeader />
       <Switch location={background || location}>
-        <Route path="/" exact={true}>
+        <Route path={`${HOME_PAGE}/`} exact={true}>
           <ConstructorPage />
         </Route>
-        <Route path="/constructor" exact={true}>
+        <Route path={`${HOME_PAGE}/constructor`} exact={true}>
           <ConstructorPage />
         </Route>
-        <Route path="/ingredient/:id">
+        <Route path={`${HOME_PAGE}/ingredient/:id`}>
           <IngredientDetailsPage />
         </Route>
-        <Route path="/login" exact={true}>
+        <Route path={`${HOME_PAGE}/login`} exact={true}>
           <LoginPage />
         </Route>
-        <Route path="/register" exact={true}>
+        <Route path={`${HOME_PAGE}/register`} exact={true}>
           <RegisterPage />
         </Route>
-        <Route path="/forgot-password" exact={true}>
+        <Route path={`${HOME_PAGE}/forgot-password`} exact={true}>
           <ForgotPasswordPage />
         </Route>
-        <Route path="/reset-password" exact={true}>
+        <Route path={`${HOME_PAGE}/reset-password`} exact={true}>
           <ResetPasswordPage />
         </Route>
-        <Route path="/feed/:id" exact={true}>
+        <Route path={`${HOME_PAGE}/feed/:id`} exact={true}>
           <OrderDetailsPage />
         </Route>
-        <Route path="/feed" exact={true}>
+        <Route path={`${HOME_PAGE}/feed`} exact={true}>
           <FeedPage />
         </Route>
         
-        <ProtectedRoute path="/profile" exact={true}>
+        <ProtectedRoute path={`${HOME_PAGE}/profile`} exact={true}>
           <ProfilePage />
         </ProtectedRoute>
         
-        <ProtectedRoute path="/exit" exact={true}>
+        <ProtectedRoute path={`${HOME_PAGE}/exit`} exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/profile/orders" exact={true}>
+        <ProtectedRoute path={`${HOME_PAGE}/profile/orders`} exact={true}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/profile/orders/:id" exact={true}>
+        <ProtectedRoute path={`${HOME_PAGE}/profile/orders/:id`} exact={true}>
           <OrderDetailsPage />
         </ProtectedRoute>
 
@@ -82,7 +83,7 @@ const ModalSwitch = () => {
       </Switch>
       {background && (
         <Route
-          path="/ingredient/:id"
+          path={`${HOME_PAGE}/ingredient/:id`}
           children={
             <Modal onClose={closeModal} header="Детали ингредиента">
               <IngredientDetailsPage />
@@ -93,7 +94,7 @@ const ModalSwitch = () => {
       )}
       {background && (
         <Route
-          path="/feed/:id"
+          path={`${HOME_PAGE}/feed/:id`}
           children={
             <Modal onClose={closeModal} header="Детали заказа">
               <OrderDetailsPage />
@@ -104,7 +105,7 @@ const ModalSwitch = () => {
       )}
       {background && (
         <Route
-          path="/profile/orders/:id"
+          path={`${HOME_PAGE}/profile/orders/:id`}
           children={
             <Modal onClose={closeModal} header="Детали заказа">
               <OrderDetailsPage />

@@ -1,6 +1,5 @@
 import {
   setCookie,
-  getCookie,
   fetchWithRefresh,
   fetchWithToken,
   fetchData,

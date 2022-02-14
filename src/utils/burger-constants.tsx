@@ -11,6 +11,7 @@ const FORGOT_PASSWORD_URL = "/password-reset";
 const RESET_PASSWORD_URL = "/password-reset/reset";
 const ORDERS_ALL_URL = "/orders/all";
 const USER_ORDERS_URL = "/orders";
+const HOME_PAGE ="/react-burger";
 export {
   INGREDIENTS_URL,
   GET_ORDER_ID_URL,
@@ -25,4 +26,5 @@ export {
   ORDERS_ALL_URL,
   USER_ORDERS_URL,
   WS_URL,
+  HOME_PAGE,
 };

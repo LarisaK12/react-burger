@@ -8,25 +8,29 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
+import { HOME_PAGE } from "../../utils/burger-constants";
 function AppHeader() {
   const history = useHistory();
   const [currentPage, setCurrentPage] = React.useState("");
   const location = useLocation();
   useEffect(() => {
-    if (location.pathname.split("/").length > 1)
-      setCurrentPage(location.pathname.split("/")[1]);
+    const c=HOME_PAGE.split("/").length;
+    if (location.pathname.split("/").length > c)
+      setCurrentPage(location.pathname.split("/")[c]);
+      
   }, [location]);
   const setConstructor = useCallback(() => {
     setCurrentPage("constructor");
-    history.replace({ pathname: "/" });
+    history.replace({ pathname: `${HOME_PAGE}/` });
   }, [history]);
   const setOrders = useCallback(() => {
     setCurrentPage("feed");
-    history.replace({ pathname: "/feed" });
+    history.replace({ pathname: `${HOME_PAGE}/feed` });
   }, [history]);
   const setProfile = useCallback(() => {
     setCurrentPage("profile");
-    history.replace({ pathname: "/profile" });
+    history.replace({ pathname: `${HOME_PAGE}/profile` });
   }, [history]);
 
   return (
@@ -57,7 +61,7 @@ function AppHeader() {
               />
             </HeaderItem>
           </div>
-          <Link to="/" className={styles.logo}>
+          <Link to={`${HOME_PAGE}/`} className={styles.logo}>
             <Logo />
           </Link>
           <HeaderItem

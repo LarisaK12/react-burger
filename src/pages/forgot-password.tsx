@@ -9,6 +9,7 @@ import { forgotPassword } from "../services/actions/profile";
 import { setError, clearError } from "../services/actions/error";
 import { useHistory, Redirect, Link } from "react-router-dom";
 import { Awaiter } from "../components/awaiter/awaiter";
+import { HOME_PAGE } from "../utils/burger-constants";
 export const ForgotPasswordPage = () => {
   const [emailValue, setEmailValue] = React.useState("");
 
@@ -39,7 +40,7 @@ export const ForgotPasswordPage = () => {
       !profileRequest &&
       !profileRequestFailed
     ) {
-      history.replace({ pathname: "/reset-password", state: history.location });
+      history.replace({ pathname: `${HOME_PAGE}/reset-password`, state: history.location });
     }
   }, [
     dispatch,
@@ -52,7 +53,7 @@ export const ForgotPasswordPage = () => {
   ]);
 
   return loggedIn ? (
-    <Redirect to="/" />
+    <Redirect to={`${HOME_PAGE}/`} />
   ) : profileRequest ? (
     <>
       <Awaiter />
@@ -85,7 +86,7 @@ export const ForgotPasswordPage = () => {
             <div className="mt-20">
               {error && <p className="text text_type_main-small">{error}</p>}
               <p className="text text_type_main-small">
-                Вспомнили пароль? <Link to="/login">Войти</Link>
+                Вспомнили пароль? <Link to={`${HOME_PAGE}/login`}>Войти</Link>
               </p>
             </div>
           </div>

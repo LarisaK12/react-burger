@@ -10,6 +10,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Awaiter } from "../components/awaiter/awaiter";
+import { HOME_PAGE } from "../utils/burger-constants";
 export const RegisterPage = () => {
   const [emailValue, setEmailValue] = React.useState("");
   const [passValue, setPassValue] = React.useState("");
@@ -43,7 +44,7 @@ export const RegisterPage = () => {
     return (
       <Redirect
         to={{
-          pathname: "/",
+          pathname: `${HOME_PAGE}/`,
         }}
       />
     );
@@ -94,7 +95,7 @@ export const RegisterPage = () => {
           <div className="mt-20">
             {error && <p className="text text_type_main-large mb-6">{error}</p>}
             <p className="text text_type_main-small">
-              Уже зарегистрироаны? <Link to="/login">Войти</Link>
+              Уже зарегистрироаны? <Link to={`${HOME_PAGE}/login`}>Войти</Link>
             </p>
           </div>
         </div>

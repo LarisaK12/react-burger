@@ -11,6 +11,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Awaiter } from "../components/awaiter/awaiter";
 import { TLocationState } from "../utils/types";
+import { HOME_PAGE } from "../utils/burger-constants";
 
 export const LoginPage = () => {
   const [emailValue, setEmailValue] = React.useState<string>("");
@@ -40,9 +41,9 @@ export const LoginPage = () => {
   return user ? (
     <Redirect
       to={
-        location.state?.from?.pathname === "/exit"
-          ? "/"
-          : location.state?.from || "/"
+        location.state?.from?.pathname === `${HOME_PAGE}/exit`
+          ? `${HOME_PAGE}/`
+          : location.state?.from || `${HOME_PAGE}/`
       }
     />
   ) : profileRequest ? (
@@ -82,13 +83,13 @@ export const LoginPage = () => {
             {error && <p className="text text_type_main-medium">{error}</p>}
             <p className="text text_type_main-small">
               Вы - новый пользователь?{" "}
-              <Link to="/register">Зарегистрироваться</Link>
+              <Link to={`${HOME_PAGE}/register`}>Зарегистрироваться</Link>
             </p>
           </div>
           <div className="mt-4">
             <p className="text text_type_main-small">
               Забыли пароль?{" "}
-              <Link to="/forgot-password">Восстановить пароль</Link>
+              <Link to={`${HOME_PAGE}/forgot-password`}>Восстановить пароль</Link>
             </p>
           </div>
         </div>

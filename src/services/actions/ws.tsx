@@ -1,7 +1,6 @@
 import { TOrder, TWSResponse } from "../../utils/types";
 
 import { WS_URL, ORDERS_ALL_URL,USER_ORDERS_URL   } from "../../utils/burger-constants";
-import { getCookie } from "../../utils/utils";
 export const WS_CONNECTION_START:"WS_CONNECTION_START" ="WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS:"WS_CONNECTION_SUCCESS" ="WS_CONNECTION_SUCCESS";
 export const WS_CONNECTION_ERROR:"WS_CONNECTION_ERROR" ="WS_CONNECTION_ERROR";

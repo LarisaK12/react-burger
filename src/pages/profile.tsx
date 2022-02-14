@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from "../utils/hooks";
 import { logout } from "../services/actions/login";
 import {startConnection, closeConnection} from "../services/actions/ws";
 import { getToken } from "../utils/utils";
+import { HOME_PAGE } from "../utils/burger-constants";
 
 export const ProfilePage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.profile);
   React.useEffect(() => {
-    if (location.pathname === "/exit") {
+    if (location.pathname === `${HOME_PAGE}/exit`) {
       dispatch(logout());
     }
   }, [location, dispatch]);
@@ -29,7 +30,7 @@ return ()=>{ dispatch(closeConnection())}
   },[dispatch])
     
   return !user ? (
-    <Redirect to="/login" />
+    <Redirect to={`${HOME_PAGE}/login`} />
   ) : (
     <main className={styles.main}>
       <section className={styles.section}>
@@ -37,11 +38,11 @@ return ()=>{ dispatch(closeConnection())}
           <div className={styles.divLink}>
             <NavLink
               className={"text text_type_main-medium " + styles.link}
-              to="/profile"
+              to={`${HOME_PAGE}/profile`}
             >
               <p
                 className={
-                  location.pathname === "/profile" ? styles.alink : styles.link
+                  location.pathname === `${HOME_PAGE}/profile` ? styles.alink : styles.link
                 }
               >
                 {" "}
@@ -52,11 +53,11 @@ return ()=>{ dispatch(closeConnection())}
           <div className={styles.divLink}>
             <NavLink
               className={"text text_type_main-medium " + styles.link}
-              to="/profile/orders"
+              to={`${HOME_PAGE}/profile/orders`}
             >
               <p
                 className={
-                  location.pathname === "/profile/orders"
+                  location.pathname ===`${HOME_PAGE}/profile/orders` 
                     ? styles.alink
                     : styles.link
                 }
@@ -69,11 +70,11 @@ return ()=>{ dispatch(closeConnection())}
           <div className={styles.divLink}>
             <NavLink
               className={"text text_type_main-medium " + styles.link}
-              to="/exit"
+              to={`${HOME_PAGE}/exit`}
             >
               <p
                 className={
-                  location.pathname === "/exit" ? styles.alink : styles.link
+                  location.pathname === `${HOME_PAGE}/exit` ? styles.alink : styles.link
                 }
               >
                 {" "}
@@ -91,8 +92,8 @@ return ()=>{ dispatch(closeConnection())}
       </section>
       <span className="mr-15"></span>
       <section className={styles.section}>
-        {location.pathname === "/profile" && <ProfileData />}
-        {location.pathname === "/profile/orders" && <ProfileOrdersData />}
+        {location.pathname === `${HOME_PAGE}/profile` && <ProfileData />}
+        {location.pathname === `${HOME_PAGE}/profile/orders` && <ProfileOrdersData />}
       </section>
     </main>
   );
