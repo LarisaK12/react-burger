@@ -20,7 +20,7 @@ const  Modal:React.FC<TModalProps> = (props) => {
         <div className={`pl-10 pt-10 pr-10 pb-15 ${styles.modal}`} onClick={e=>e.stopPropagation()}>
         <div className={styles.header}>
           <span className="text text_type_main-large">{header}</span>
-          <img className="ml-2" onClick={onClose}  src={CloseImg} alt="закрыть"/>
+          <img className="ml-2" onClick={onClose}  src={CloseImg} alt="закрыть" id="closeButton"/>
         </div>
         {children}          
         </div>

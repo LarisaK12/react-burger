@@ -15,6 +15,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import {TAddedIngredient,TIngredient, TDraggingElement} from "../../utils/types";
+import {HOME_PAGE} from "../../utils/burger-constants";
 
 function BurgerConstructor() {
   const history = useHistory();
@@ -43,7 +44,10 @@ function BurgerConstructor() {
   const onSubmit = (e:React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    if (!user) history.replace({ pathname: "/login" });
+    if (!user) {
+      history.replace({ pathname: `${HOME_PAGE}/login` });
+      return;
+  }
     if (!burger || burger.filter((i:TAddedIngredient) => i.type === "bottom" || i.type === "top").length === 0)
       dispatch(setError( "Без булок мы готовить не умеем." ));
     else dispatch(submitOrder(burger.map((ingr:TAddedIngredient) => ingr._id)));
@@ -62,7 +66,7 @@ function BurgerConstructor() {
   }, [dispatch, submitOrderFailed]);
   return (
     <>
-      <div className={styles.burger} ref={dropTarget}>
+      <div className={styles.burger} id="burger-constructor" ref={dropTarget}>
         {Boolean(burger && burger.length) && (
           <>
             {top && <BurgerElement {...top} isLocked={true}></BurgerElement>}

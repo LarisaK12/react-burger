@@ -55,7 +55,7 @@ export const LoginPage = () => {
       <div className={styles.main}>
         <div className={styles.inner}>
           <p className="text text_type_main-large mb-6">Вход</p>
-          <div className={styles.item}>
+          <div className={styles.item} id="email">
             <EmailInput
               size="default"
               onChange={onChangeEmail}
@@ -64,7 +64,7 @@ export const LoginPage = () => {
             />
           </div>
           <span className="mb-6"></span>
-          <div className={styles.item}>
+          <div className={styles.item} id="password">
             <PasswordInput
               size="default"
               onChange={onChangePass}
