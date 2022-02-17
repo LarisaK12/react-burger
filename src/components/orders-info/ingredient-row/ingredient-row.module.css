@@ -22,6 +22,18 @@
     border: 3px solid  #5e1383;  
 
 }
+.transparent{
+    position: absolute;
+    border-radius: 100px; 
+    background-color: rgba(0, 0, 0, 0.8);
+    height:78px;
+    width: 78px;    
+    color: white; 
+    align-items: center;
+    justify-content: center;
+    display:flex;
+}
+
 .price_div{
     display: flex;
     flex-direction: row;

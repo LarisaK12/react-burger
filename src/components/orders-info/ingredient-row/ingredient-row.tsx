@@ -19,15 +19,19 @@ const IngredientRow:React.FC<TOrderIngredients> = (props)=>{
         },[props,ingredients]  
     )
     const price = useMemo(()=>selectedIngreients.length === 0?0: selectedIngreients.map((ingr)=>ingr.price).reduce((s,price)=>s+price),[selectedIngreients]);
+    const visibleIngredientsNumber = 6;
     
 return(
     <div className={styles.main} >
-<div className={styles.img_container} style={{padding:`0 0 0 ${36*(props.ingredients.length-1)}px`}} >
-   {selectedIngreients&& selectedIngreients.map((ingr:TIngredient, index:number)=>
+<div className={styles.img_container} style={{padding:`0  ${36*(props.ingredients.length-1)}px 0 0`}} >
+   {selectedIngreients&& selectedIngreients.slice(0,visibleIngredientsNumber).map((ingr:TIngredient, index:number)=>
    (       
-       <img key={index} src={ingr.image} className={styles.item} style={{margin:`0 0 0 ${index*36*-1}px`}} alt={ingr.name}></img>
+       <img key={index} src={ingr.image} className={styles.item} style={{margin:`0 0 0 ${index*36}px`}} alt={ingr.name}></img>
     )
    )} 
+  {selectedIngreients&& selectedIngreients.length> visibleIngredientsNumber &&
+   <div className={`${styles.transparent} text text_type_digits-default `} style={{margin:`0 0 0 ${(visibleIngredientsNumber-1)*36}px`}} >
+       +{selectedIngreients.length-visibleIngredientsNumber}</div>}
 </div>
 
 <span className={styles.price_div}>
