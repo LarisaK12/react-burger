@@ -1,6 +1,6 @@
 describe('app works correctly with ingredients', function() {
     before(function() {
-      cy.visit('http://localhost:3000/react-burger');
+      cy.visit('http://localhost:3000/');
     });
   
     it('should open constructor page by default', function() {
