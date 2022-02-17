@@ -32,6 +32,7 @@
     "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "cypress:open": "./node_modules/.bin/cypress open",
+    "deploy-script": "npm run build && scp -r ./build/* larisakhor@62.84.121.176:/home/practicum/stellar-frontend",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/"
