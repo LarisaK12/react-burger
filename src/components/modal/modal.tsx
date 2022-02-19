@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
-import CloseImg from '../../images/close.svg'
+import CloseImg from '../../images/close.png'
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { TModalProps } from '../../utils/types';
 const  Modal:React.FC<TModalProps> = (props) => {
@@ -20,7 +20,7 @@ const  Modal:React.FC<TModalProps> = (props) => {
         <div className={`pl-10 pt-10 pr-10 pb-15 ${styles.modal}`} onClick={e=>e.stopPropagation()}>
         <div className={styles.header}>
           <span className="text text_type_main-large">{header}</span>
-          <img className="ml-2" onClick={onClose}  src={CloseImg} alt="закрыть"/>
+          <img className={`${styles.img} ml-2`} onClick={onClose}  src={CloseImg} alt="закрыть" id="closeButton"/>
         </div>
         {children}          
         </div>

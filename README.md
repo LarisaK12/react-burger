@@ -1,5 +1,6 @@
 # URL for this work
-https://larisak12.github.io/react-burger/ 
+1. https://larisak12.github.io/react-burger/ 
+2. https://larisakhor.students.nomoredomains.xyz/
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

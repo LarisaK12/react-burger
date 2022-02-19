@@ -36,7 +36,7 @@ const BurgerIngredientCard:FC<TIngredient> = (props) => {
       className={styles.link}
     >
       <DragPreviewImage connect={preview} src={props.image} />
-      <div className={styles.ingredient_card} ref={dragRef}>
+      <div className={styles.ingredient_card} id="ingredient" ref={dragRef}>
         {counter !== 0 && <Counter count={counter} size="default" />}
         <img
           src={props.image}

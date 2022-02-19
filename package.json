@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/user-event": "^12.8.3",
@@ -32,6 +32,7 @@
     "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "cypress:open": "./node_modules/.bin/cypress open",
+    "deploy-script": "npm run build && scp -r ./build/* larisakhor@62.84.121.176:/home/practicum/stellar-frontend",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/"
